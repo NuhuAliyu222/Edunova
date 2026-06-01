@@ -1,0 +1,6 @@
+{
+  "name": "Edunova Smart Learning",
+  "description": "A production-grade, highly-interactive learning management system featuring student dashboards, quizzes, courses, and admin portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
