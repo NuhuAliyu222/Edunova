@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edunova - Smart Learning - Admin Login</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+  <link rel="stylesheet" href="../../assets/css/global.css"/>
+  <link rel="stylesheet" href="../../assets/css/animation.css"/>
+  <link rel="stylesheet" href="../../assets/css/responsive.css"/>
+
+  <style>
+    * {
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      background: #f4f4f7;
+    }
+
+    .left-panel {
+      background:
+        radial-gradient(circle at top right, rgba(92, 79, 255, 0.12) 0%, rgba(92, 79, 255, 0.06) 18%, transparent 20%),
+        radial-gradient(circle at 80% 22%, rgba(115, 95, 255, 0.08) 0%, rgba(115, 95, 255, 0.05) 16%, transparent 17%),
+        linear-gradient(180deg, #040f5e 0%, #07145f 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .left-panel::before {
+      content: "";
+      position: absolute;
+      top: -80px;
+      right: -90px;
+      width: 340px;
+      height: 340px;
+      background: rgba(118, 103, 255, 0.08);
+      border-radius: 50%;
+    }
+
+    .left-panel::after {
+      content: "";
+      position: absolute;
+      top: 70px;
+      right: 40px;
+      width: 220px;
+      height: 220px;
+      background: rgba(118, 103, 255, 0.06);
+      border-radius: 50%;
+    }
+
+    .input-field {
+      height: 58px;
+      border: 1px solid #d8dbe8;
+      border-radius: 12px;
+      padding-left: 56px;
+      padding-right: 52px;
+      font-size: 18px;
+      color: #111827;
+      outline: none;
+      width: 100%;
+      background: #fff;
+    }
+
+    .input-field::placeholder {
+      color: #8b93a7;
+      font-weight: 400;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7d869f;
+      font-size: 20px;
+    }
+
+    .eye-icon {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7d869f;
+      font-size: 19px;
+    }
+
+    .login-btn {
+      height: 58px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #5a2cff 0%, #4f27f7 100%);
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      width: 100%;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(89, 48, 255, 0.18);
+    }
+
+    .sso-btn {
+      height: 58px;
+      border-radius: 10px;
+      border: 2px solid #b79cff;
+      background: white;
+      color: #532dff;
+      font-size: 18px;
+      font-weight: 600;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .dashboard-card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.18);
+    }
+
+    .mini-card {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center px-6 py-6">
+
+  <div class="w-full max-w-[1540px] h-[930px] bg-white rounded-[28px] overflow-hidden flex shadow-[0_10px_60px_rgba(0,0,0,0.08)]">
+
+    <!-- LEFT -->
+    <div class="left-panel w-[48%] relative text-white px-[58px] pt-[48px] pb-[40px]">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-3 relative z-10">
+        <div class="w-[42px] h-[42px] rounded-xl bg-[#4d31ff] flex items-center justify-center">
+          <i class="fa-solid fa-graduation-cap text-white text-[18px]"></i>
+        </div>
+
+        <div class="text-[20px] font-[700] tracking-[-0.3px]">
+          Edunova <span class="text-[#7358ff]">- Smart Learning</span>
+        </div>
+      </div>
+
+      <!-- Heading -->
+      <div class="relative z-10 mt-[90px]">
+        <h1 class="text-[64px] leading-[1.05] font-[800] tracking-[-2px]">
+          Admin <span class="text-[#6f55ff]">Portal</span>
+        </h1>
+
+        <p class="mt-6 text-[19px] leading-[1.65] text-[#f0f3ff] max-w-[520px] font-[400]">
+          Secure access to manage users, courses,
+          content and system settings.
+        </p>
+      </div>
+
+      <!-- Features -->
+      <div class="relative z-10 mt-[58px] flex flex-col gap-10">
+
+        <div class="flex items-start gap-5">
+          <div class="w-[62px] h-[62px] rounded-full bg-[#3b2bb6] flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-users text-white text-[22px]"></i>
+          </div>
+
+          <div>
+            <div class="text-[28px] font-[700] leading-none">User Management</div>
+            <div class="mt-3 text-[20px] leading-[1.6] text-[#d9def8] max-w-[410px]">
+              Manage students, instructors
+              and roles efficiently.
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-5">
+          <div class="w-[62px] h-[62px] rounded-full bg-[#3b2bb6] flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-book-open text-white text-[21px]"></i>
+          </div>
+
+          <div>
+            <div class="text-[28px] font-[700] leading-none">Content Management</div>
+            <div class="mt-3 text-[20px] leading-[1.6] text-[#d9def8] max-w-[460px]">
+              Create, update and organize
+              courses and learning material.
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-5">
+          <div class="w-[62px] h-[62px] rounded-full bg-[#3b2bb6] flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-gear text-white text-[22px]"></i>
+          </div>
+
+          <div>
+            <div class="text-[28px] font-[700] leading-none">System Control</div>
+            <div class="mt-3 text-[20px] leading-[1.6] text-[#d9def8] max-w-[450px]">
+              Configure settings, permissions
+              and system preferences.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Dashboard Mockup -->
+      <div class="relative z-10 mt-[60px] flex items-end gap-6">
+
+        <div class="dashboard-card w-[590px] h-[320px] overflow-hidden p-4">
+
+          <div class="flex h-full">
+
+            <!-- Sidebar -->
+            <div class="w-[120px] rounded-[12px] bg-[#081152] p-4 text-white">
+              <div class="h-[44px] rounded-[10px] bg-[#5b37ff] flex items-center px-4 text-[12px] font-[600]">
+                Dashboard
+              </div>
+
+              <div class="mt-6 flex flex-col gap-4 text-[12px] text-[#cfd4ff]">
+                <div><i class="fa-solid fa-users mr-2"></i> Users</div>
+                <div><i class="fa-solid fa-book mr-2"></i> Courses</div>
+                <div><i class="fa-solid fa-file-lines mr-2"></i> Lessons</div>
+                <div><i class="fa-solid fa-id-card mr-2"></i> Enrollments</div>
+                <div><i class="fa-solid fa-chart-column mr-2"></i> Reports</div>
+                <div><i class="fa-solid fa-gear mr-2"></i> Settings</div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="flex-1 pl-4">
+
+              <div class="grid grid-cols-3 gap-3">
+                <div class="mini-card">
+                  <div class="text-[10px] text-[#7a8399]">Total Users</div>
+                  <div class="text-[28px] font-[700] mt-1">1,245</div>
+                  <div class="text-[10px] text-[#2dbb6b] mt-1">+12% this month</div>
+                </div>
+
+                <div class="mini-card">
+                  <div class="text-[10px] text-[#7a8399]">Total Courses</div>
+                  <div class="text-[28px] font-[700] mt-1">86</div>
+                  <div class="text-[10px] text-[#2dbb6b] mt-1">+8% this month</div>
+                </div>
+
+                <div class="mini-card">
+                  <div class="text-[10px] text-[#7a8399]">Enrollments</div>
+                  <div class="text-[28px] font-[700] mt-1">3,560</div>
+                  <div class="text-[10px] text-[#2dbb6b] mt-1">+15% this month</div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-[1fr_180px] gap-3 mt-4">
+
+                <div class="mini-card relative overflow-hidden">
+                  <div class="text-[12px] font-[600] text-[#475069]">
+                    Enrollment Overview
+                  </div>
+
+                  <svg class="absolute bottom-4 left-3" width="280" height="110">
+                    <polyline
+                      fill="none"
+                      stroke="#5b37ff"
+                      stroke-width="4"
+                      points="0,90 40,70 80,82 120,50 160,60 200,32 240,18 280,8"
+                    />
+                  </svg>
+                </div>
+
+                <div class="mini-card">
+                  <div class="text-[12px] font-[600] text-[#475069]">
+                    Top Courses
+                  </div>
+
+                  <div class="mt-4 flex flex-col gap-3 text-[11px] text-[#525c74]">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-[#5b37ff]"></span>
+                      Web Development
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-[#4e83ff]"></span>
+                      Data Science
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-[#111827]"></span>
+                      UI/UX Design
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-[#b85cff]"></span>
+                      Python Programming
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Plant -->
+        <div class="mb-2">
+          <div class="relative w-[78px] h-[120px]">
+            <div class="absolute bottom-0 left-[18px] w-[42px] h-[56px] bg-[#e9e9ee] rounded-b-[12px] rounded-t-[8px]"></div>
+
+            <div class="absolute bottom-[45px] left-[38px] w-[4px] h-[42px] bg-[#57743b] rounded-full"></div>
+
+            <div class="absolute bottom-[68px] left-[12px] w-[32px] h-[18px] bg-[#7ab54c] rounded-full rotate-[-35deg]"></div>
+            <div class="absolute bottom-[52px] left-[4px] w-[34px] h-[20px] bg-[#6ea941] rounded-full rotate-[15deg]"></div>
+
+            <div class="absolute bottom-[68px] left-[42px] w-[34px] h-[20px] bg-[#8bc45d] rounded-full rotate-[35deg]"></div>
+            <div class="absolute bottom-[48px] left-[48px] w-[32px] h-[18px] bg-[#77b24a] rounded-full rotate-[-10deg]"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="w-[52%] bg-[#f6f6f9] flex items-center justify-center">
+
+      <div class="w-[86%] h-[84%] bg-white rounded-[26px] shadow-[0_10px_40px_rgba(0,0,0,0.04)] px-[78px] pt-[70px]">
+
+        <!-- Top Icon -->
+        <div class="flex justify-center">
+          <div class="w-[120px] h-[120px] rounded-full bg-[#f0ebff] flex items-center justify-center">
+            <div class="w-[72px] h-[72px] rounded-[22px] bg-[#5b37ff] flex items-center justify-center">
+              <i class="fa-solid fa-lock text-white text-[28px]"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Heading -->
+        <div class="text-center mt-10">
+          <h2 class="text-[58px] font-[800] tracking-[-1.5px] text-[#0f1738]">
+            Admin Login
+          </h2>
+
+          <p class="mt-4 text-[24px] text-[#7f89a3] leading-[1.5]">
+            Enter your credentials to access the admin panel
+          </p>
+        </div>
+
+        <!-- Form -->
+        <form id="adminLoginForm" class="mt-14">
+
+          <p data-auth-message class="hidden text-center text-[18px] font-[600] mb-4 text-red-500"></p>
+
+          <!-- Email -->
+          <div>
+            <label class="block text-[22px] font-[700] text-[#161d38] mb-4">
+              Email Address
+            </label>
+
+            <div class="relative">
+              <i class="fa-regular fa-envelope input-icon"></i>
+
+              <input
+                type="email"
+                name="email"
+                required
+                class="input-field"
+                placeholder="Enter your email address"
+              />
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="mt-10">
+            <label class="block text-[22px] font-[700] text-[#161d38] mb-4">
+              Password
+            </label>
+
+            <div class="relative">
+              <i class="fa-solid fa-lock input-icon"></i>
+
+              <input
+                type="password"
+                name="password"
+                required
+                class="input-field"
+                placeholder="Enter your password"
+              />
+
+              <i class="fa-regular fa-eye eye-icon"></i>
+            </div>
+          </div>
+
+          <!-- Remember -->
+          <div class="mt-8 flex items-center justify-between">
+            <label class="flex items-center gap-4 cursor-pointer">
+              <div class="w-[22px] h-[22px] border-2 border-[#a9b0c4] rounded-[4px]"></div>
+
+              <span class="text-[19px] text-[#566079] font-[500]">
+                Remember me
+              </span>
+            </label>
+
+            <button class="text-[19px] font-[600] text-[#5631ff]">
+              Forgot Password?
+            </button>
+          </div>
+
+          <!-- Login -->
+          <button type="submit" class="login-btn mt-10 flex items-center justify-center gap-4">
+            Login
+            <i class="fa-solid fa-right-to-bracket text-[18px]"></i>
+          </button>
+
+          <!-- Divider -->
+          <div class="mt-10 flex items-center gap-5">
+            <div class="flex-1 h-[1px] bg-[#d9dce7]"></div>
+
+            <span class="text-[18px] text-[#7f89a3] font-[500]">or</span>
+
+            <div class="flex-1 h-[1px] bg-[#d9dce7]"></div>
+          </div>
+
+          <!-- SSO -->
+          <button type="button" class="sso-btn mt-10 flex items-center justify-center gap-4">
+            <i class="fa-solid fa-shield-halved text-[18px]"></i>
+            Login with SSO
+          </button>
+
+          <!-- Bottom -->
+          <div class="mt-14 flex items-center justify-center gap-3 text-[#7f89a3]">
+            <i class="fa-solid fa-lock text-[16px]"></i>
+
+            <span class="text-[18px]">
+              Secure admin access to Edunova - Smart Learning
+            </span>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+<script src="../../assets/js/api.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/layout.js"></script>
+</body>
+</html>

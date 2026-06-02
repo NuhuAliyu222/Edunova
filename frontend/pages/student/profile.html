@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edunova - Smart Learning Profile Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+  <link rel="stylesheet" href="../../assets/css/global.css"/>
+  <link rel="stylesheet" href="../../assets/css/animation.css"/>
+  <link rel="stylesheet" href="../../assets/css/responsive.css"/>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:'Outfit',sans-serif;
+      background:#f6f5fb;
+      color:#111827;
+      overflow-x:hidden;
+    }
+
+    .dashboard{
+      display:flex;
+      min-height:100vh;
+      width:100%;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar{
+      width:255px;
+      background:linear-gradient(180deg,#24157e 0%,#17105f 100%);
+      padding:24px 16px;
+      color:#fff;
+      position:fixed;
+      top:0;
+      left:0;
+      bottom:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:0 10px;
+      margin-bottom:38px;
+    }
+
+    .logo i{
+      font-size:34px;
+    }
+
+    .logo h2{
+      font-size:18px;
+      line-height:1.25;
+      font-weight:700;
+    }
+
+    .menu{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .menu-item{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      color:#fff;
+      text-decoration:none;
+      padding:14px 16px;
+      border-radius:14px;
+      font-size:16px;
+      font-weight:500;
+      transition:0.2s;
+    }
+
+    .menu-item i{
+      width:24px;
+      font-size:20px;
+    }
+
+    .menu-item.active{
+      background:#ffffff;
+      color:#5c3dff;
+    }
+
+    .upgrade-card{
+      background:#ffffff;
+      border-radius:20px;
+      padding:24px 18px;
+      color:#161616;
+      margin-top:20px;
+    }
+
+    .upgrade-card img{
+      width:120px;
+      display:block;
+      margin:0 auto 12px;
+    }
+
+    .upgrade-card h3{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:10px;
+      line-height:1.4;
+    }
+
+    .upgrade-card p{
+      font-size:15px;
+      line-height:1.7;
+      color:#5f6473;
+      margin-bottom:18px;
+    }
+
+    .upgrade-btn{
+      background:#5d35ff;
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      padding:12px 18px;
+      font-size:15px;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    /* MAIN */
+
+    .main{
+      margin-left:255px;
+      width:calc(100% - 255px);
+    }
+
+    /* TOPBAR */
+
+    .topbar{
+      height:82px;
+      background:#fff;
+      border-bottom:1px solid #ececf4;
+      padding:0 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .top-left{
+      display:flex;
+      align-items:center;
+      gap:28px;
+    }
+
+    .menu-toggle{
+      font-size:28px;
+      color:#4b4b66;
+    }
+
+    .search-box{
+      width:435px;
+      height:44px;
+      border:1px solid #e7e7f1;
+      border-radius:12px;
+      padding:0 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .search-box input{
+      width:100%;
+      border:none;
+      outline:none;
+      font-family:'Outfit',sans-serif;
+      font-size:16px;
+      color:#4b4b66;
+    }
+
+    .search-box i{
+      color:#6a6a86;
+      font-size:18px;
+    }
+
+    .top-right{
+      display:flex;
+      align-items:center;
+      gap:28px;
+    }
+
+    .notification{
+      position:relative;
+      font-size:24px;
+      color:#2c2c4d;
+    }
+
+    .badge{
+      position:absolute;
+      top:-6px;
+      right:-8px;
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      background:#ff4c5b;
+      color:#fff;
+      font-size:10px;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .profile-mini{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .profile-mini img{
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      object-fit:cover;
+    }
+
+    .mini-text h4{
+      font-size:16px;
+      font-weight:700;
+      margin-bottom:2px;
+    }
+
+    .mini-text p{
+      color:#6b6f82;
+      font-size:14px;
+    }
+
+    .dropdown{
+      color:#4f4f67;
+      margin-left:8px;
+    }
+
+    /* CONTENT */
+
+    .content{
+      padding:18px;
+      display:grid;
+      grid-template-columns:1fr 420px;
+      gap:16px;
+    }
+
+    .left-section{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .page-title{
+      margin-bottom:4px;
+    }
+
+    .page-title h1{
+      font-size:30px;
+      font-weight:800;
+      margin-bottom:4px;
+      color:#12172a;
+    }
+
+    .page-title p{
+      color:#5e6475;
+      font-size:16px;
+    }
+
+    /* PROFILE HERO */
+
+    .profile-hero{
+      background:#f1edff;
+      border-radius:16px;
+      padding:26px 30px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:relative;
+      overflow:hidden;
+      border:1px solid #ece9ff;
+    }
+
+    .dots{
+      position:absolute;
+      right:60px;
+      top:24px;
+      display:grid;
+      grid-template-columns:repeat(6,8px);
+      gap:8px;
+      opacity:0.35;
+    }
+
+    .dots span{
+      width:5px;
+      height:5px;
+      border-radius:50%;
+      background:#8b78ff;
+    }
+
+    .hero-left{
+      display:flex;
+      align-items:center;
+      gap:34px;
+    }
+
+    .avatar-wrapper{
+      position:relative;
+    }
+
+    .avatar{
+      width:156px;
+      height:156px;
+      border-radius:50%;
+      object-fit:cover;
+    }
+
+    .camera{
+      position:absolute;
+      bottom:10px;
+      right:-2px;
+      width:40px;
+      height:40px;
+      border-radius:12px;
+      background:#fff;
+      box-shadow:0 10px 20px rgba(0,0,0,0.08);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#5d35ff;
+      font-size:18px;
+    }
+
+    .hero-info h2{
+      font-size:26px;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .student-tag{
+      background:#e8dcff;
+      color:#5d35ff;
+      font-size:14px;
+      font-weight:600;
+      padding:5px 10px;
+      border-radius:8px;
+      margin-left:10px;
+      vertical-align:middle;
+    }
+
+    .hero-info ul{
+      list-style:none;
+      margin-top:18px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .hero-info li{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      color:#5e6475;
+      font-size:16px;
+    }
+
+    .hero-info li i{
+      width:18px;
+      color:#555c73;
+    }
+
+    .edit-btn{
+      border:2px solid #6b4eff;
+      background:#fff;
+      color:#5d35ff;
+      height:40px;
+      padding:0 18px;
+      border-radius:10px;
+      font-size:15px;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      cursor:pointer;
+      margin-top:85px;
+    }
+
+    /* TABS */
+
+    .tabs-container{
+      background:#fff;
+      border-radius:16px;
+      border:1px solid #ececf4;
+      overflow:hidden;
+    }
+
+    .tabs{
+      display:flex;
+      align-items:center;
+      gap:44px;
+      padding:0 28px;
+      border-bottom:1px solid #ececf4;
+      height:58px;
+    }
+
+    .tab{
+      height:100%;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#50556c;
+      font-size:16px;
+      font-weight:500;
+      position:relative;
+      cursor:pointer;
+    }
+
+    .tab.active{
+      color:#5d35ff;
+      font-weight:600;
+    }
+
+    .tab.active::after{
+      content:'';
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:100%;
+      height:3px;
+      background:#5d35ff;
+      border-radius:10px;
+    }
+
+    /* FORM */
+
+    .form-area{
+      padding:24px;
+    }
+
+    .form-area h3{
+      font-size:18px;
+      font-weight:700;
+      color:#15305d;
+      margin-bottom:20px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px 22px;
+    }
+
+    .form-group{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .form-group.full{
+      grid-column:1/3;
+    }
+
+    .form-group label{
+      font-size:15px;
+      font-weight:600;
+      color:#111827;
+    }
+
+    .input{
+      width:100%;
+      height:40px;
+      border:1px solid #dfe2ec;
+      border-radius:8px;
+      padding:0 14px;
+      font-size:15px;
+      color:#444;
+      font-family:'Outfit',sans-serif;
+      outline:none;
+      background:#fff;
+    }
+
+    .input-icon{
+      position:relative;
+    }
+
+    .input-icon i{
+      position:absolute;
+      right:14px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#6b6f82;
+      font-size:14px;
+    }
+
+    textarea.input{
+      height:78px;
+      resize:none;
+      padding-top:10px;
+      line-height:1.6;
+    }
+
+    .save-btn{
+      margin-top:16px;
+      width:120px;
+      height:40px;
+      border:none;
+      background:#5d35ff;
+      color:#fff;
+      border-radius:8px;
+      font-size:15px;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    /* RIGHT */
+
+    .right-section{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:16px;
+      border:1px solid #ececf4;
+      padding:22px;
+    }
+
+    .card h3{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:18px;
+      color:#12172a;
+    }
+
+    /* STATS */
+
+    .stats-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .stat-box{
+      border:1px solid #ececf4;
+      border-radius:12px;
+      padding:16px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .stat-icon{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+    }
+
+    .purple-bg{
+      background:#efe7ff;
+      color:#7a49ff;
+    }
+
+    .green-bg{
+      background:#e5f7ec;
+      color:#22c55e;
+    }
+
+    .orange-bg{
+      background:#fff2df;
+      color:#f59e0b;
+    }
+
+    .blue-bg{
+      background:#e8efff;
+      color:#3b82f6;
+    }
+
+    .stat-info h2{
+      font-size:18px;
+      font-weight:800;
+      margin-bottom:3px;
+    }
+
+    .stat-info p{
+      font-size:13px;
+      color:#62697a;
+    }
+
+    /* ACHIEVEMENTS */
+
+    .header-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:18px;
+    }
+
+    .view{
+      color:#5d35ff;
+      font-size:15px;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .achievement{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 0;
+      border-top:1px solid #f0f0f5;
+    }
+
+    .achievement:first-of-type{
+      border-top:none;
+      padding-top:0;
+    }
+
+    .ach-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .ach-icon{
+      width:52px;
+      height:52px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+    }
+
+    .ach-purple{
+      background:#efe7ff;
+      color:#7a49ff;
+    }
+
+    .ach-green{
+      background:#e8faef;
+      color:#22c55e;
+    }
+
+    .ach-orange{
+      background:#fff1de;
+      color:#f59e0b;
+    }
+
+    .ach-info h4{
+      font-size:16px;
+      font-weight:700;
+      margin-bottom:4px;
+    }
+
+    .ach-info p{
+      font-size:14px;
+      color:#63697b;
+    }
+
+    .ach-date{
+      font-size:14px;
+      color:#63697b;
+    }
+
+    /* CONNECT */
+
+    .connect-text{
+      color:#61687a;
+      font-size:15px;
+      margin-bottom:18px;
+      line-height:1.7;
+    }
+
+    .connect-buttons{
+      display:flex;
+      gap:16px;
+    }
+
+    .connect-btn{
+      flex:1;
+      height:44px;
+      border:1px solid #dfe3ec;
+      border-radius:10px;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      font-size:15px;
+      font-weight:500;
+      color:#1f2937;
+      cursor:pointer;
+    }
+
+    .google{
+      color:#ea4335;
+    }
+
+    .facebook{
+      color:#1877f2;
+    }
+
+    @media(max-width:1400px){
+
+      .content{
+        grid-template-columns:1fr;
+      }
+
+      .right-section{
+        width:100%;
+      }
+    }
+
+    @media(max-width:1100px){
+
+      .sidebar{
+        display:none;
+      }
+
+      .main{
+        margin-left:0;
+        width:100%;
+      }
+    }
+
+    @media(max-width:900px){
+
+      .profile-hero{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+      }
+
+      .hero-left{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .edit-btn{
+        margin-top:0;
+      }
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .form-group.full{
+        grid-column:auto;
+      }
+
+      .tabs{
+        overflow:auto;
+        white-space:nowrap;
+      }
+
+      .stats-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:768px){
+
+      .topbar{
+        height:auto;
+        padding:20px;
+        flex-direction:column;
+        gap:20px;
+      }
+
+      .top-left,
+      .top-right{
+        width:100%;
+      }
+
+      .search-box{
+        width:100%;
+      }
+
+      .content{
+        padding:14px;
+      }
+
+      .connect-buttons{
+        flex-direction:column;
+      }
+    }
+
+  </style>
+</head>
+
+<body data-auth-guard="student">
+
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar" id="sidebar">
+
+    <div>
+
+      <div class="logo">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <h2>Edunova<br>Smart Learning</h2>
+      </div>
+
+      <nav class="menu" aria-label="Student main menu">
+
+        <a href="dashboard.html" class="menu-item">
+          <i class="fa-solid fa-house"></i>
+          Dashboard
+        </a>
+
+        <a href="courses.html" class="menu-item">
+          <i class="fa-solid fa-book-open"></i>
+          My Courses
+        </a>
+
+        <a href="courses.html" class="menu-item">
+          <i class="fa-solid fa-play-circle"></i>
+          Lessons
+        </a>
+
+        <a href="quiz.html" class="menu-item">
+          <i class="fa-solid fa-question-circle"></i>
+          Quizzes
+        </a>
+
+        <a href="profile.html" class="menu-item">
+          <i class="fa-solid fa-chart-line"></i>
+          My Progress
+        </a>
+
+        <a href="profile.html#certificates" class="menu-item">
+          <i class="fa-solid fa-certificate"></i>
+          Certificates
+        </a>
+
+        <a href="courses.html#bookmarks" class="menu-item">
+          <i class="fa-regular fa-bookmark"></i>
+          Bookmarks
+        </a>
+
+        <a href="profile.html#messages" class="menu-item">
+          <i class="fa-regular fa-envelope"></i>
+          Messages
+        </a>
+
+        <a href="profile.html" class="menu-item active">
+          <i class="fa-regular fa-user"></i>
+          Profile
+        </a>
+
+        <a href="profile.html#settings" class="menu-item">
+          <i class="fa-solid fa-gear"></i>
+          Settings
+        </a>
+
+        <a href="login.html" class="menu-item" data-logout style="margin-top:10px;">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          Logout
+        </a>
+
+      </nav>
+
+    </div>
+
+    <div class="upgrade-card">
+
+      <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="rocket">
+
+      <h3>Upgrade Your Learning</h3>
+
+      <p>
+        Unlock premium courses, certificates and more benefits.
+      </p>
+
+      <button class="upgrade-btn">
+        Upgrade Now
+      </button>
+
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+      <div class="top-left">
+
+        <div class="menu-toggle">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <div class="search-box">
+          <input type="text" placeholder="Search for courses, lessons...">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+      </div>
+
+      <div class="top-right">
+
+        <div class="notification">
+          <i class="fa-regular fa-bell"></i>
+          <div class="badge">3</div>
+        </div>
+
+        <div class="profile-mini">
+
+          <img src="https://i.pravatar.cc/150?img=12" alt="">
+
+          <div class="mini-text">
+            <h4>John Doe</h4>
+            <p>Student</p>
+          </div>
+
+          <div class="dropdown">
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CONTENT -->
+
+    <div class="content">
+
+      <!-- LEFT -->
+
+      <div class="left-section">
+
+        <div class="page-title" id="messages">
+          <h1>My Profile</h1>
+          <p>Manage your personal information and learning journey.</p>
+        </div>
+
+        <!-- HERO -->
+
+        <div class="profile-hero">
+
+          <div class="dots">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+
+          <div class="hero-left">
+
+            <div class="avatar-wrapper">
+
+              <img
+                class="avatar"
+                src="https://i.pravatar.cc/300?img=12"
+                alt=""
+              >
+
+              <div class="camera">
+                <i class="fa-solid fa-camera"></i>
+              </div>
+
+            </div>
+
+            <div class="hero-info">
+
+              <h2>
+                John Doe
+                <span class="student-tag">Student</span>
+              </h2>
+
+              <ul>
+
+                <li>
+                  <i class="fa-regular fa-envelope"></i>
+                  john.doe@example.com
+                </li>
+
+                <li>
+                  <i class="fa-solid fa-phone"></i>
+                  +1 234 567 8900
+                </li>
+
+                <li>
+                  <i class="fa-solid fa-location-dot"></i>
+                  New York, USA
+                </li>
+
+                <li>
+                  <i class="fa-regular fa-calendar"></i>
+                  Joined on Jan 15, 2024
+                </li>
+
+              </ul>
+
+            </div>
+
+          </div>
+
+          <button class="edit-btn">
+            <i class="fa-solid fa-pen"></i>
+            Edit Profile
+          </button>
+
+        </div>
+
+
+<!-- Certificates Section - Add to profile.html -->
+<div class="card" id="certificatesSection">
+  <div class="header-row">
+    <h3>🏆 My Certificates</h3>
+    <div class="view" onclick="refreshCertificates()">Refresh</div>
+  </div>
+  <div id="certificatesList"></div>
+</div>
+
+<script>
+async function loadCertificates() {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch('/backend/routes/api.php?action=getUserCertificates', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const result = await response.json();
+    
+    if (result.success && result.data && result.data.length > 0) {
+      const container = document.getElementById('certificatesList');
+      container.innerHTML = result.data.map(cert => `
+        <div class="achievement" onclick="window.location.href='certificate.html?id=${cert.id}'" style="cursor:pointer">
+          <div class="ach-left">
+            <div class="ach-icon ach-purple">
+              <i class="fa-solid fa-certificate"></i>
+            </div>
+            <div class="ach-info">
+              <h4>${cert.course_title}</h4>
+              <p>Issued: ${new Date(cert.issued_at).toLocaleDateString()}</p>
+            </div>
+          </div>
+          <div class="ach-date">
+            <i class="fa-solid fa-download"></i> View
+          </div>
+        </div>
+      `).join('');
+    } else {
+      document.getElementById('certificatesList').innerHTML = '<p style="text-align:center;color:#8b93ad;padding:20px">No certificates yet. Complete courses to earn certificates!</p>';
+    }
+  } catch (error) {
+    console.error('Error loading certificates:', error);
+  }
+}
+
+function refreshCertificates() {
+  loadCertificates();
+}
+
+document.addEventListener('DOMContentLoaded', loadCertificates);
+</script>
+        
+
+        <!-- TABS -->
+
+        <div class="tabs-container">
+
+          <div class="tabs">
+
+            <div class="tab active">
+              <i class="fa-regular fa-user"></i>
+              Overview
+            </div>
+
+            <div class="tab">
+              <i class="fa-solid fa-book-open"></i>
+              Courses
+            </div>
+
+            <div class="tab" id="certificates">
+              <i class="fa-regular fa-id-badge"></i>
+              Certificates
+            </div>
+
+            <div class="tab">
+              <i class="fa-solid fa-trophy"></i>
+              Achievements
+            </div>
+
+            <div class="tab">
+              <i class="fa-regular fa-clock"></i>
+              Activity
+            </div>
+
+          </div>
+
+          <!-- FORM -->
+
+          <div class="form-area" id="settings">
+
+            <h3>Personal Information</h3>
+
+            <div class="form-grid">
+
+              <div class="form-group">
+                <label>Full Name</label>
+                <input class="input" type="text" value="John Doe">
+              </div>
+
+              <div class="form-group">
+                <label>Username</label>
+                <input class="input" type="text" value="johndoe123">
+              </div>
+
+              <div class="form-group">
+                <label>Email Address</label>
+                <input class="input" type="email" value="john.doe@example.com">
+              </div>
+
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input class="input" type="text" value="+1 234 567 8900">
+              </div>
+
+              <div class="form-group">
+                <label>Date of Birth</label>
+
+                <div class="input-icon">
+                  <input class="input" type="text" value="May 15, 2000">
+                  <i class="fa-regular fa-calendar"></i>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Gender</label>
+
+                <div class="input-icon">
+                  <input class="input" type="text" value="Male">
+                  <i class="fa-solid fa-chevron-down"></i>
+                </div>
+
+              </div>
+
+              <div class="form-group full">
+                <label>Location</label>
+                <input class="input" type="text" value="New York, USA">
+              </div>
+
+              <div class="form-group full">
+                <label>Bio</label>
+
+                <textarea class="input">Enthusiastic learner with a passion for web development and technology.
+Always exploring new concepts and improving my skills.</textarea>
+              </div>
+
+            </div>
+
+            <button class="save-btn">
+              Save Changes
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="right-section">
+
+        <!-- STATS -->
+
+        <div class="card">
+
+          <h3>Learning Stats</h3>
+
+          <div class="stats-grid">
+
+            <div class="stat-box">
+
+              <div class="stat-icon purple-bg">
+                <i class="fa-solid fa-book-open"></i>
+              </div>
+
+              <div class="stat-info">
+                <h2>4</h2>
+                <p>Enrolled Courses</p>
+              </div>
+
+            </div>
+
+            <div class="stat-box">
+
+              <div class="stat-icon green-bg">
+                <i class="fa-regular fa-circle-check"></i>
+              </div>
+
+              <div class="stat-info">
+                <h2>12</h2>
+                <p>Completed Lessons</p>
+              </div>
+
+            </div>
+
+            <div class="stat-box">
+
+              <div class="stat-icon orange-bg">
+                <i class="fa-solid fa-trophy"></i>
+              </div>
+
+              <div class="stat-info">
+                <h2>85%</h2>
+                <p>Average Score</p>
+              </div>
+
+            </div>
+
+            <div class="stat-box">
+
+              <div class="stat-icon blue-bg">
+                <i class="fa-regular fa-clock"></i>
+              </div>
+
+              <div class="stat-info">
+                <h2>28h 30m</h2>
+                <p>Time Spent</p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ACHIEVEMENTS -->
+
+        <div class="card">
+
+          <div class="header-row">
+            <h3>Recent Achievements</h3>
+            <div class="view">View All</div>
+          </div>
+
+          <div class="achievement">
+
+            <div class="ach-left">
+
+              <div class="ach-icon ach-purple">
+                <i class="fa-solid fa-shield"></i>
+              </div>
+
+              <div class="ach-info">
+                <h4>Quiz Master</h4>
+                <p>Score 100% in 5 quizzes</p>
+              </div>
+
+            </div>
+
+            <div class="ach-date">
+              May 10, 2024
+            </div>
+
+          </div>
+
+          <div class="achievement">
+
+            <div class="ach-left">
+
+              <div class="ach-icon ach-green">
+                <i class="fa-solid fa-star"></i>
+              </div>
+
+              <div class="ach-info">
+                <h4>Consistent Learner</h4>
+                <p>Learn for 7 consecutive days</p>
+              </div>
+
+            </div>
+
+            <div class="ach-date">
+              Apr 28, 2024
+            </div>
+
+          </div>
+
+          <div class="achievement">
+
+            <div class="ach-left">
+
+              <div class="ach-icon ach-orange">
+                <i class="fa-solid fa-award"></i>
+              </div>
+
+              <div class="ach-info">
+                <h4>First Certificate</h4>
+                <p>Earn your first certificate</p>
+              </div>
+
+            </div>
+
+            <div class="ach-date">
+              Apr 15, 2024
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- CONNECT -->
+
+        <div class="card">
+
+          <h3>Connected Accounts</h3>
+
+          <p class="connect-text">
+            Connect your accounts to enhance your learning experience.
+          </p>
+
+          <div class="connect-buttons">
+
+            <button class="connect-btn">
+              <i class="fa-brands fa-google google"></i>
+              Connect Google
+            </button>
+
+            <button class="connect-btn">
+              <i class="fa-brands fa-facebook facebook"></i>
+              Connect Facebook
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+<script src="../../assets/js/api.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/sidebar.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/layout.js"></script>
+</body>
+</html>

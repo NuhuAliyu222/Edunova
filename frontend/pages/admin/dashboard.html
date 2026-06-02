@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edunova - Smart Learning  Dashboard</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+  <link rel="stylesheet" href="../../assets/css/global.css"/>
+  <link rel="stylesheet" href="../../assets/css/animation.css"/>
+  <link rel="stylesheet" href="../../assets/css/responsive.css"/>
+
+  <style>
+    * {
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      background: #f5f6fb;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      background:
+        radial-gradient(circle at top left, rgba(95, 75, 255, 0.08), transparent 28%),
+        linear-gradient(180deg, #050f59 0%, #08114f 100%);
+    }
+
+    .menu-item {
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 18px;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .menu-item.active {
+      background: linear-gradient(90deg, #5631ff 0%, #4f2af4 100%);
+      box-shadow: 0 8px 20px rgba(90, 55, 255, 0.35);
+    }
+
+    .menu-item i {
+      width: 20px;
+      font-size: 18px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #ececf4;
+      border-radius: 18px;
+    }
+
+    .stat-card {
+      height: 158px;
+      padding: 26px;
+    }
+
+    .purple-gradient {
+      background: linear-gradient(180deg, #673fff 0%, #4a27f2 100%);
+    }
+
+    .chart-line-1 {
+      fill: none;
+      stroke: #5631ff;
+      stroke-width: 3;
+    }
+
+    .chart-line-2 {
+      fill: none;
+      stroke: #cfd2df;
+      stroke-width: 3;
+    }
+
+    .progress-bg {
+      background: #ececf4;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, #5a35ff 0%, #4e2cf3 100%);
+    }
+
+    .scroll-hidden::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+
+<body class="w-screen h-screen" data-auth-guard="admin">
+
+  <div class="flex w-full h-full">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar w-[255px] h-full text-white relative">
+
+      <!-- Logo -->
+      <div class="px-7 pt-7 flex items-start gap-4">
+        <div class="w-[42px] h-[42px] rounded-xl bg-[#5a35ff] flex items-center justify-center">
+          <i class="fa-solid fa-graduation-cap text-white text-[18px]"></i>
+        </div>
+
+        <div class="leading-tight">
+          <div class="text-[18px] font-[700]">Edunova</div>
+          <div class="text-[18px] font-[700]">- Smart Learning</div>
+        </div>
+      </div>
+
+      <!-- Menu -->
+      <nav class="mt-12 px-4 flex flex-col gap-3" aria-label="Admin main menu">
+
+        <a href="dashboard.html" class="menu-item active">
+          <i class="fa-solid fa-house"></i>
+          Dashboard
+        </a>
+
+        <a href="manage students.html" class="menu-item justify-between">
+          <span class="flex items-center gap-4">
+            <i class="fa-regular fa-user"></i>
+            Users
+          </span>
+
+          <i class="fa-solid fa-angle-down text-[13px]"></i>
+        </a>
+
+        <a href="manage courses.html" class="menu-item">
+          <i class="fa-solid fa-book-open"></i>
+          Courses
+        </a>
+
+        <a href="upload lessons.html" class="menu-item">
+          <i class="fa-regular fa-circle-play"></i>
+          Lessons
+        </a>
+
+        <a href="managa quiz.html" class="menu-item">
+          <i class="fa-regular fa-circle-question"></i>
+          Quizzes
+        </a>
+
+        <a href="dashboard.html#enrollments" class="menu-item">
+          <i class="fa-solid fa-graduation-cap"></i>
+          Enrollments
+        </a>
+
+        <a href="dashboard.html#certificates" class="menu-item">
+          <i class="fa-regular fa-id-badge"></i>
+          Certificates
+        </a>
+
+        <a href="dashboard.html#categories" class="menu-item">
+          <i class="fa-solid fa-table-cells-large"></i>
+          Categories
+        </a>
+
+        <a href="dashboard.html#reports" class="menu-item justify-between">
+          <span class="flex items-center gap-4">
+            <i class="fa-solid fa-chart-simple"></i>
+            Reports
+          </span>
+
+          <i class="fa-solid fa-angle-down text-[13px]"></i>
+        </a>
+
+        <a href="dashboard.html#announcements" class="menu-item">
+          <i class="fa-solid fa-bullhorn"></i>
+          Announcements
+        </a>
+
+        <a href="dashboard.html#settings" class="menu-item">
+          <i class="fa-solid fa-gear"></i>
+          Settings
+        </a>
+
+        <a href="dashboard.html#system-settings" class="menu-item">
+          <i class="fa-solid fa-shield-halved"></i>
+          System Settings
+        </a>
+
+        <a href="login.html" class="menu-item">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          Logout
+        </a>
+
+      </nav>
+
+      <!-- Status Card -->
+      <div class="absolute left-4 right-4 bottom-5 rounded-[18px] bg-[#131d67] border border-[#1b277a] p-6">
+
+        <div class="flex justify-center">
+          <div class="relative w-[120px] h-[90px]">
+            <div class="absolute left-[20px] top-[42px] w-[80px] h-[24px] bg-[#251f83] rounded-full blur-xl"></div>
+
+            <div class="absolute left-[26px] top-[16px] w-[68px] h-[68px] rounded-[24px] purple-gradient flex items-center justify-center shadow-[0_10px_30px_rgba(93,60,255,0.5)]">
+              <i class="fa-solid fa-shield text-white text-[30px]"></i>
+            </div>
+
+            <div class="absolute left-[6px] top-[52px] w-[18px] h-[18px] bg-[#2f2b88] rounded-md"></div>
+            <div class="absolute right-[6px] top-[52px] w-[18px] h-[18px] bg-[#2f2b88] rounded-md"></div>
+          </div>
+        </div>
+
+        <div class="mt-5 text-[16px] font-[700]">
+          System Status
+        </div>
+
+        <div class="mt-4 flex items-center gap-3 text-[15px] text-[#ffffff]">
+          <div class="w-[8px] h-[8px] rounded-full bg-[#24d164]"></div>
+          All Systems Operational
+        </div>
+
+        <div class="mt-7 text-[#6d5cff] text-[15px] font-[500] flex items-center gap-2">
+          View System Health
+          <i class="fa-solid fa-arrow-right text-[12px]"></i>
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="flex-1 h-full overflow-hidden">
+
+      <!-- TOPBAR -->
+      <div class="h-[80px] bg-white border-b border-[#ececf4] px-8 flex items-center justify-between">
+
+        <div class="flex items-center gap-8">
+
+          <button class="text-[#42507a] text-[28px]">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="relative">
+            <input
+              type="text"
+              placeholder="Search for users, courses, quizzes..."
+              class="w-[520px] h-[44px] rounded-[12px] border border-[#dfe3f0] pl-5 pr-14 text-[16px] outline-none"
+            />
+
+            <i class="fa-solid fa-magnifying-glass absolute right-5 top-1/2 -translate-y-1/2 text-[#64708e]"></i>
+          </div>
+
+        </div>
+
+        <div class="flex items-center gap-7">
+
+          <div class="relative">
+            <i class="fa-regular fa-bell text-[24px] text-[#2f3d66]"></i>
+
+            <div class="absolute -top-2 -right-2 w-[22px] h-[22px] rounded-full bg-[#ff3b3b] text-white text-[11px] font-[700] flex items-center justify-center border-2 border-white">
+              3
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4">
+
+            <div class="w-[44px] h-[44px] rounded-full bg-gradient-to-br from-[#ffcf9d] to-[#8b5a3b] border-[3px] border-[#4f2af4]"></div>
+
+            <div>
+              <div class="text-[18px] font-[700] text-[#111827]">
+                Admin User
+              </div>
+
+              <div class="text-[14px] text-[#6f7894] mt-[2px]">
+                Super Admin
+              </div>
+            </div>
+
+            <i class="fa-solid fa-angle-down text-[#4b5574] text-[14px] ml-2"></i>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- CONTENT -->
+      <div class="h-[calc(100%-80px)] overflow-y-auto scroll-hidden px-7 py-7">
+
+        <!-- Header -->
+        <div class="flex items-start justify-between">
+
+          <div>
+            <h1 class="text-[48px] leading-none font-[800] text-[#0f172e] tracking-[-1px]">
+              Welcome back, Admin! 👋
+            </h1>
+
+            <p class="mt-5 text-[22px] text-[#667089]">
+              Here's what's happening with your learning platform today.
+            </p>
+          </div>
+
+          <button class="w-[295px] h-[58px] rounded-[14px] bg-white border border-[#e6e8f0] flex items-center justify-between px-6 text-[#384561] text-[20px]">
+            <div class="flex items-center gap-4">
+              <i class="fa-regular fa-calendar"></i>
+              May 12 – May 18, 2024
+            </div>
+
+            <i class="fa-solid fa-angle-down text-[14px]"></i>
+          </button>
+
+        </div>
+
+        <!-- STATS -->
+        <div class="grid grid-cols-5 gap-5 mt-8">
+
+          <!-- Card -->
+          <div class="card stat-card flex items-start gap-5">
+
+            <div class="w-[62px] h-[62px] rounded-full bg-[#ede7ff] flex items-center justify-center">
+              <i class="fa-regular fa-user text-[#5b35ff] text-[28px]"></i>
+            </div>
+
+            <div>
+              <div class="text-[15px] text-[#55607b] font-[600]">
+                Total Users
+              </div>
+
+              <div id="totalStudents" class="mt-1 text-[28px] font-[800] text-[#0f172e]">
+                0
+              </div>
+
+              <div class="mt-2 text-[#20b15a] text-[14px]">
+                ↑ 12.5% from last week
+              </div>
+            </div>
+
+          </div>
+
+          <div class="card stat-card flex items-start gap-5">
+
+            <div class="w-[62px] h-[62px] rounded-full bg-[#e8f1ff] flex items-center justify-center">
+              <i class="fa-regular fa-bookmark text-[#4584ff] text-[28px]"></i>
+            </div>
+
+            <div>
+              <div class="text-[15px] text-[#55607b] font-[600]">
+                Total Courses
+              </div>
+
+              <div id="totalCourses" class="mt-1 text-[28px] font-[800] text-[#0f172e]">
+                0
+              </div>
+
+              <div class="mt-2 text-[#20b15a] text-[14px]">
+                ↑ 8.4% from last week
+              </div>
+            </div>
+
+          </div>
+
+          <div class="card stat-card flex items-start gap-5">
+
+            <div class="w-[62px] h-[62px] rounded-full bg-[#e6f7ed] flex items-center justify-center">
+              <i class="fa-solid fa-graduation-cap text-[#38b86d] text-[28px]"></i>
+            </div>
+
+            <div>
+              <div class="text-[15px] text-[#55607b] font-[600]">
+                Total Enrollments
+              </div>
+
+              <div id="totalEnrollments" class="mt-1 text-[28px] font-[800] text-[#0f172e]">
+                0
+              </div>
+
+              <div class="mt-2 text-[#20b15a] text-[14px]">
+                ↑ 15.3% from last week
+              </div>
+            </div>
+
+          </div>
+
+          <div class="card stat-card flex items-start gap-5">
+
+            <div class="w-[62px] h-[62px] rounded-full bg-[#fff3e2] flex items-center justify-center">
+              <i class="fa-regular fa-clipboard text-[#ff9f2e] text-[28px]"></i>
+            </div>
+
+            <div>
+              <div class="text-[15px] text-[#55607b] font-[600]">
+                Total Quizzes
+              </div>
+
+              <div id="totalQuizzes" class="mt-1 text-[28px] font-[800] text-[#0f172e]">
+                0
+              </div>
+
+              <div class="mt-2 text-[#20b15a] text-[14px]">
+                ↑ 6.7% from last week
+              </div>
+            </div>
+
+          </div>
+
+          <div class="card stat-card flex items-start gap-5">
+
+            <div class="w-[62px] h-[62px] rounded-full bg-[#eee8ff] flex items-center justify-center">
+              <i class="fa-regular fa-id-card text-[#6b3dff] text-[28px]"></i>
+            </div>
+
+            <div>
+              <div class="text-[15px] text-[#55607b] font-[600]">
+                Certificates Issued
+              </div>
+
+              <div id="totalCertificates" class="mt-1 text-[28px] font-[800] text-[#0f172e]">
+                0
+              </div>
+
+              <div class="mt-2 text-[#20b15a] text-[14px]">
+                ↑ 10.1% from last week
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ROW 2 -->
+        <div class="grid grid-cols-[2fr_1.4fr_1.15fr] gap-5 mt-5">
+
+          <!-- Enrollments -->
+          <div class="card p-6 h-[385px]">
+
+            <div class="flex items-center justify-between">
+
+              <div class="text-[18px] font-[700] text-[#111827]">
+                Enrollments Overview
+              </div>
+
+              <button class="w-[86px] h-[38px] rounded-[10px] border border-[#e7e9f1] text-[14px] font-[600] text-[#3e4965]">
+                Weekly
+                <i class="fa-solid fa-angle-down ml-2 text-[11px]"></i>
+              </button>
+
+            </div>
+
+            <div class="mt-7 flex items-center gap-8 text-[14px]">
+              <div class="flex items-center gap-3 text-[#5a35ff]">
+                <div class="w-[9px] h-[9px] rounded-full bg-[#5a35ff]"></div>
+                This Week
+              </div>
+
+              <div class="flex items-center gap-3 text-[#b9becf]">
+                <div class="w-[9px] h-[9px] rounded-full bg-[#d6d9e4]"></div>
+                Last Week
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <svg width="100%" height="235" viewBox="0 0 760 235">
+
+                <!-- Grid -->
+                <line x1="50" y1="30" x2="730" y2="30" stroke="#edf0f7"/>
+                <line x1="50" y1="80" x2="730" y2="80" stroke="#edf0f7"/>
+                <line x1="50" y1="130" x2="730" y2="130" stroke="#edf0f7"/>
+                <line x1="50" y1="180" x2="730" y2="180" stroke="#edf0f7"/>
+
+                <!-- Purple -->
+                <polyline
+                  class="chart-line-1"
+                  points="50,170 120,110 190,85 260,105 330,45 400,105 470,60 540,78 610,38 680,60"
+                />
+
+                <!-- Gray -->
+                <polyline
+                  class="chart-line-2"
+                  points="50,130 120,138 190,125 260,110 330,112 400,110 470,125 540,105 610,75 680,45"
+                />
+
+                <!-- Dots -->
+                <g fill="#5a35ff">
+                  <circle cx="50" cy="170" r="4"/>
+                  <circle cx="120" cy="110" r="4"/>
+                  <circle cx="190" cy="85" r="4"/>
+                  <circle cx="260" cy="105" r="4"/>
+                  <circle cx="330" cy="45" r="4"/>
+                  <circle cx="400" cy="105" r="4"/>
+                  <circle cx="470" cy="60" r="4"/>
+                  <circle cx="540" cy="78" r="4"/>
+                  <circle cx="610" cy="38" r="4"/>
+                  <circle cx="680" cy="60" r="4"/>
+                </g>
+
+                <!-- Labels -->
+                <g fill="#68728f" font-size="12">
+                  <text x="35" y="185">0</text>
+                  <text x="22" y="135">250</text>
+                  <text x="22" y="85">500</text>
+                  <text x="22" y="35">750</text>
+
+                  <text x="35" y="215">May 12</text>
+                  <text x="110" y="215">May 13</text>
+                  <text x="180" y="215">May 14</text>
+                  <text x="250" y="215">May 15</text>
+                  <text x="320" y="215">May 16</text>
+                  <text x="390" y="215">May 17</text>
+                  <text x="460" y="215">May 18</text>
+                </g>
+
+              </svg>
+            </div>
+
+          </div>
+
+          <!-- Users by role -->
+          <div class="card p-6 h-[385px]">
+
+            <div class="text-[18px] font-[700] text-[#111827]">
+              Users by Role
+            </div>
+
+            <div class="mt-10 flex items-center justify-between">
+
+              <div class="relative w-[230px] h-[230px] rounded-full bg-[conic-gradient(#5732ff_0deg,#4c2df4_240deg,#4391ff_295deg,#44bf6c_330deg,#ff9827_360deg)] flex items-center justify-center">
+
+                <div class="w-[150px] h-[150px] rounded-full bg-white flex flex-col items-center justify-center">
+                  <div class="text-[18px] font-[800] text-[#111827]">
+                    1,245
+                  </div>
+
+                  <div class="text-[14px] text-[#7b859f] mt-1">
+                    Total Users
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="flex flex-col gap-5">
+
+                <div class="flex items-start gap-3">
+                  <div class="w-[10px] h-[10px] rounded-full bg-[#5a35ff] mt-2"></div>
+
+                  <div>
+                    <div class="text-[14px] text-[#4d5875]">Students</div>
+                    <div class="text-[16px] font-[600] text-[#111827] mt-1">
+                      1,002 (80.6%)
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <div class="w-[10px] h-[10px] rounded-full bg-[#4391ff] mt-2"></div>
+
+                  <div>
+                    <div class="text-[14px] text-[#4d5875]">Instructors</div>
+                    <div class="text-[16px] font-[600] text-[#111827] mt-1">
+                      143 (11.5%)
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <div class="w-[10px] h-[10px] rounded-full bg-[#44bf6c] mt-2"></div>
+
+                  <div>
+                    <div class="text-[14px] text-[#4d5875]">Editors</div>
+                    <div class="text-[16px] font-[600] text-[#111827] mt-1">
+                      65 (5.2%)
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <div class="w-[10px] h-[10px] rounded-full bg-[#ff9827] mt-2"></div>
+
+                  <div>
+                    <div class="text-[14px] text-[#4d5875]">Admins</div>
+                    <div class="text-[16px] font-[600] text-[#111827] mt-1">
+                      35 (2.7%)
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Registrations -->
+          <div class="card p-6 h-[385px]">
+
+            <div class="flex items-center justify-between">
+              <div class="text-[18px] font-[700] text-[#111827]">
+                Recent Registrations
+              </div>
+
+              <button class="text-[#5a35ff] text-[14px] font-[700]">
+                View All
+              </button>
+            </div>
+
+            <div class="mt-6 flex flex-col gap-7">
+
+              <!-- User -->
+              <div class="flex items-start justify-between">
+                <div class="flex gap-4">
+
+                  <div class="w-[44px] h-[44px] rounded-full bg-gradient-to-br from-[#ffd1aa] to-[#7b4a2e]"></div>
+
+                  <div>
+                    <div class="text-[16px] font-[700] text-[#111827]">
+                      Sarah Johnson
+                    </div>
+
+                    <div class="text-[14px] text-[#7b859f] mt-1">
+                      sarah.johnson@example.com
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[13px] text-[#7b859f]">
+                  May 18, 2024
+                </div>
+              </div>
+
+              <div class="flex items-start justify-between">
+                <div class="flex gap-4">
+
+                  <div class="w-[44px] h-[44px] rounded-full bg-gradient-to-br from-[#ffcf9d] to-[#6e4730]"></div>
+
+                  <div>
+                    <div class="text-[16px] font-[700] text-[#111827]">
+                      Michael Brown
+                    </div>
+
+                    <div class="text-[14px] text-[#7b859f] mt-1">
+                      michael.brown@example.com
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[13px] text-[#7b859f]">
+                  May 18, 2024
+                </div>
+              </div>
+
+              <div class="flex items-start justify-between">
+                <div class="flex gap-4">
+
+                  <div class="w-[44px] h-[44px] rounded-full bg-gradient-to-br from-[#ffd7c4] to-[#7f4b35]"></div>
+
+                  <div>
+                    <div class="text-[16px] font-[700] text-[#111827]">
+                      Emily Davis
+                    </div>
+
+                    <div class="text-[14px] text-[#7b859f] mt-1">
+                      emily.davis@example.com
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[13px] text-[#7b859f]">
+                  May 17, 2024
+                </div>
+              </div>
+
+              <div class="flex items-start justify-between">
+                <div class="flex gap-4">
+
+                  <div class="w-[44px] h-[44px] rounded-full bg-gradient-to-br from-[#ffcf9d] to-[#7b4a2e]"></div>
+
+                  <div>
+                    <div class="text-[16px] font-[700] text-[#111827]">
+                      James Wilson
+                    </div>
+
+                    <div class="text-[14px] text-[#7b859f] mt-1">
+                      james.wilson@example.com
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[13px] text-[#7b859f]">
+                  May 17, 2024
+                </div>
+              </div>
+
+              <div class="flex items-start justify-between">
+                <div class="flex gap-4">
+
+                  <div class="w-[44px] h-[44px] rounded-full bg-gradient-to-br from-[#ffd9cb] to-[#87543a]"></div>
+
+                  <div>
+                    <div class="text-[16px] font-[700] text-[#111827]">
+                      Olivia Martinez
+                    </div>
+
+                    <div class="text-[14px] text-[#7b859f] mt-1">
+                      olivia.martinez@example.com
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[13px] text-[#7b859f]">
+                  May 16, 2024
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ROW 3 -->
+        <div class="grid grid-cols-[1.7fr_1.2fr_0.9fr] gap-5 mt-5 pb-10">
+
+          <!-- Top Courses -->
+          <div class="card p-6">
+
+            <div class="flex items-center justify-between">
+
+              <div class="text-[18px] font-[700] text-[#111827]">
+                Top Courses
+              </div>
+
+              <button class="text-[#5a35ff] text-[14px] font-[700]">
+                View All
+              </button>
+
+            </div>
+
+            <div class="mt-5 border border-[#edf0f7] rounded-[14px] overflow-hidden">
+
+              <div class="h-[54px] bg-[#fafbfe] grid grid-cols-[2fr_1fr_1fr] px-6 items-center text-[14px] font-[600] text-[#58627d] border-b border-[#edf0f7]">
+                <div>Course</div>
+                <div>Enrollments</div>
+                <div>Completion Rate</div>
+              </div>
+
+              <!-- Rows -->
+              <div class="divide-y divide-[#edf0f7]">
+
+                <div class="grid grid-cols-[2fr_1fr_1fr] px-6 py-5 items-center">
+
+                  <div class="flex items-center gap-4">
+                    <div class="w-[34px] h-[34px] rounded-[10px] bg-[#ede7ff] flex items-center justify-center text-[#5a35ff]">
+                      <i class="fa-solid fa-code"></i>
+                    </div>
+
+                    <div class="text-[15px] font-[500] text-[#111827]">
+                      Web Development Fundamentals
+                    </div>
+                  </div>
+
+                  <div class="text-[15px] text-[#4e5874]">845</div>
+
+                  <div class="flex items-center gap-4">
+                    <div class="w-[92px] h-[6px] rounded-full progress-bg overflow-hidden">
+                      <div class="w-[68%] h-full rounded-full progress-fill"></div>
+                    </div>
+
+                    <div class="text-[15px] text-[#4e5874]">68%</div>
+                  </div>
+
+                </div>
+
+                <div class="grid grid-cols-[2fr_1fr_1fr] px-6 py-5 items-center">
+
+                  <div class="flex items-center gap-4">
+                    <div class="w-[34px] h-[34px] rounded-[10px] bg-[#fff4db] flex items-center justify-center text-[#ffb31a]">
+                      <i class="fa-brands fa-python"></i>
+                    </div>
+
+                    <div class="text-[15px] font-[500] text-[#111827]">
+                      Python Programming Basics
+                    </div>
+                  </div>
+
+                  <div class="text-[15px] text-[#4e5874]">654</div>
+
+                  <div class="flex items-center gap-4">
+                    <div class="w-[92px] h-[6px] rounded-full progress-bg overflow-hidden">
+                      <div class="w-[72%] h-full rounded-full progress-fill"></div>
+                    </div>
+
+                    <div class="text-[15px] text-[#4e5874]">72%</div>
+                  </div>
+
+                </div>
+
+                <div class="grid grid-cols-[2fr_1fr_1fr] px-6 py-5 items-center">
+
+                  <div class="flex items-center gap-4">
+                    <div class="w-[34px] h-[34px] rounded-[10px] bg-[#e7f0ff] flex items-center justify-center text-[#3b82f6]">
+                      <i class="fa-solid fa-object-group"></i>
+                    </div>
+
+                    <div class="text-[15px] font-[500] text-[#111827]">
+                      UI/UX Design Essentials
+                    </div>
+                  </div>
+
+                  <div class="text-[15px] text-[#4e5874]">412</div>
+
+                  <div class="flex items-center gap-4">
+                    <div class="w-[92px] h-[6px] rounded-full progress-bg overflow-hidden">
+                      <div class="w-[65%] h-full rounded-full progress-fill"></div>
+                    </div>
+
+                    <div class="text-[15px] text-[#4e5874]">65%</div>
+                  </div>
+
+                </div>
+
+                <div class="grid grid-cols-[2fr_1fr_1fr] px-6 py-5 items-center">
+
+                  <div class="flex items-center gap-4">
+                    <div class="w-[34px] h-[34px] rounded-[10px] bg-[#f1e9ff] flex items-center justify-center text-[#7c3aed]">
+                      <i class="fa-solid fa-chart-column"></i>
+                    </div>
+
+                    <div class="text-[15px] font-[500] text-[#111827]">
+                      Data Science with Python
+                    </div>
+                  </div>
+
+                  <div class="text-[15px] text-[#4e5874]">365</div>
+
+                  <div class="flex items-center gap-4">
+                    <div class="w-[92px] h-[6px] rounded-full progress-bg overflow-hidden">
+                      <div class="w-[70%] h-full rounded-full progress-fill"></div>
+                    </div>
+
+                    <div class="text-[15px] text-[#4e5874]">70%</div>
+                  </div>
+
+                </div>
+
+                <div class="grid grid-cols-[2fr_1fr_1fr] px-6 py-5 items-center">
+
+                  <div class="flex items-center gap-4">
+                    <div class="w-[34px] h-[34px] rounded-[10px] bg-[#ffe8ef] flex items-center justify-center text-[#ff3d6d]">
+                      <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+
+                    <div class="text-[15px] font-[500] text-[#111827]">
+                      Digital Marketing Basics
+                    </div>
+                  </div>
+
+                  <div class="text-[15px] text-[#4e5874]">298</div>
+
+                  <div class="flex items-center gap-4">
+                    <div class="w-[92px] h-[6px] rounded-full progress-bg overflow-hidden">
+                      <div class="w-[60%] h-full rounded-full progress-fill"></div>
+                    </div>
+
+                    <div class="text-[15px] text-[#4e5874]">60%</div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Activity Feed -->
+          <div class="card p-6">
+
+            <div class="flex items-center justify-between">
+
+              <div class="text-[18px] font-[700] text-[#111827]">
+                Activity Feed
+              </div>
+
+              <button class="text-[#5a35ff] text-[14px] font-[700]">
+                View All
+              </button>
+
+            </div>
+
+            <div class="mt-7 flex flex-col gap-8">
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#ede7ff] text-[#5a35ff] flex items-center justify-center">
+                    <i class="fa-regular fa-user"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      New user registered
+                    </div>
+
+                    <div class="text-[14px] text-[#6f7894] mt-1">
+                      Sarah Johnson has joined the platform
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[13px] text-[#8a93ac]">
+                  2 min ago
+                </div>
+
+              </div>
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#e8f7ee] text-[#2bb768] flex items-center justify-center">
+                    <i class="fa-solid fa-book-open"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      New course added
+                    </div>
+
+                    <div class="text-[14px] text-[#6f7894] mt-1">
+                      “Advanced JavaScript” has been added
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[13px] text-[#8a93ac]">
+                  1 hour ago
+                </div>
+
+              </div>
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#fff1df] text-[#ff9726] flex items-center justify-center">
+                    <i class="fa-regular fa-clipboard"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      Quiz created
+                    </div>
+
+                    <div class="text-[14px] text-[#6f7894] mt-1">
+                      “React Basics Quiz” has been created
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[13px] text-[#8a93ac]">
+                  3 hours ago
+                </div>
+
+              </div>
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#e8f0ff] text-[#3b82f6] flex items-center justify-center">
+                    <i class="fa-regular fa-id-card"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      Certificate issued
+                    </div>
+
+                    <div class="text-[14px] text-[#6f7894] mt-1">
+                      Certificate issued to Michael Brown
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[13px] text-[#8a93ac]">
+                  5 hours ago
+                </div>
+
+              </div>
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#e8f7ee] text-[#2bb768] flex items-center justify-center">
+                    <i class="fa-solid fa-user-plus"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      New enrollment
+                    </div>
+
+                    <div class="text-[14px] text-[#6f7894] mt-1">
+                      Emily Davis enrolled in Python Basics
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[13px] text-[#8a93ac]">
+                  6 hours ago
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- System Overview -->
+          <div class="card p-6">
+
+            <div class="text-[18px] font-[700] text-[#111827]">
+              System Overview
+            </div>
+
+            <div class="mt-8 flex flex-col gap-8">
+
+              <div>
+                <div class="flex items-start gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-[12px] bg-[#ede7ff] flex items-center justify-center text-[#5a35ff]">
+                    <i class="fa-solid fa-server"></i>
+                  </div>
+
+                  <div class="flex-1">
+                    <div class="text-[14px] text-[#6b748f]">
+                      Total Storage Used
+                    </div>
+
+                    <div class="mt-2 flex justify-between text-[14px]">
+                      <span class="font-[700] text-[#111827]">
+                        128.5 GB / 500 GB
+                      </span>
+
+                      <span class="font-[700] text-[#4e5874]">
+                        25.7%
+                      </span>
+                    </div>
+
+                    <div class="mt-3 h-[6px] rounded-full bg-[#ececf4] overflow-hidden">
+                      <div class="w-[25%] h-full rounded-full bg-[#5a35ff]"></div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-start gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-[12px] bg-[#e8f0ff] flex items-center justify-center text-[#3b82f6]">
+                    <i class="fa-solid fa-wave-square"></i>
+                  </div>
+
+                  <div class="flex-1">
+                    <div class="text-[14px] text-[#6b748f]">
+                      Bandwidth Used
+                    </div>
+
+                    <div class="mt-2 flex justify-between text-[14px]">
+                      <span class="font-[700] text-[#111827]">
+                        256.3 GB / 1 TB
+                      </span>
+
+                      <span class="font-[700] text-[#4e5874]">
+                        25.0%
+                      </span>
+                    </div>
+
+                    <div class="mt-3 h-[6px] rounded-full bg-[#ececf4] overflow-hidden">
+                      <div class="w-[25%] h-full rounded-full bg-[#3b82f6]"></div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between">
+
+                <div class="flex items-center gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-[12px] bg-[#edf0f7] flex items-center justify-center text-[#4e5874]">
+                    <i class="fa-solid fa-desktop"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[14px] text-[#6b748f]">
+                      Active Sessions
+                    </div>
+
+                    <div class="mt-2 text-[30px] font-[800] text-[#111827]">
+                      342
+                    </div>
+                  </div>
+
+                </div>
+
+                <button class="text-[#5a35ff] text-[14px] font-[700]">
+                  View All
+                </button>
+
+              </div>
+
+              <div class="flex items-center justify-between">
+
+                <div class="flex items-center gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-[12px] bg-[#e8f7ee] flex items-center justify-center text-[#22b566]">
+                    <i class="fa-regular fa-circle-check"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[14px] text-[#6b748f]">
+                      System Uptime
+                    </div>
+
+                    <div class="mt-2 text-[30px] font-[800] text-[#111827]">
+                      99.98%
+                    </div>
+                  </div>
+
+                </div>
+
+                <button class="text-[#5a35ff] text-[14px] font-[700]">
+                  View Details
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+<script src="../../assets/js/api.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/admin.js"></script>
+<script src="../../assets/js/sidebar.js"></script>
+<script src="../../assets/js/layout.js"></script>
+</body>
+</html>

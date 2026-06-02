@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Courses - Edunova - Smart Learning System</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+  <link rel="stylesheet" href="../../assets/css/global.css"/>
+  <link rel="stylesheet" href="../../assets/css/animation.css"/>
+  <link rel="stylesheet" href="../../assets/css/responsive.css"/>
+
+  <style>
+    *{
+      font-family:'Inter',sans-serif;
+    }
+
+    body{
+      background:#f5f6fb;
+      overflow:hidden;
+    }
+
+    .sidebar{
+      background:
+        radial-gradient(circle at top left, rgba(103,76,255,0.08), transparent 26%),
+        linear-gradient(180deg,#050b58 0%,#070f52 100%);
+    }
+
+    .menu-item{
+      height:54px;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      padding:0 20px;
+      border-radius:14px;
+      color:#ffffff;
+      font-size:17px;
+      font-weight:500;
+    }
+
+    .menu-item.active{
+      background:linear-gradient(90deg,#5b35ff 0%,#4a28f1 100%);
+      box-shadow:0 12px 28px rgba(91,53,255,0.35);
+    }
+
+    .menu-item i{
+      width:18px;
+      font-size:18px;
+    }
+
+    .card{
+      background:#ffffff;
+      border:1px solid #ececf4;
+      border-radius:18px;
+    }
+
+    .shadow-purple{
+      box-shadow:0 10px 30px rgba(91,53,255,0.25);
+    }
+
+    .progress-track{
+      background:#e8e9f2;
+    }
+
+    .progress-fill{
+      background:#5a35ff;
+    }
+
+    .table-row{
+      height:94px;
+      border-bottom:1px solid #eff0f6;
+    }
+
+    .action-btn{
+      width:34px;
+      height:34px;
+      border-radius:8px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid #d9dcef;
+      color:#5a35ff;
+      background:#fff;
+    }
+
+    .action-btn.red{
+      color:#ff5d5d;
+      border-color:#ffd0d0;
+    }
+
+    .chart-grid{
+      stroke:#eceef7;
+      stroke-width:1;
+    }
+
+    .chart-line{
+      fill:none;
+      stroke:#5b35ff;
+      stroke-width:3;
+    }
+
+    .chart-dot{
+      fill:#5b35ff;
+    }
+
+    .scroll-hidden::-webkit-scrollbar{
+      display:none;
+    }
+  </style>
+</head>
+
+<body class="w-screen h-screen" data-auth-guard="admin">
+
+<div class="flex w-full h-full">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar w-[245px] h-full relative text-white">
+
+    <!-- Logo -->
+    <div class="px-6 pt-5 flex items-start gap-4">
+      <div class="w-[44px] h-[44px] rounded-xl bg-[#5b35ff] flex items-center justify-center">
+        <i class="fa-solid fa-layer-group text-white text-[18px]"></i>
+      </div>
+
+      <div class="leading-tight pt-[2px]">
+        <div class="text-[18px] font-[700]">Edunova </div>
+        <div class="text-[18px] font-[700]">- Smart Learning</div>
+      </div>
+    </div>
+
+    <!-- Menu Title -->
+    <div class="mt-14 px-6 text-[13px] tracking-[0.8px] text-[#c7cbff] font-[600]">
+      MAIN MENU
+    </div>
+
+    <!-- Menu -->
+    <nav class="mt-6 px-3 flex flex-col gap-[9px]" aria-label="Admin main menu">
+
+      <a href="dashboard.html" class="menu-item">
+        <i class="fa-solid fa-house"></i>
+        Dashboard
+      </a>
+
+      <a href="manage students.html" class="menu-item">
+        <i class="fa-solid fa-users"></i>
+        Users
+      </a>
+
+      <a href="manage courses.html" class="menu-item active">
+        <i class="fa-solid fa-book-open"></i>
+        Courses
+      </a>
+
+      <a href="upload lessons.html" class="menu-item">
+        <i class="fa-regular fa-circle-play"></i>
+        Lessons
+      </a>
+
+      <a href="managa quiz.html" class="menu-item">
+        <i class="fa-regular fa-circle-question"></i>
+        Quizzes
+      </a>
+
+      <a href="dashboard.html#certificates" class="menu-item">
+        <i class="fa-regular fa-id-badge"></i>
+        Certificates
+      </a>
+
+      <a href="dashboard.html#reports" class="menu-item">
+        <i class="fa-solid fa-chart-simple"></i>
+        Reports
+      </a>
+
+      <a href="dashboard.html#settings" class="menu-item">
+        <i class="fa-solid fa-gear"></i>
+        Settings
+      </a>
+
+      <a href="dashboard.html#system-settings" class="menu-item">
+        <i class="fa-solid fa-shield-halved"></i>
+        System Settings
+      </a>
+
+      <a href="login.html" class="menu-item">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        Logout
+      </a>
+
+    </nav>
+
+    <!-- Upgrade Card -->
+    <div class="absolute left-4 right-4 bottom-5 rounded-[20px] bg-[#151d6d] border border-[#1c287a] px-5 py-6">
+
+      <div class="flex justify-center">
+        <div class="w-[82px] h-[82px] rounded-full bg-[#2d2a89] flex items-center justify-center">
+          <div class="w-[56px] h-[56px] rounded-full bg-[#5a35ff] flex items-center justify-center shadow-purple">
+            <i class="fa-solid fa-crown text-white text-[22px]"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 text-center text-[18px] font-[700]">
+        Upgrade to Pro
+      </div>
+
+      <div class="mt-3 text-center text-[15px] leading-[1.6] text-[#d5d9ff]">
+        Unlock all features and get
+        exclusive benefits.
+      </div>
+
+      <button class="mt-6 w-full h-[46px] rounded-[12px] bg-[#5a35ff] text-white text-[16px] font-[600] shadow-purple">
+        Upgrade Now
+      </button>
+
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="flex-1 h-full overflow-hidden">
+
+    <!-- TOPBAR -->
+    <div class="h-[78px] bg-white border-b border-[#ececf4] flex items-center justify-between px-8">
+
+      <div class="flex items-center gap-8">
+
+        <button class="text-[#44527b] text-[26px]">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="relative">
+          <input
+            type="text"
+            placeholder="Search for courses, users, quizzes..."
+            class="w-[420px] h-[44px] rounded-[12px] border border-[#dde1ef] pl-6 pr-14 text-[15px] outline-none text-[#111827]"
+          />
+
+          <i class="fa-solid fa-magnifying-glass absolute right-5 top-1/2 -translate-y-1/2 text-[#5f6984]"></i>
+        </div>
+
+      </div>
+
+      <div class="flex items-center gap-8">
+
+        <!-- Bell -->
+        <div class="relative">
+          <i class="fa-regular fa-bell text-[24px] text-[#3d4969]"></i>
+
+          <div class="absolute -top-2 -right-2 w-[20px] h-[20px] rounded-full bg-[#7c3aed] border-2 border-white text-white text-[10px] font-[700] flex items-center justify-center">
+            3
+          </div>
+        </div>
+
+        <!-- User -->
+        <div class="flex items-center gap-4">
+
+          <div class="w-[46px] h-[46px] rounded-full bg-gradient-to-br from-[#ffcf9e] to-[#875638] border-[3px] border-[#5b35ff]"></div>
+
+          <div>
+            <div class="text-[17px] font-[700] text-[#111827]">
+              Admin User
+            </div>
+
+            <div class="text-[14px] text-[#707892] mt-[2px]">
+              Super Admin
+            </div>
+          </div>
+
+          <i class="fa-solid fa-angle-down text-[#515c79] text-[13px] ml-1"></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CONTENT -->
+    <div class="h-[calc(100%-78px)] overflow-y-auto scroll-hidden px-7 py-7">
+
+      <!-- Heading -->
+      <div class="flex items-start justify-between">
+
+        <div class="flex items-start gap-5">
+
+          <div class="w-[60px] h-[60px] rounded-[16px] bg-[#f1ecff] flex items-center justify-center">
+            <i class="fa-solid fa-book-open text-[#5a35ff] text-[26px]"></i>
+          </div>
+
+          <div>
+            <h1 class="text-[50px] leading-none font-[800] tracking-[-1px] text-[#0e152f]">
+              Manage Courses
+            </h1>
+
+            <p class="mt-4 text-[22px] text-[#67718a]">
+              Create, manage and organize learning courses
+            </p>
+          </div>
+
+        </div>
+
+        <button class="w-[194px] h-[56px] rounded-[14px] bg-[#5a35ff] text-white text-[18px] font-[600] flex items-center justify-center gap-4 shadow-purple">
+          <i class="fa-solid fa-plus"></i>
+          Add New Course
+        </button>
+
+      </div>
+
+      <!-- Content Grid -->
+      <div class="grid grid-cols-[1fr_330px] gap-5 mt-8">
+
+        <!-- LEFT -->
+        <div>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-4 gap-5">
+
+            <!-- Card -->
+            <div class="card h-[136px] px-6 flex items-center gap-5">
+
+              <div class="w-[62px] h-[62px] rounded-full bg-[#f0ebff] flex items-center justify-center">
+                <i class="fa-solid fa-book-open text-[#5a35ff] text-[28px]"></i>
+              </div>
+
+              <div>
+                <div class="text-[14px] text-[#5c6682] font-[600]">
+                  Total Courses
+                </div>
+
+                <div class="mt-2 text-[28px] font-[800] text-[#111827]">
+                  86
+                </div>
+
+                <div class="mt-2 text-[#21b165] text-[13px]">
+                  ↑ 8.4% from last month
+                </div>
+              </div>
+
+            </div>
+
+            <div class="card h-[136px] px-6 flex items-center gap-5">
+
+              <div class="w-[62px] h-[62px] rounded-full bg-[#e7f7ee] flex items-center justify-center">
+                <i class="fa-regular fa-circle-check text-[#1faa65] text-[28px]"></i>
+              </div>
+
+              <div>
+                <div class="text-[14px] text-[#5c6682] font-[600]">
+                  Published Courses
+                </div>
+
+                <div class="mt-2 text-[28px] font-[800] text-[#111827]">
+                  64
+                </div>
+
+                <div class="mt-2 text-[#21b165] text-[13px]">
+                  ↑ 12.6% from last month
+                </div>
+              </div>
+
+            </div>
+
+            <div class="card h-[136px] px-6 flex items-center gap-5">
+
+              <div class="w-[62px] h-[62px] rounded-full bg-[#fff4e7] flex items-center justify-center">
+                <i class="fa-regular fa-file-lines text-[#f6a323] text-[28px]"></i>
+              </div>
+
+              <div>
+                <div class="text-[14px] text-[#5c6682] font-[600]">
+                  Draft Courses
+                </div>
+
+                <div class="mt-2 text-[28px] font-[800] text-[#111827]">
+                  22
+                </div>
+
+                <div class="mt-2 text-[#ff5b5b] text-[13px]">
+                  ↓ 5.3% from last month
+                </div>
+              </div>
+
+            </div>
+
+            <div class="card h-[136px] px-6 flex items-center gap-5">
+
+              <div class="w-[62px] h-[62px] rounded-full bg-[#edf4ff] flex items-center justify-center">
+                <i class="fa-solid fa-users text-[#3b82f6] text-[28px]"></i>
+              </div>
+
+              <div>
+                <div class="text-[14px] text-[#5c6682] font-[600]">
+                  Student Enrollments
+                </div>
+
+                <div class="mt-2 text-[28px] font-[800] text-[#111827]">
+                  3,560
+                </div>
+
+                <div class="mt-2 text-[#21b165] text-[13px]">
+                  ↑ 15.3% from last month
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Table -->
+          <div class="card mt-6 overflow-hidden">
+
+            <!-- Filters -->
+            <div class="p-5 border-b border-[#eff0f6] flex items-center gap-4">
+
+              <!-- Search -->
+              <div class="relative flex-1">
+                <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-[#6a738f] text-[14px]"></i>
+
+                <input
+                  type="text"
+                  placeholder="Search courses..."
+                  class="w-full h-[44px] rounded-[10px] border border-[#e3e5f0] pl-12 pr-4 text-[14px] outline-none"
+                />
+              </div>
+
+              <!-- Select -->
+              <button class="w-[160px] h-[44px] rounded-[10px] border border-[#e3e5f0] bg-white px-4 flex items-center justify-between text-[14px] text-[#4e5874]">
+                All Categories
+                <i class="fa-solid fa-angle-down text-[12px]"></i>
+              </button>
+
+              <button class="w-[145px] h-[44px] rounded-[10px] border border-[#e3e5f0] bg-white px-4 flex items-center justify-between text-[14px] text-[#4e5874]">
+                All Instructors
+                <i class="fa-solid fa-angle-down text-[12px]"></i>
+              </button>
+
+              <button class="w-[140px] h-[44px] rounded-[10px] border border-[#e3e5f0] bg-white px-4 flex items-center justify-between text-[14px] text-[#4e5874]">
+                Sort by: Newest
+                <i class="fa-solid fa-angle-down text-[12px]"></i>
+              </button>
+
+              <button class="w-[86px] h-[44px] rounded-[10px] border border-[#e3e5f0] bg-white flex items-center justify-center gap-3 text-[14px] text-[#4e5874]">
+                <i class="fa-solid fa-filter"></i>
+                Filters
+              </button>
+
+            </div>
+
+            <!-- Table Head -->
+            <div class="h-[46px] bg-[#fafbfe] border-b border-[#eff0f6] grid grid-cols-[2.4fr_1.6fr_0.6fr_0.7fr_1fr_0.8fr_0.9fr] items-center px-4 text-[13px] font-[600] text-[#5d6784]">
+
+              <div>Course</div>
+              <div>Instructor</div>
+              <div>Lessons</div>
+              <div>Students</div>
+              <div>Progress</div>
+              <div>Status</div>
+              <div>Actions</div>
+
+            </div>
+
+            <!-- Rows -->
+            <div>
+
+              <!-- Row -->
+              <div class="table-row grid grid-cols-[2.4fr_1.6fr_0.6fr_0.7fr_1fr_0.8fr_0.9fr] items-center px-4">
+
+                <!-- Course -->
+                <div class="flex items-center gap-4">
+
+                  <div class="w-[74px] h-[62px] rounded-[10px] overflow-hidden bg-gradient-to-br from-[#09091b] to-[#5b35ff] relative">
+                    <div class="absolute inset-0 flex items-center justify-center text-white text-[34px]">
+                      <i class="fa-solid fa-code"></i>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="text-[16px] leading-[1.3] font-[600] text-[#111827]">
+                      Complete Web
+                      Development Bootcamp
+                    </div>
+
+                    <div class="mt-2 text-[13px] text-[#5a35ff] font-[500]">
+                      Web Development
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Instructor -->
+                <div class="flex items-center gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-gradient-to-br from-[#ffcf9d] to-[#7d5134]"></div>
+
+                  <div>
+                    <div class="text-[15px] font-[600] text-[#111827]">
+                      Alex Johnson
+                    </div>
+
+                    <div class="text-[12px] text-[#7a829d] mt-[2px]">
+                      alex.johnson@example.com
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[16px] text-[#28314d]">42</div>
+
+                <div class="text-[16px] text-[#28314d]">1,245</div>
+
+                <!-- Progress -->
+                <div>
+                  <div class="text-[14px] font-[600] text-[#28314d] mb-2">
+                    75%
+                  </div>
+
+                  <div class="w-[84px] h-[5px] rounded-full progress-track overflow-hidden">
+                    <div class="w-[75%] h-full progress-fill rounded-full"></div>
+                  </div>
+                </div>
+
+                <!-- Status -->
+                <div>
+                  <div class="w-[82px] h-[30px] rounded-[8px] bg-[#e7f7ee] text-[#1fa764] text-[13px] font-[600] flex items-center justify-center">
+                    Published
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-6">
+
+                  <button class="action-btn">
+                    <i class="fa-regular fa-eye text-[13px]"></i>
+                  </button>
+
+                  <button class="action-btn">
+                    <i class="fa-solid fa-pen text-[12px]"></i>
+                  </button>
+
+                  <button class="action-btn red">
+                    <i class="fa-regular fa-trash-can text-[12px]"></i>
+                  </button>
+
+                </div>
+
+              </div>
+
+              <!-- Row 2 -->
+              <div class="table-row grid grid-cols-[2.4fr_1.6fr_0.6fr_0.7fr_1fr_0.8fr_0.9fr] items-center px-4">
+
+                <div class="flex items-center gap-4">
+
+                  <div class="w-[74px] h-[62px] rounded-[10px] overflow-hidden bg-gradient-to-br from-[#0b1d55] to-[#0f6dff] flex items-center justify-center text-[#ffd447] text-[42px]">
+                    <i class="fa-brands fa-python"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[16px] leading-[1.3] font-[600] text-[#111827]">
+                      Python Programming
+                      for Beginners
+                    </div>
+
+                    <div class="mt-2 text-[13px] text-[#5a35ff] font-[500]">
+                      Programming
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="flex items-center gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-gradient-to-br from-[#ffd9cb] to-[#87543a]"></div>
+
+                  <div>
+                    <div class="text-[15px] font-[600] text-[#111827]">
+                      Sarah Wilson
+                    </div>
+
+                    <div class="text-[12px] text-[#7a829d] mt-[2px]">
+                      sarah.wilson@example.com
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[16px] text-[#28314d]">28</div>
+
+                <div class="text-[16px] text-[#28314d]">856</div>
+
+                <div>
+                  <div class="text-[14px] font-[600] text-[#28314d] mb-2">
+                    60%
+                  </div>
+
+                  <div class="w-[84px] h-[5px] rounded-full progress-track overflow-hidden">
+                    <div class="w-[60%] h-full progress-fill rounded-full"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="w-[82px] h-[30px] rounded-[8px] bg-[#e7f7ee] text-[#1fa764] text-[13px] font-[600] flex items-center justify-center">
+                    Published
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-6">
+
+                  <button class="action-btn">
+                    <i class="fa-regular fa-eye text-[13px]"></i>
+                  </button>
+
+                  <button class="action-btn">
+                    <i class="fa-solid fa-pen text-[12px]"></i>
+                  </button>
+
+                  <button class="action-btn red">
+                    <i class="fa-regular fa-trash-can text-[12px]"></i>
+                  </button>
+
+                </div>
+
+              </div>
+
+              <!-- Row 3 -->
+              <div class="table-row grid grid-cols-[2.4fr_1.6fr_0.6fr_0.7fr_1fr_0.8fr_0.9fr] items-center px-4">
+
+                <div class="flex items-center gap-4">
+
+                  <div class="w-[74px] h-[62px] rounded-[10px] overflow-hidden bg-gradient-to-br from-[#05071f] to-[#3b82f6] flex items-center justify-center text-white text-[24px] font-[800]">
+                    UI/UX
+                  </div>
+
+                  <div>
+                    <div class="text-[16px] leading-[1.3] font-[600] text-[#111827]">
+                      UI/UX Design
+                      Fundamentals
+                    </div>
+
+                    <div class="mt-2 text-[13px] text-[#5a35ff] font-[500]">
+                      Design
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="flex items-center gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-gradient-to-br from-[#ffcf9d] to-[#7b4a2e]"></div>
+
+                  <div>
+                    <div class="text-[15px] font-[600] text-[#111827]">
+                      Michael Brown
+                    </div>
+
+                    <div class="text-[12px] text-[#7a829d] mt-[2px]">
+                      michael.brown@example.com
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[16px] text-[#28314d]">36</div>
+
+                <div class="text-[16px] text-[#28314d]">642</div>
+
+                <div>
+                  <div class="text-[14px] font-[600] text-[#28314d] mb-2">
+                    45%
+                  </div>
+
+                  <div class="w-[84px] h-[5px] rounded-full progress-track overflow-hidden">
+                    <div class="w-[45%] h-full progress-fill rounded-full"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="w-[62px] h-[30px] rounded-[8px] bg-[#fff5e8] text-[#f4a227] text-[13px] font-[600] flex items-center justify-center">
+                    Draft
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-6">
+
+                  <button class="action-btn">
+                    <i class="fa-regular fa-eye text-[13px]"></i>
+                  </button>
+
+                  <button class="action-btn">
+                    <i class="fa-solid fa-pen text-[12px]"></i>
+                  </button>
+
+                  <button class="action-btn red">
+                    <i class="fa-regular fa-trash-can text-[12px]"></i>
+                  </button>
+
+                </div>
+
+              </div>
+
+              <!-- Row 4 -->
+              <div class="table-row grid grid-cols-[2.4fr_1.6fr_0.6fr_0.7fr_1fr_0.8fr_0.9fr] items-center px-4">
+
+                <div class="flex items-center gap-4">
+
+                  <div class="w-[74px] h-[62px] rounded-[10px] overflow-hidden bg-gradient-to-br from-[#05071f] to-[#0f6dff] flex items-center justify-center text-white text-[30px]">
+                    <i class="fa-solid fa-chart-line"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[16px] leading-[1.3] font-[600] text-[#111827]">
+                      Data Science
+                      with Python
+                    </div>
+
+                    <div class="mt-2 text-[13px] text-[#5a35ff] font-[500]">
+                      Data Science
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="flex items-center gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-gradient-to-br from-[#ffd6c2] to-[#8a573d]"></div>
+
+                  <div>
+                    <div class="text-[15px] font-[600] text-[#111827]">
+                      Emily Davis
+                    </div>
+
+                    <div class="text-[12px] text-[#7a829d] mt-[2px]">
+                      emily.davis@example.com
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[16px] text-[#28314d]">50</div>
+
+                <div class="text-[16px] text-[#28314d]">1,023</div>
+
+                <div>
+                  <div class="text-[14px] font-[600] text-[#28314d] mb-2">
+                    30%
+                  </div>
+
+                  <div class="w-[84px] h-[5px] rounded-full progress-track overflow-hidden">
+                    <div class="w-[30%] h-full progress-fill rounded-full"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="w-[62px] h-[30px] rounded-[8px] bg-[#fff5e8] text-[#f4a227] text-[13px] font-[600] flex items-center justify-center">
+                    Draft
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-6">
+
+                  <button class="action-btn">
+                    <i class="fa-regular fa-eye text-[13px]"></i>
+                  </button>
+
+                  <button class="action-btn">
+                    <i class="fa-solid fa-pen text-[12px]"></i>
+                  </button>
+
+                  <button class="action-btn red">
+                    <i class="fa-regular fa-trash-can text-[12px]"></i>
+                  </button>
+
+                </div>
+
+              </div>
+
+              <!-- Row 5 -->
+              <div class="table-row grid grid-cols-[2.4fr_1.6fr_0.6fr_0.7fr_1fr_0.8fr_0.9fr] items-center px-4 border-b-0">
+
+                <div class="flex items-center gap-4">
+
+                  <div class="w-[74px] h-[62px] rounded-[10px] overflow-hidden bg-gradient-to-br from-[#7c3aed] to-[#5a35ff] flex items-center justify-center text-white text-[32px]">
+                    <i class="fa-solid fa-bullhorn"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[16px] leading-[1.3] font-[600] text-[#111827]">
+                      Digital Marketing
+                      Masterclass
+                    </div>
+
+                    <div class="mt-2 text-[13px] text-[#5a35ff] font-[500]">
+                      Marketing
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="flex items-center gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-gradient-to-br from-[#ffcf9d] to-[#7b4a2e]"></div>
+
+                  <div>
+                    <div class="text-[15px] font-[600] text-[#111827]">
+                      David Lee
+                    </div>
+
+                    <div class="text-[12px] text-[#7a829d] mt-[2px]">
+                      david.lee@example.com
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[16px] text-[#28314d]">24</div>
+
+                <div class="text-[16px] text-[#28314d]">512</div>
+
+                <div>
+                  <div class="text-[14px] font-[600] text-[#28314d] mb-2">
+                    90%
+                  </div>
+
+                  <div class="w-[84px] h-[5px] rounded-full progress-track overflow-hidden">
+                    <div class="w-[90%] h-full progress-fill rounded-full"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="w-[82px] h-[30px] rounded-[8px] bg-[#e7f7ee] text-[#1fa764] text-[13px] font-[600] flex items-center justify-center">
+                    Published
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-6">
+
+                  <button class="action-btn">
+                    <i class="fa-regular fa-eye text-[13px]"></i>
+                  </button>
+
+                  <button class="action-btn">
+                    <i class="fa-solid fa-pen text-[12px]"></i>
+                  </button>
+
+                  <button class="action-btn red">
+                    <i class="fa-regular fa-trash-can text-[12px]"></i>
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Pagination -->
+            <div class="h-[62px] border-t border-[#eff0f6] px-4 flex items-center justify-between">
+
+              <div class="text-[15px] text-[#606b87]">
+                Showing 1 to 5 of 86 courses
+              </div>
+
+              <div class="flex items-center gap-3">
+
+                <button class="w-[34px] h-[34px] rounded-[10px] border border-[#e2e5f0] text-[#4f5975]">
+                  <i class="fa-solid fa-angle-left text-[12px]"></i>
+                </button>
+
+                <button class="w-[34px] h-[34px] rounded-[10px] bg-[#5a35ff] text-white text-[14px] font-[600] shadow-purple">
+                  1
+                </button>
+
+                <button class="w-[34px] h-[34px] rounded-[10px] border border-[#e2e5f0] text-[#4f5975] text-[14px]">
+                  2
+                </button>
+
+                <button class="w-[34px] h-[34px] rounded-[10px] border border-[#e2e5f0] text-[#4f5975] text-[14px]">
+                  3
+                </button>
+
+                <button class="w-[34px] h-[34px] rounded-[10px] border border-[#e2e5f0] text-[#4f5975] text-[14px]">
+                  ...
+                </button>
+
+                <button class="w-[34px] h-[34px] rounded-[10px] border border-[#e2e5f0] text-[#4f5975] text-[14px]">
+                  18
+                </button>
+
+                <button class="w-[34px] h-[34px] rounded-[10px] border border-[#e2e5f0] text-[#4f5975]">
+                  <i class="fa-solid fa-angle-right text-[12px]"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="flex flex-col gap-5">
+
+          <!-- Analytics -->
+          <div class="card p-5">
+
+            <div class="flex items-center justify-between">
+
+              <div class="text-[18px] font-[700] text-[#111827]">
+                Courses Analytics
+              </div>
+
+              <button class="w-[118px] h-[38px] rounded-[10px] border border-[#e3e5f0] bg-white flex items-center justify-center gap-3 text-[13px] text-[#4e5874]">
+                This Month
+                <i class="fa-solid fa-angle-down text-[11px]"></i>
+              </button>
+
+            </div>
+
+            <div class="mt-6">
+
+              <svg width="100%" height="220" viewBox="0 0 300 220">
+
+                <!-- Grid -->
+                <line class="chart-grid" x1="20" y1="20" x2="290" y2="20"/>
+                <line class="chart-grid" x1="20" y1="70" x2="290" y2="70"/>
+                <line class="chart-grid" x1="20" y1="120" x2="290" y2="120"/>
+                <line class="chart-grid" x1="20" y1="170" x2="290" y2="170"/>
+
+                <!-- Area -->
+                <path
+                  d="M20 160 L45 110 L70 95 L95 70 L120 80 L145 92 L170 45 L195 78 L220 110 L245 88 L270 70 L290 80 L290 200 L20 200 Z"
+                  fill="rgba(91,53,255,0.08)"
+                />
+
+                <!-- Line -->
+                <polyline
+                  class="chart-line"
+                  points="20,160 45,110 70,95 95,70 120,80 145,92 170,45 195,78 220,110 245,88 270,70 290,80"
+                />
+
+                <!-- Dots -->
+                <g class="chart-dot">
+                  <circle cx="20" cy="160" r="4"/>
+                  <circle cx="45" cy="110" r="4"/>
+                  <circle cx="70" cy="95" r="4"/>
+                  <circle cx="95" cy="70" r="4"/>
+                  <circle cx="120" cy="80" r="4"/>
+                  <circle cx="145" cy="92" r="4"/>
+                  <circle cx="170" cy="45" r="4"/>
+                  <circle cx="195" cy="78" r="4"/>
+                  <circle cx="220" cy="110" r="4"/>
+                  <circle cx="245" cy="88" r="4"/>
+                  <circle cx="270" cy="70" r="4"/>
+                  <circle cx="290" cy="80" r="4"/>
+                </g>
+
+                <!-- Tooltip -->
+                <g>
+                  <rect x="150" y="78" width="78" height="44" rx="8" fill="#111827"/>
+                  <text x="160" y="96" fill="#ffffff" font-size="11">May 21</text>
+                  <text x="160" y="112" fill="#ffffff" font-size="13" font-weight="700">Courses: 720</text>
+                </g>
+
+                <!-- Labels -->
+                <g fill="#707892" font-size="11">
+                  <text x="0" y="174">0</text>
+                  <text x="0" y="124">250</text>
+                  <text x="0" y="74">500</text>
+                  <text x="0" y="24">1K</text>
+
+                  <text x="18" y="205">May 1</text>
+                  <text x="70" y="205">May 7</text>
+                  <text x="120" y="205">May 14</text>
+                  <text x="168" y="205">May 21</text>
+                  <text x="242" y="205">May 28</text>
+                </g>
+
+              </svg>
+
+            </div>
+
+            <!-- Bottom Stats -->
+            <div class="grid grid-cols-3 gap-3 mt-3">
+
+              <div class="h-[64px] rounded-[12px] bg-[#fafbfe] border border-[#ececf4] px-4 flex flex-col justify-center">
+                <div class="text-[16px] font-[800] text-[#5a35ff]">
+                  720
+                </div>
+
+                <div class="text-[13px] text-[#606b87] mt-1">
+                  Courses Created
+                </div>
+              </div>
+
+              <div class="h-[64px] rounded-[12px] bg-[#fafbfe] border border-[#ececf4] px-4 flex flex-col justify-center">
+                <div class="text-[16px] font-[800] text-[#20b165]">
+                  520
+                </div>
+
+                <div class="text-[13px] text-[#606b87] mt-1">
+                  Published
+                </div>
+              </div>
+
+              <div class="h-[64px] rounded-[12px] bg-[#fafbfe] border border-[#ececf4] px-4 flex flex-col justify-center">
+                <div class="text-[16px] font-[800] text-[#f6a323]">
+                  200
+                </div>
+
+                <div class="text-[13px] text-[#606b87] mt-1">
+                  Draft
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Activity -->
+          <div class="card p-5 flex-1">
+
+            <div class="flex items-center justify-between">
+
+              <div class="text-[18px] font-[700] text-[#111827]">
+                Recent Course Activity
+              </div>
+
+              <button class="text-[#5a35ff] text-[14px] font-[700]">
+                View All
+              </button>
+
+            </div>
+
+            <div class="mt-8 flex flex-col gap-8">
+
+              <!-- Item -->
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#1fa764] flex items-center justify-center text-white">
+                    <i class="fa-solid fa-plus"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      New course created
+                    </div>
+
+                    <div class="text-[14px] text-[#69738d] mt-2">
+                      “Advanced JavaScript” by Alex Johnson
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[12px] text-[#8b93ad]">
+                  2 min ago
+                </div>
+
+              </div>
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#5a35ff] flex items-center justify-center text-white">
+                    <i class="fa-solid fa-pen"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      Course updated
+                    </div>
+
+                    <div class="text-[14px] text-[#69738d] mt-2">
+                      “Python Programming” by Sarah Wilson
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[12px] text-[#8b93ad]">
+                  15 min ago
+                </div>
+
+              </div>
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#f6a323] flex items-center justify-center text-white">
+                    <i class="fa-regular fa-eye"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      Course published
+                    </div>
+
+                    <div class="text-[14px] text-[#69738d] mt-2">
+                      “Digital Marketing Masterclass”
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[12px] text-[#8b93ad]">
+                  1 hour ago
+                </div>
+
+              </div>
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#ff5b5b] flex items-center justify-center text-white">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      Course deleted
+                    </div>
+
+                    <div class="text-[14px] text-[#69738d] mt-2">
+                      “Old PHP Tutorial” by Michael Brown
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[12px] text-[#8b93ad]">
+                  3 hours ago
+                </div>
+
+              </div>
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#3b82f6] flex items-center justify-center text-white">
+                    <i class="fa-regular fa-file-lines"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      New lesson added
+                    </div>
+
+                    <div class="text-[14px] text-[#69738d] mt-2">
+                      “React Basics” in Web Development
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[12px] text-[#8b93ad]">
+                  5 hours ago
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+<script src="../../assets/js/api.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/sidebar.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/layout.js"></script>
+</body>
+</html>

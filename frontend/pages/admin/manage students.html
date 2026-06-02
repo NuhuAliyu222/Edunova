@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Students - Edunova - Smart Learning</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../../assets/css/global.css"/>
+  <link rel="stylesheet" href="../../assets/css/animation.css"/>
+  <link rel="stylesheet" href="../../assets/css/responsive.css"/>
+
+  <style>
+    *{
+      font-family: 'Inter', sans-serif;
+    }
+
+    body{
+      background:#f6f5fb;
+      overflow:hidden;
+    }
+
+    .sidebar-gradient{
+      background: linear-gradient(180deg,#05072f 0%, #090d48 45%, #06072f 100%);
+    }
+
+    .purple-gradient{
+      background: linear-gradient(90deg,#6d28ff 0%, #4d16d6 100%);
+    }
+
+    .card{
+      background:white;
+      border:1px solid #eceaf5;
+      border-radius:18px;
+    }
+
+    .table-row{
+      border-top:1px solid #efedf6;
+    }
+
+    .progress-line{
+      height:6px;
+      border-radius:999px;
+      background:#e6e2f5;
+      overflow:hidden;
+    }
+
+    .progress-fill{
+      height:100%;
+      background:#5a2dfc;
+      border-radius:999px;
+    }
+
+    .mini-progress{
+      width:130px;
+      height:6px;
+      border-radius:999px;
+      background:#e6e2f5;
+      overflow:hidden;
+    }
+
+    .mini-progress-fill{
+      height:100%;
+      background:#5a2dfc;
+      border-radius:999px;
+    }
+
+    .donut{
+      width:145px;
+      height:145px;
+      border-radius:50%;
+      background: conic-gradient(#5629ff 0 76%, #3794ff 76% 100%);
+      position:relative;
+    }
+
+    .donut::after{
+      content:'';
+      position:absolute;
+      inset:21px;
+      background:white;
+      border-radius:50%;
+    }
+
+    .shadow-soft{
+      box-shadow:0 2px 10px rgba(20,20,43,.03);
+    }
+
+    a.admin-nav-item{
+      text-decoration:none;
+      color:inherit;
+      display:flex;
+      align-items:center;
+    }
+
+  </style>
+</head>
+
+<body data-auth-guard="admin">
+
+<div class="w-screen h-screen flex">
+
+  <!-- SIDEBAR -->
+  <aside class="w-[245px] sidebar-gradient text-white flex flex-col justify-between">
+
+    <div>
+
+      <!-- Logo -->
+      <div class="px-6 pt-6 flex items-start gap-3">
+        <div class="w-12 h-12 rounded-xl purple-gradient flex items-center justify-center text-2xl">
+          🎓
+        </div>
+
+        <div class="leading-tight">
+          <h1 class="font-bold text-[17px]">Edunova </h1>
+          <p class="font-bold text-[17px]">- Smart Learning</p>
+        </div>
+      </div>
+
+      <!-- Menu -->
+      <nav class="mt-12 px-3 space-y-2" aria-label="Admin main menu">
+
+        <a href="dashboard.html" class="admin-nav-item flex items-center gap-4 px-4 py-4 rounded-xl text-white/95">
+          <span class="text-xl">⌂</span>
+          <span class="text-[15px] font-medium">Dashboard</span>
+        </a>
+
+        <!-- USERS -->
+        <div class="rounded-2xl bg-[#13154d] border border-[#232566] overflow-hidden">
+
+          <a href="manage students.html" class="admin-nav-item purple-gradient flex items-center justify-between px-4 py-4">
+            <span class="flex items-center gap-4">
+              <span class="text-xl">👥</span>
+              <span class="text-[15px] font-medium">Users</span>
+            </span>
+
+            <span class="text-xs">⌃</span>
+          </a>
+
+          <div class="px-5 py-4 space-y-4">
+
+            <a href="manage students.html" class="admin-nav-item flex items-center gap-3 text-white">
+              <div class="w-2 h-2 rounded-full bg-white"></div>
+              <span class="text-[15px]">All Students</span>
+            </a>
+
+            <a href="manage students.html#instructors" class="admin-nav-item flex items-center gap-3 text-[#7d70d7]">
+              <div class="w-2 h-2 rounded-full bg-[#7d70d7]"></div>
+              <span class="text-[15px]">Instructors</span>
+            </a>
+
+            <a href="manage students.html#roles" class="admin-nav-item flex items-center gap-3 text-[#7d70d7]">
+              <div class="w-2 h-2 rounded-full bg-[#7d70d7]"></div>
+              <span class="text-[15px]">Roles & Permissions</span>
+            </a>
+
+          </div>
+        </div>
+
+        <a href="manage courses.html" class="admin-nav-item flex items-center gap-4 px-4 py-4 rounded-xl">
+          <span class="text-xl">📚</span>
+          <span class="text-[15px]">Courses</span>
+        </a>
+
+        <a href="upload lessons.html" class="admin-nav-item flex items-center gap-4 px-4 py-4 rounded-xl">
+          <span class="text-xl">▶</span>
+          <span class="text-[15px]">Lessons</span>
+        </a>
+
+        <a href="managa quiz.html" class="admin-nav-item flex items-center gap-4 px-4 py-4 rounded-xl">
+          <span class="text-xl">❔</span>
+          <span class="text-[15px]">Quizzes</span>
+        </a>
+
+        <a href="dashboard.html#certificates" class="admin-nav-item flex items-center gap-4 px-4 py-4 rounded-xl">
+          <span class="text-xl">🛡</span>
+          <span class="text-[15px]">Certificates</span>
+        </a>
+
+        <a href="dashboard.html#reports" class="admin-nav-item flex items-center gap-4 px-4 py-4 rounded-xl">
+          <span class="text-xl">▦</span>
+          <span class="text-[15px]">Reports</span>
+        </a>
+
+        <a href="dashboard.html#announcements" class="admin-nav-item flex items-center gap-4 px-4 py-4 rounded-xl">
+          <span class="text-xl">📢</span>
+          <span class="text-[15px]">Announcements</span>
+        </a>
+
+        <a href="dashboard.html#settings" class="admin-nav-item flex items-center gap-4 px-4 py-4 rounded-xl">
+          <span class="text-xl">⚙</span>
+          <span class="text-[15px]">Settings</span>
+        </a>
+
+        <a href="dashboard.html#system-settings" class="admin-nav-item flex items-center gap-4 px-4 py-4 rounded-xl">
+          <span class="text-xl">🛡</span>
+          <span class="text-[15px]">System Settings</span>
+        </a>
+
+        <a href="login.html" class="admin-nav-item flex items-center gap-4 px-4 py-4 rounded-xl">
+          <span class="text-xl">⎋</span>
+          <span class="text-[15px]">Logout</span>
+        </a>
+
+      </nav>
+
+    </div>
+
+    <!-- Upgrade -->
+    <div class="p-4">
+      <div class="rounded-[24px] bg-[#17185c] border border-[#22236c] p-6 text-center">
+
+        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-b from-[#5f2dff] to-[#4420d0] flex items-center justify-center text-4xl">
+          👑
+        </div>
+
+        <h3 class="mt-6 font-semibold text-[16px]">Upgrade to Pro</h3>
+
+        <p class="text-[#d0cfff] text-[14px] leading-6 mt-3">
+          Unlock all features and get exclusive benefits.
+        </p>
+
+        <button class="mt-6 w-full h-14 rounded-xl purple-gradient font-semibold text-[17px]">
+          Upgrade Now
+        </button>
+
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- TOPBAR -->
+    <header class="h-[80px] bg-white border-b border-[#eceaf5] flex items-center justify-between px-8">
+
+      <div class="flex items-center gap-8">
+
+        <button class="text-[28px] text-[#53567b]">
+          ☰
+        </button>
+
+        <div class="relative">
+          <input
+            type="text"
+            placeholder="Search for users, courses, quizzes..."
+            class="w-[430px] h-[42px] rounded-xl border border-[#e7e5f0] bg-white pl-5 pr-12 text-[14px] outline-none"
+          />
+
+          <span class="absolute right-4 top-[10px] text-[#5f6287] text-[20px]">
+            ⌕
+          </span>
+        </div>
+
+      </div>
+
+      <div class="flex items-center gap-8">
+
+        <div class="relative text-[25px] text-[#25284d]">
+          🔔
+
+          <div class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#ff355d] text-white text-[11px] flex items-center justify-center font-semibold">
+            5
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+
+          <img
+            src="https://i.pravatar.cc/100?img=12"
+            class="w-12 h-12 rounded-full border-[3px] border-[#4f22ff]"
+          />
+
+          <div>
+            <div class="font-semibold text-[#12152f] text-[18px]">
+              Admin User
+            </div>
+
+            <div class="text-[#707396] text-[14px] mt-1">
+              Super Admin
+            </div>
+          </div>
+
+          <div class="text-[#5f6287] text-xl ml-2">
+            ⌄
+          </div>
+
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- CONTENT -->
+    <div class="flex-1 overflow-auto p-7">
+
+      <div class="flex gap-5">
+
+        <!-- LEFT -->
+        <section class="flex-1">
+
+          <!-- HEADER -->
+          <div class="flex items-start justify-between">
+
+            <div>
+              <h1 class="text-[52px] leading-[54px] font-extrabold text-[#0f1230]">
+                Manage Students
+              </h1>
+
+              <p class="mt-3 text-[18px] text-[#6d708d]">
+                View and manage all registered students on the platform.
+              </p>
+            </div>
+
+            <button class="w-[220px] h-[64px] rounded-2xl purple-gradient text-white font-semibold text-[22px] flex items-center justify-center gap-4 shadow-soft">
+              <span class="text-3xl">＋</span>
+              Add New Student
+            </button>
+
+          </div>
+
+          <!-- STAT CARDS -->
+          <div class="grid grid-cols-4 gap-5 mt-8">
+
+            <!-- CARD -->
+            <div class="card p-7 shadow-soft">
+
+              <div class="flex items-start justify-between">
+
+                <div class="w-20 h-20 rounded-full bg-[#f1e9ff] flex items-center justify-center text-[38px] text-[#5a2dfc]">
+                  👥
+                </div>
+
+                <div class="text-right">
+                  <div class="text-[#60637d] text-[15px] font-medium">
+                    Total Students
+                  </div>
+
+                  <div class="text-[48px] leading-none mt-4 font-extrabold text-[#0f1230]">
+                    2,458
+                  </div>
+
+                  <div class="text-[#15a867] text-[14px] mt-4 font-medium">
+                    ↑ 12.5% from last month
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="card p-7 shadow-soft">
+
+              <div class="flex items-start justify-between">
+
+                <div class="w-20 h-20 rounded-full bg-[#e8f7ef] flex items-center justify-center text-[38px] text-[#23b26d]">
+                  🎓
+                </div>
+
+                <div class="text-right">
+                  <div class="text-[#60637d] text-[15px] font-medium">
+                    Active Students
+                  </div>
+
+                  <div class="text-[48px] leading-none mt-4 font-extrabold text-[#0f1230]">
+                    1,856
+                  </div>
+
+                  <div class="text-[#15a867] text-[14px] mt-4 font-medium">
+                    ↑ 15.3% from last month
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="card p-7 shadow-soft">
+
+              <div class="flex items-start justify-between">
+
+                <div class="w-20 h-20 rounded-full bg-[#fff4e3] flex items-center justify-center text-[38px] text-[#f3a10a]">
+                  👤
+                </div>
+
+                <div class="text-right">
+                  <div class="text-[#60637d] text-[15px] font-medium">
+                    Inactive Students
+                  </div>
+
+                  <div class="text-[48px] leading-none mt-4 font-extrabold text-[#0f1230]">
+                    602
+                  </div>
+
+                  <div class="text-[#f0445a] text-[14px] mt-4 font-medium">
+                    ↓ 6.4% from last month
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="card p-7 shadow-soft">
+
+              <div class="flex items-start justify-between">
+
+                <div class="w-20 h-20 rounded-full bg-[#edf4ff] flex items-center justify-center text-[38px] text-[#3083ff]">
+                  📊
+                </div>
+
+                <div class="text-right">
+                  <div class="text-[#60637d] text-[15px] font-medium">
+                    New Students
+                  </div>
+
+                  <div class="text-[48px] leading-none mt-4 font-extrabold text-[#0f1230]">
+                    230
+                  </div>
+
+                  <div class="text-[#15a867] text-[14px] mt-4 font-medium">
+                    ↑ 10.2% from last month
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- TABLE -->
+          <div class="card shadow-soft mt-7 overflow-hidden">
+
+            <!-- FILTERS -->
+            <div class="p-5 border-b border-[#efedf6] flex items-center gap-4">
+
+              <input
+                type="text"
+                placeholder="Search students..."
+                class="w-[300px] h-[54px] rounded-xl border border-[#ebe8f4] px-5 outline-none text-[15px]"
+              />
+
+              <select class="w-[160px] h-[54px] rounded-xl border border-[#ebe8f4] px-4 text-[15px] text-[#4c5070] bg-white">
+                <option>All Roles</option>
+              </select>
+
+              <select class="w-[160px] h-[54px] rounded-xl border border-[#ebe8f4] px-4 text-[15px] text-[#4c5070] bg-white">
+                <option>All Status</option>
+              </select>
+
+              <select class="w-[180px] h-[54px] rounded-xl border border-[#ebe8f4] px-4 text-[15px] text-[#4c5070] bg-white">
+                <option>All Courses</option>
+              </select>
+
+              <button class="w-[130px] h-[54px] rounded-xl border border-[#ebe8f4] bg-white text-[15px] font-medium text-[#4c5070]">
+                ☰ Filters
+              </button>
+
+              <button class="w-[130px] h-[54px] rounded-xl border border-[#ebe8f4] bg-white text-[15px] font-medium text-[#4c5070]">
+                ⬇ Export
+              </button>
+
+            </div>
+
+            <!-- TABLE HEADER -->
+            <div class="grid grid-cols-[1.5fr_1.7fr_0.8fr_1.2fr_0.9fr_1fr_0.8fr] px-5 py-5 text-[#5b5e7d] text-[15px] font-semibold">
+
+              <div>Student</div>
+              <div>Email</div>
+              <div>Courses Enrolled</div>
+              <div>Progress</div>
+              <div>Status</div>
+              <div>Joined Date</div>
+              <div>Actions</div>
+
+            </div>
+
+            <!-- ROWS -->
+            <div class="table-row px-5 py-5 grid grid-cols-[1.5fr_1.7fr_0.8fr_1.2fr_0.9fr_1fr_0.8fr] items-center">
+
+              <div class="flex items-center gap-4">
+                <img src="https://i.pravatar.cc/100?img=11" class="w-12 h-12 rounded-full"/>
+                <span class="font-semibold text-[17px] text-[#12152f]">John Michael</span>
+              </div>
+
+              <div class="text-[#656886] text-[15px]">
+                john.michael@example.com
+              </div>
+
+              <div class="text-[16px] text-[#12152f]">
+                8
+              </div>
+
+              <div>
+                <div class="text-[15px] font-semibold text-[#12152f] mb-2">75%</div>
+                <div class="progress-line w-[130px]">
+                  <div class="progress-fill w-[75%]"></div>
+                </div>
+              </div>
+
+              <div>
+                <span class="bg-[#e8f7ef] text-[#16a466] text-[14px] px-4 py-2 rounded-lg">
+                  Active
+                </span>
+              </div>
+
+              <div class="text-[#4b4f6c] text-[15px]">
+                May 18, 2024
+              </div>
+
+              <div class="flex gap-3 text-[18px]">
+                <button class="w-10 h-10 rounded-lg border border-[#e6dfff] text-[#5a2dfc]">👁</button>
+                <button class="w-10 h-10 rounded-lg border border-[#e6dfff] text-[#5a2dfc]">✎</button>
+                <button class="w-10 h-10 rounded-lg border border-[#ffdede] text-[#ff4b5f]">🗑</button>
+              </div>
+
+            </div>
+
+            <!-- MORE ROWS -->
+            <div class="table-row px-5 py-5 grid grid-cols-[1.5fr_1.7fr_0.8fr_1.2fr_0.9fr_1fr_0.8fr] items-center">
+
+              <div class="flex items-center gap-4">
+                <img src="https://i.pravatar.cc/100?img=32" class="w-12 h-12 rounded-full"/>
+                <span class="font-semibold text-[17px] text-[#12152f]">Sarah Johnson</span>
+              </div>
+
+              <div class="text-[#656886] text-[15px]">
+                sarah.johnson@example.com
+              </div>
+
+              <div class="text-[16px] text-[#12152f]">
+                6
+              </div>
+
+              <div>
+                <div class="text-[15px] font-semibold text-[#12152f] mb-2">60%</div>
+                <div class="progress-line w-[130px]">
+                  <div class="progress-fill w-[60%]"></div>
+                </div>
+              </div>
+
+              <div>
+                <span class="bg-[#e8f7ef] text-[#16a466] text-[14px] px-4 py-2 rounded-lg">
+                  Active
+                </span>
+              </div>
+
+              <div class="text-[#4b4f6c] text-[15px]">
+                May 17, 2024
+              </div>
+
+              <div class="flex gap-3 text-[18px]">
+                <button class="w-10 h-10 rounded-lg border border-[#e6dfff] text-[#5a2dfc]">👁</button>
+                <button class="w-10 h-10 rounded-lg border border-[#e6dfff] text-[#5a2dfc]">✎</button>
+                <button class="w-10 h-10 rounded-lg border border-[#ffdede] text-[#ff4b5f]">🗑</button>
+              </div>
+
+            </div>
+
+            <div class="table-row px-5 py-5 grid grid-cols-[1.5fr_1.7fr_0.8fr_1.2fr_0.9fr_1fr_0.8fr] items-center">
+
+              <div class="flex items-center gap-4">
+                <img src="https://i.pravatar.cc/100?img=15" class="w-12 h-12 rounded-full"/>
+                <span class="font-semibold text-[17px] text-[#12152f]">Michael Brown</span>
+              </div>
+
+              <div class="text-[#656886] text-[15px]">
+                michael.brown@example.com
+              </div>
+
+              <div class="text-[16px] text-[#12152f]">
+                10
+              </div>
+
+              <div>
+                <div class="text-[15px] font-semibold text-[#12152f] mb-2">90%</div>
+                <div class="progress-line w-[130px]">
+                  <div class="progress-fill w-[90%]"></div>
+                </div>
+              </div>
+
+              <div>
+                <span class="bg-[#e8f7ef] text-[#16a466] text-[14px] px-4 py-2 rounded-lg">
+                  Active
+                </span>
+              </div>
+
+              <div class="text-[#4b4f6c] text-[15px]">
+                May 16, 2024
+              </div>
+
+              <div class="flex gap-3 text-[18px]">
+                <button class="w-10 h-10 rounded-lg border border-[#e6dfff] text-[#5a2dfc]">👁</button>
+                <button class="w-10 h-10 rounded-lg border border-[#e6dfff] text-[#5a2dfc]">✎</button>
+                <button class="w-10 h-10 rounded-lg border border-[#ffdede] text-[#ff4b5f]">🗑</button>
+              </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="border-t border-[#efedf6] px-5 py-5 flex items-center justify-between">
+
+              <div class="text-[#666985] text-[15px]">
+                Showing 1 to 8 of 2,458 students
+              </div>
+
+              <div class="flex items-center gap-3">
+
+                <button class="w-11 h-11 rounded-xl border border-[#ebe8f4] bg-white text-[#60637d]">
+                  ‹
+                </button>
+
+                <button class="w-11 h-11 rounded-xl purple-gradient text-white font-semibold">
+                  1
+                </button>
+
+                <button class="w-11 h-11 rounded-xl border border-[#ebe8f4] bg-white text-[#60637d]">
+                  2
+                </button>
+
+                <button class="w-11 h-11 rounded-xl border border-[#ebe8f4] bg-white text-[#60637d]">
+                  3
+                </button>
+
+                <button class="w-11 h-11 rounded-xl border border-[#ebe8f4] bg-white text-[#60637d]">
+                  ...
+                </button>
+
+                <button class="w-16 h-11 rounded-xl border border-[#ebe8f4] bg-white text-[#60637d]">
+                  308
+                </button>
+
+                <button class="w-11 h-11 rounded-xl border border-[#ebe8f4] bg-white text-[#60637d]">
+                  ›
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="w-[390px] space-y-5">
+
+          <!-- STUDENT OVERVIEW -->
+          <div class="card p-6 shadow-soft">
+
+            <div class="flex items-center justify-between">
+              <h3 class="text-[28px] font-bold text-[#10132f]">
+                Students Overview
+              </h3>
+
+              <button class="w-[120px] h-[44px] rounded-xl border border-[#ebe8f4] text-[#4c5070] text-[15px]">
+                This Month
+              </button>
+            </div>
+
+            <div class="mt-8 flex items-center gap-8">
+
+              <div class="relative">
+
+                <div class="donut"></div>
+
+                <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
+                  <div class="text-[38px] font-extrabold text-[#11142f]">
+                    2,458
+                  </div>
+
+                  <div class="text-[#6d708d] text-[15px]">
+                    Total Students
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="space-y-6">
+
+                <div>
+                  <div class="flex items-center gap-3">
+                    <div class="w-3 h-3 rounded-full bg-[#5a2dfc]"></div>
+                    <span class="text-[#4b4f6c] text-[16px]">Active</span>
+                  </div>
+
+                  <div class="text-[18px] font-semibold mt-2">
+                    1,856 (75.6%)
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex items-center gap-3">
+                    <div class="w-3 h-3 rounded-full bg-[#3794ff]"></div>
+                    <span class="text-[#4b4f6c] text-[16px]">Inactive</span>
+                  </div>
+
+                  <div class="text-[18px] font-semibold mt-2">
+                    602 (24.4%)
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- TOP COURSES -->
+          <div class="card p-6 shadow-soft">
+
+            <div class="flex items-center justify-between">
+              <h3 class="text-[28px] font-bold text-[#10132f]">
+                Top Courses
+              </h3>
+
+              <button class="text-[#5a2dfc] font-semibold text-[16px]">
+                View All
+              </button>
+            </div>
+
+            <div class="mt-8 space-y-7">
+
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-14 h-14 rounded-xl bg-[#efe7ff] flex items-center justify-center text-2xl">📑</div>
+
+                  <div>
+                    <div class="font-semibold text-[17px]">Web Development</div>
+                    <div class="text-[#6d708d] text-[15px] mt-1">1,245 students</div>
+                  </div>
+                </div>
+
+                <div class="mini-progress">
+                  <div class="mini-progress-fill w-[78%]"></div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-14 h-14 rounded-xl bg-[#e8f1ff] flex items-center justify-center text-2xl">🐍</div>
+
+                  <div>
+                    <div class="font-semibold text-[17px]">Python Programming</div>
+                    <div class="text-[#6d708d] text-[15px] mt-1">978 students</div>
+                  </div>
+                </div>
+
+                <div class="mini-progress">
+                  <div class="mini-progress-fill w-[64%]"></div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-14 h-14 rounded-xl bg-[#edf0ff] flex items-center justify-center text-2xl">🖥</div>
+
+                  <div>
+                    <div class="font-semibold text-[17px]">UI/UX Design</div>
+                    <div class="text-[#6d708d] text-[15px] mt-1">856 students</div>
+                  </div>
+                </div>
+
+                <div class="mini-progress">
+                  <div class="mini-progress-fill w-[56%]"></div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-14 h-14 rounded-xl bg-[#eef1ff] flex items-center justify-center text-2xl">📈</div>
+
+                  <div>
+                    <div class="font-semibold text-[17px]">Data Science</div>
+                    <div class="text-[#6d708d] text-[15px] mt-1">642 students</div>
+                  </div>
+                </div>
+
+                <div class="mini-progress">
+                  <div class="mini-progress-fill w-[42%]"></div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-14 h-14 rounded-xl bg-[#fff2bf] flex items-center justify-center text-2xl">JS</div>
+
+                  <div>
+                    <div class="font-semibold text-[17px]">Digital Marketing</div>
+                    <div class="text-[#6d708d] text-[15px] mt-1">521 students</div>
+                  </div>
+                </div>
+
+                <div class="mini-progress">
+                  <div class="mini-progress-fill w-[36%]"></div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- RECENT -->
+          <div class="card p-6 shadow-soft">
+
+            <div class="flex items-center justify-between">
+              <h3 class="text-[28px] font-bold text-[#10132f]">
+                Recent Student Activity
+              </h3>
+
+              <button class="text-[#5a2dfc] font-semibold text-[16px]">
+                View All
+              </button>
+            </div>
+
+            <div class="mt-8 space-y-7">
+
+              <div class="flex items-start justify-between">
+                <div class="flex gap-4">
+                  <img src="https://i.pravatar.cc/100?img=32" class="w-12 h-12 rounded-full"/>
+
+                  <div>
+                    <div class="text-[16px]">
+                      <span class="font-semibold">Sarah Johnson</span> enrolled in
+                    </div>
+
+                    <div class="text-[#5f6287] mt-1">
+                      Python Programming
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-[#7d809d] text-[14px]">
+                  2 min ago
+                </div>
+              </div>
+
+              <div class="flex items-start justify-between">
+                <div class="flex gap-4">
+                  <img src="https://i.pravatar.cc/100?img=15" class="w-12 h-12 rounded-full"/>
+
+                  <div>
+                    <div class="text-[16px]">
+                      <span class="font-semibold">Michael Brown</span> completed
+                    </div>
+
+                    <div class="text-[#5f6287] mt-1">
+                      UI/UX Design Course
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-[#7d809d] text-[14px]">
+                  15 min ago
+                </div>
+              </div>
+
+              <div class="flex items-start justify-between">
+                <div class="flex gap-4">
+                  <img src="https://i.pravatar.cc/100?img=32" class="w-12 h-12 rounded-full"/>
+
+                  <div>
+                    <div class="text-[16px]">
+                      <span class="font-semibold">Emily Davis</span> earned a certificate in
+                    </div>
+
+                    <div class="text-[#5f6287] mt-1">
+                      Web Development
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-[#7d809d] text-[14px]">
+                  1 hour ago
+                </div>
+              </div>
+
+              <div class="flex items-start justify-between">
+                <div class="flex gap-4">
+                  <img src="https://i.pravatar.cc/100?img=11" class="w-12 h-12 rounded-full"/>
+
+                  <div>
+                    <div class="text-[16px]">
+                      <span class="font-semibold">David Wilson</span> joined the platform
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-[#7d809d] text-[14px]">
+                  2 hours ago
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </aside>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+<script src="../../assets/js/api.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/sidebar.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/layout.js"></script>
+</body>
+</html>

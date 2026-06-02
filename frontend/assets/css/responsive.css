@@ -1,0 +1,118 @@
+/* Responsive safeguards without altering theme or branding */
+
+html,
+body {
+  max-width: 100%;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.responsive-table {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    width: 96%;
+  }
+}
+
+@media (max-width: 992px) {
+  .nav-links {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 94%;
+  }
+
+  .hero,
+  .dashboard,
+  .app {
+    min-width: 0;
+  }
+
+  .search,
+  .search-box {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .hero-buttons,
+  .nav-btns {
+    width: 100%;
+  }
+
+  .btn,
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+  }
+}
+
+/* Auth pages (Tailwind grid layouts) */
+@media (max-width: 1100px) {
+  .grid.grid-cols-\[46\%_54\%\],
+  .grid.grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Dashboard / app layouts */
+@media (max-width: 992px) {
+  .dashboard {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .dashboard .sidebar {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
+    transition: left 0.3s ease;
+  }
+
+  .dashboard .sidebar.open,
+  .app .sidebar.open {
+    left: 0;
+  }
+
+  .dashboard .main,
+  .app .main {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  body.dashboard-body,
+  .dashboard body {
+    overflow: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .app .sidebar {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+

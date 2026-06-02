@@ -1,0 +1,115 @@
+/* ============================================
+   EDUNOVA - DESIGN SYSTEM VARIABLES
+   Color, Typography, Spacing & Effects
+   ============================================ */
+
+/* PRIMARY COLORS */
+:root {
+  /* Brand Colors */
+  --primary: #5130e5;
+  --primary-light: #6B3BFF;
+  --primary-dark: #3f1fb8;
+  --primary-ultra-dark: #1a0f5e;
+  
+  /* Secondary Colors */
+  --secondary: #7c5cf5;
+  --secondary-light: #95A7FF;
+  --secondary-dark: #5B34F2;
+  
+  /* Accent Colors */
+  --accent: #f4b400;
+  --accent-danger: #ff4d5a;
+  --accent-success: #22c55e;
+  
+  /* Neutrals */
+  --text-dark: #111827;
+  --text-gray: #555f76;
+  --text-light: #8c93a6;
+  --border-light: #ddd;
+  --border-soft: #ececf4;
+  --border-ultra-light: #e6e8f0;
+  
+  /* Background */
+  --bg-primary: #f5f4fb;
+  --bg-secondary: #f8f2ff;
+  --bg-light: #f7f6fb;
+  --bg-ultra-light: #f1edff;
+  --bg-white: #ffffff;
+  
+  /* Status Colors */
+  --success: #22c55e;
+  --warning: #f97316;
+  --danger: #ef4444;
+  --info: #3b82f6;
+  
+  /* Typography */
+  --font-main: 'Poppins', 'Inter', 'Outfit', sans-serif;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-ultra-bold: 800;
+  
+  /* Font Sizes */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 28px;
+  --text-4xl: 34px;
+  --text-5xl: 42px;
+  --text-6xl: 56px;
+  --text-7xl: 72px;
+  
+  /* Line Heights */
+  --line-height-tight: 1.1;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.8;
+  --line-height-loose: 1.9;
+  
+  /* Spacing Scale */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-base: 16px;
+  --space-lg: 20px;
+  --space-xl: 24px;
+  --space-2xl: 28px;
+  --space-3xl: 32px;
+  --space-4xl: 40px;
+  --space-5xl: 48px;
+  --space-6xl: 60px;
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 25px;
+  --radius-full: 50%;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 15px 35px rgba(81, 48, 229, 0.2);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.2);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-base: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
+  
+  /* Z-index Scale */
+  --z-dropdown: 100;
+  --z-sticky: 50;
+  --z-fixed: 1000;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-tooltip: 1070;
+}
+
+/* Brand colors are fixed; dark-mode overrides are intentionally disabled. */

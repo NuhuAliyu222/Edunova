@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Course Details</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+  <link rel="stylesheet" href="../../assets/css/global.css"/>
+  <link rel="stylesheet" href="../../assets/css/animation.css"/>
+  <link rel="stylesheet" href="../../assets/css/responsive.css"/>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:'Outfit',sans-serif;
+      background:#f7f6fb;
+      color:#111827;
+      overflow-x:hidden;
+    }
+
+    .app{
+      display:flex;
+      min-height:100vh;
+      width:100%;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar{
+      width:255px;
+      background:linear-gradient(180deg,#24157f 0%, #191163 100%);
+      padding:20px 16px;
+      color:#fff;
+      position:fixed;
+      left:0;
+      top:0;
+      bottom:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:36px;
+      padding:0 8px;
+    }
+
+    .logo i{
+      font-size:36px;
+    }
+
+    .logo h2{
+      font-size:18px;
+      font-weight:700;
+      line-height:1.3;
+    }
+
+    .menu{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .menu-item{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      padding:14px 14px;
+      border-radius:14px;
+      color:#fff;
+      text-decoration:none;
+      font-size:16px;
+      font-weight:500;
+    }
+
+    .menu-item i{
+      width:24px;
+      font-size:20px;
+    }
+
+    .menu-item.active{
+      background:#fff;
+      color:#5d35ff;
+    }
+
+    /* UPGRADE CARD */
+
+    .upgrade-card{
+      background:#fff;
+      border-radius:18px;
+      padding:20px 18px;
+      color:#161616;
+      margin-top:20px;
+      overflow:hidden;
+    }
+
+    .upgrade-card h3{
+      font-size:17px;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+
+    .upgrade-card p{
+      font-size:15px;
+      color:#62697c;
+      line-height:1.7;
+      margin-bottom:18px;
+    }
+
+    .upgrade-btn{
+      border:none;
+      background:#5d35ff;
+      color:#fff;
+      height:40px;
+      padding:0 18px;
+      border-radius:10px;
+      font-size:15px;
+      font-weight:600;
+      cursor:pointer;
+      margin-bottom:16px;
+    }
+
+    .upgrade-card img{
+      width:170px;
+      display:block;
+      margin:0 auto;
+    }
+
+    /* MAIN */
+
+    .main{
+      margin-left:255px;
+      width:calc(100% - 255px);
+    }
+
+    /* TOPBAR */
+
+    .topbar{
+      height:72px;
+      background:#fff;
+      border-bottom:1px solid #ececf4;
+      padding:0 26px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .top-left{
+      display:flex;
+      align-items:center;
+      gap:26px;
+    }
+
+    .menu-toggle{
+      font-size:28px;
+      color:#50506d;
+    }
+
+    .search-box{
+      width:392px;
+      height:42px;
+      border:1px solid #dfe2ec;
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 18px;
+    }
+
+    .search-box input{
+      width:100%;
+      border:none;
+      outline:none;
+      font-family:'Outfit',sans-serif;
+      font-size:16px;
+      color:#555a6c;
+    }
+
+    .search-box i{
+      color:#575d76;
+      font-size:18px;
+    }
+
+    .top-right{
+      display:flex;
+      align-items:center;
+      gap:30px;
+    }
+
+    .notification{
+      position:relative;
+      font-size:24px;
+      color:#252b49;
+    }
+
+    .badge{
+      position:absolute;
+      top:-6px;
+      right:-8px;
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      background:#ff4d5a;
+      color:#fff;
+      font-size:10px;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .profile-mini{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .profile-mini img{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      object-fit:cover;
+    }
+
+    .profile-text h4{
+      font-size:16px;
+      font-weight:700;
+      margin-bottom:2px;
+    }
+
+    .profile-text p{
+      font-size:14px;
+      color:#666d80;
+    }
+
+    .dropdown{
+      margin-left:10px;
+      color:#4f556e;
+    }
+
+    /* CONTENT */
+
+    .content{
+      padding:18px 22px;
+      display:grid;
+      grid-template-columns:1fr 380px;
+      gap:18px;
+    }
+
+    .left-section{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .back-link{
+      color:#4f46e5;
+      font-size:16px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:2px;
+      text-decoration:none;
+    }
+
+    /* COURSE HERO */
+
+    .course-hero{
+      background:#fff;
+      border:1px solid #ececf4;
+      border-radius:18px;
+      padding:20px;
+      display:grid;
+      grid-template-columns:340px 1fr;
+      gap:28px;
+      align-items:center;
+    }
+
+    .course-image{
+      background:#cbbcff;
+      border-radius:14px;
+      height:250px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .course-image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .tag{
+      position:absolute;
+      right:18px;
+      width:44px;
+      height:44px;
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-size:14px;
+      font-weight:700;
+      box-shadow:0 10px 20px rgba(0,0,0,0.08);
+    }
+
+    .html-tag{
+      top:30px;
+      background:#7a5cff;
+    }
+
+    .css-tag{
+      top:76px;
+      background:#46a7ff;
+    }
+
+    .js-tag{
+      top:122px;
+      background:#ffbe2f;
+    }
+
+    .course-info h1{
+      font-size:34px;
+      line-height:1.2;
+      font-weight:800;
+      margin-bottom:14px;
+      color:#0f172a;
+    }
+
+    .course-info p{
+      font-size:17px;
+      line-height:1.6;
+      color:#5f6677;
+      margin-bottom:20px;
+      max-width:650px;
+    }
+
+    .meta-row{
+      display:flex;
+      align-items:center;
+      gap:22px;
+      margin-bottom:24px;
+      flex-wrap:wrap;
+    }
+
+    .meta{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#374151;
+      font-size:16px;
+      position:relative;
+    }
+
+    .meta:not(:last-child)::after{
+      content:'';
+      position:absolute;
+      right:-12px;
+      top:2px;
+      width:1px;
+      height:18px;
+      background:#e3e5ef;
+    }
+
+    .meta i{
+      color:#fbbf24;
+    }
+
+    .meta .dark{
+      color:#303654;
+    }
+
+    .progress-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:10px;
+    }
+
+    .progress-title h4{
+      font-size:16px;
+      font-weight:600;
+    }
+
+    .progress-title span{
+      font-size:16px;
+      font-weight:700;
+    }
+
+    .progress-bar{
+      width:100%;
+      height:8px;
+      border-radius:10px;
+      background:#e8e6f7;
+      overflow:hidden;
+      margin-bottom:24px;
+    }
+
+    .progress-fill{
+      width:75%;
+      height:100%;
+      background:#5d35ff;
+      border-radius:10px;
+    }
+
+    .hero-buttons{
+      display:flex;
+      align-items:center;
+      gap:20px;
+    }
+
+    .primary-btn{
+      height:46px;
+      padding:0 24px;
+      border:none;
+      border-radius:10px;
+      background:#5d35ff;
+      color:#fff;
+      font-size:16px;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      cursor:pointer;
+    }
+
+    .outline-btn{
+      height:46px;
+      padding:0 22px;
+      border:1.5px solid #bcaeff;
+      border-radius:10px;
+      background:#fff;
+      color:#5d35ff;
+      font-size:16px;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      cursor:pointer;
+    }
+
+    /* TABS */
+
+    .tabs-wrapper{
+      background:#fff;
+      border:1px solid #ececf4;
+      border-radius:18px;
+      overflow:hidden;
+    }
+
+    .tabs{
+      height:58px;
+      display:flex;
+      align-items:center;
+      gap:40px;
+      padding:0 26px;
+      border-bottom:1px solid #ececf4;
+    }
+
+    .tab{
+      height:100%;
+      display:flex;
+      align-items:center;
+      font-size:16px;
+      font-weight:500;
+      color:#4b556d;
+      position:relative;
+      cursor:pointer;
+    }
+
+    .tab.active{
+      color:#5d35ff;
+      font-weight:600;
+    }
+
+    .tab.active::after{
+      content:'';
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:100%;
+      height:3px;
+      background:#5d35ff;
+      border-radius:10px;
+    }
+
+    /* MODULES */
+
+    .modules{
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .module{
+      border:1px solid #ececf4;
+      border-radius:12px;
+      overflow:hidden;
+      background:#fff;
+    }
+
+    .module-header{
+      height:44px;
+      background:#f8f7fc;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 18px;
+    }
+
+    .module-header h3{
+      font-size:16px;
+      font-weight:600;
+      color:#1f2937;
+    }
+
+    .lesson-count{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      color:#4b556d;
+      font-size:15px;
+      font-weight:500;
+    }
+
+    .lesson-list{
+      background:#fff;
+    }
+
+    .lesson{
+      height:54px;
+      border-top:1px solid #eef0f6;
+      padding:0 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      cursor:pointer;
+      transition:background .15s;
+    }
+
+    .lesson:hover{
+      background:#f8f9ff;
+    }
+
+    .lesson.is-done{
+      background:#f0fdf4;
+    }
+
+    .lesson.is-done .lesson-title{
+      color:#166534;
+    }
+
+    .lesson-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .lesson-left i{
+      color:#374151;
+      font-size:18px;
+    }
+
+    .lesson-title{
+      font-size:15px;
+      color:#111827;
+    }
+
+    .lesson-right{
+      display:flex;
+      align-items:center;
+      gap:26px;
+    }
+
+    .time{
+      color:#4b556d;
+      font-size:15px;
+    }
+
+    .completed{
+      color:#22c55e;
+      font-size:18px;
+    }
+
+    .quiz-btn{
+      height:34px;
+      padding:0 16px;
+      border:1px solid #bcaeff;
+      background:#fff;
+      border-radius:8px;
+      color:#5d35ff;
+      font-size:14px;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .collapsed{
+      height:56px;
+      background:#f8f7fc;
+      border:1px solid #ececf4;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 18px;
+    }
+
+    .collapsed h3{
+      font-size:16px;
+      font-weight:600;
+    }
+
+    .collapsed-right{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      color:#4b556d;
+      font-size:15px;
+    }
+
+    /* RIGHT SIDEBAR */
+
+    .right-section{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid #ececf4;
+      border-radius:18px;
+      padding:22px;
+    }
+
+    .card h3{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:18px;
+      color:#111827;
+    }
+
+    .about-text{
+      color:#5f6677;
+      font-size:16px;
+      line-height:1.8;
+      margin-bottom:20px;
+    }
+
+    .about-list{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
+    .about-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .about-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      color:#111827;
+      font-size:16px;
+    }
+
+    .about-left i{
+      width:20px;
+      color:#374151;
+    }
+
+    .about-right{
+      color:#4b556d;
+      font-size:16px;
+    }
+
+    .purple-text{
+      color:#5d35ff;
+      font-weight:600;
+    }
+
+    /* RESOURCES */
+
+    .resource-list{
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+    }
+
+    .resource{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .resource-left{
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+    }
+
+    .resource-left i{
+      font-size:20px;
+      margin-top:2px;
+    }
+
+    .red{
+      color:#ef4444;
+    }
+
+    .blue{
+      color:#3b82f6;
+    }
+
+    .orange{
+      color:#f97316;
+    }
+
+    .dark{
+      color:#1f2937;
+    }
+
+    .resource-info h4{
+      font-size:16px;
+      font-weight:500;
+      margin-bottom:4px;
+    }
+
+    .resource-info p{
+      color:#5f6677;
+      font-size:14px;
+    }
+
+    .resource-action{
+      color:#374151;
+      font-size:20px;
+    }
+
+    /* HELP */
+
+    .help-card{
+      background:#f1edff;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      overflow:hidden;
+    }
+
+    .help-content h3{
+      margin-bottom:14px;
+    }
+
+    .help-content p{
+      color:#5f6677;
+      font-size:15px;
+      line-height:1.7;
+      margin-bottom:20px;
+      max-width:220px;
+    }
+
+    .help-btn{
+      height:44px;
+      padding:0 20px;
+      border:none;
+      border-radius:10px;
+      background:#5d35ff;
+      color:#fff;
+      font-size:15px;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      cursor:pointer;
+    }
+
+    .help-card img{
+      width:120px;
+      object-fit:contain;
+    }
+
+    @media(max-width:1400px){
+
+      .content{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:1100px){
+
+      .sidebar{
+        display:none;
+      }
+
+      .main{
+        margin-left:0;
+        width:100%;
+      }
+    }
+
+    @media(max-width:900px){
+
+      .course-hero{
+        grid-template-columns:1fr;
+      }
+
+      .course-image{
+        height:240px;
+      }
+
+      .hero-buttons{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+
+    @media(max-width:768px){
+
+      .topbar{
+        flex-direction:column;
+        height:auto;
+        gap:18px;
+        padding:18px;
+      }
+
+      .top-left,
+      .top-right{
+        width:100%;
+      }
+
+      .search-box{
+        width:100%;
+      }
+
+      .tabs{
+        overflow:auto;
+        white-space:nowrap;
+      }
+
+      .content{
+        padding:14px;
+      }
+
+      .lesson{
+        height:auto;
+        padding:14px 18px;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+      }
+
+      .lesson-right{
+        width:100%;
+        justify-content:space-between;
+      }
+
+      .help-card{
+        flex-direction:column;
+        gap:20px;
+        align-items:flex-start;
+      }
+    }
+
+  </style>
+</head>
+
+<body data-auth-guard="student">
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar" id="sidebar">
+
+    <div>
+
+      <div class="logo">
+        <i class="fa-solid fa-graduation-cap"></i>
+
+        <h2>
+          Edunova<br>
+          Smart Learning
+        </h2>
+      </div>
+
+      <nav class="menu" aria-label="Student main menu">
+
+        <a href="dashboard.html" class="menu-item">
+          <i class="fa-solid fa-house"></i>
+          Dashboard
+        </a>
+
+        <a href="courses.html" class="menu-item active">
+          <i class="fa-solid fa-book-open"></i>
+          My Courses
+        </a>
+
+        <a href="courses.html" class="menu-item">
+          <i class="fa-solid fa-play-circle"></i>
+          Lessons
+        </a>
+
+        <a href="quiz.html" class="menu-item">
+          <i class="fa-solid fa-question-circle"></i>
+          Quizzes
+        </a>
+
+        <a href="profile.html" class="menu-item">
+          <i class="fa-solid fa-chart-line"></i>
+          My Progress
+        </a>
+
+        <a href="profile.html#certificates" class="menu-item">
+          <i class="fa-solid fa-certificate"></i>
+          Certificates
+        </a>
+
+        <a href="courses.html#bookmarks" class="menu-item">
+          <i class="fa-regular fa-bookmark"></i>
+          Bookmarks
+        </a>
+
+        <a href="profile.html#messages" class="menu-item">
+          <i class="fa-regular fa-envelope"></i>
+          Messages
+        </a>
+
+        <a href="profile.html" class="menu-item">
+          <i class="fa-regular fa-user"></i>
+          Profile
+        </a>
+
+        <a href="profile.html#settings" class="menu-item">
+          <i class="fa-solid fa-gear"></i>
+          Settings
+        </a>
+
+        <a href="login.html" class="menu-item" data-logout style="margin-top:10px;">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          Logout
+        </a>
+
+      </nav>
+
+    </div>
+
+    <!-- UPGRADE -->
+
+    <div class="upgrade-card">
+
+      <h3>Upgrade Your Learning</h3>
+
+      <p>
+        Unlock premium courses, earn certificates and much more.
+      </p>
+
+      <button class="upgrade-btn">
+        Upgrade Now
+      </button>
+
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="">
+
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+      <div class="top-left">
+
+        <div class="menu-toggle">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <div class="search-box">
+
+          <input type="text" placeholder="Search for courses, lessons...">
+
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+        </div>
+
+      </div>
+
+      <div class="top-right">
+
+        <div class="notification">
+
+          <i class="fa-regular fa-bell"></i>
+
+          <div class="badge">3</div>
+
+        </div>
+
+        <div class="profile-mini">
+
+          <img src="https://i.pravatar.cc/100?img=12" alt="">
+
+          <div class="profile-text">
+            <h4>John Doe</h4>
+            <p>Student</p>
+          </div>
+
+          <div class="dropdown">
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CONTENT -->
+
+    <div class="content" id="bookmarks">
+
+      <!-- LEFT -->
+
+      <div class="left-section">
+
+        <a href="courses.html" class="back-link">
+          <i class="fa-solid fa-chevron-left"></i>
+          Back to My Courses
+        </a>
+
+        <!-- COURSE HERO -->
+
+        <div class="course-hero">
+
+          <div class="course-image">
+
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="">
+
+            <div class="tag html-tag">HTML</div>
+            <div class="tag css-tag">CSS</div>
+            <div class="tag js-tag">JS</div>
+
+          </div>
+
+          <div class="course-info">
+
+            <h1>Web Development Fundamentals</h1>
+
+            <p>
+              Learn HTML, CSS, JavaScript and build responsive websites from scratch.
+            </p>
+
+            <div class="meta-row">
+
+              <div class="meta">
+                <i class="fa-solid fa-star"></i>
+                4.8 (120 ratings)
+              </div>
+
+              <div class="meta">
+                <i class="fa-solid fa-users dark"></i>
+                1,250 Students
+              </div>
+
+              <div class="meta">
+                <i class="fa-solid fa-chart-column dark"></i>
+                Beginner
+              </div>
+
+            </div>
+
+            <div class="progress-title">
+              <h4>Overall Progress</h4>
+              <span>75%</span>
+            </div>
+
+            <div class="progress-bar">
+              <div class="progress-fill"></div>
+            </div>
+
+            <div class="hero-buttons">
+
+              <button class="primary-btn">
+                <i class="fa-solid fa-play"></i>
+                Continue Learning
+              </button>
+
+              <button class="outline-btn">
+                <i class="fa-regular fa-bookmark"></i>
+                Bookmark Course
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- TABS -->
+
+        <div class="tabs-wrapper">
+
+          <div class="tabs">
+
+            <div class="tab active">
+              Course Content
+            </div>
+
+            <div class="tab">
+              About Course
+            </div>
+
+            <div class="tab">
+              Reviews (120)
+            </div>
+
+            <div class="tab">
+              Announcements
+            </div>
+
+          </div>
+
+          <!-- MODULES -->
+
+          <div class="modules">
+
+            <!-- OPEN -->
+
+            <div class="module">
+
+              <div class="module-header">
+
+                <h3>Module 1: Introduction to Web Development</h3>
+
+                <div class="lesson-count">
+                  4 Lessons
+                  <i class="fa-solid fa-chevron-up"></i>
+                </div>
+
+              </div>
+
+              <div class="lesson-list">
+
+                <div class="lesson">
+
+                  <div class="lesson-left">
+
+                    <i class="fa-regular fa-circle-play"></i>
+
+                    <div class="lesson-title">
+                      1.1&nbsp;&nbsp;What is Web Development?
+                    </div>
+
+                  </div>
+
+                  <div class="lesson-right">
+
+                    <div class="time">10:15</div>
+
+                    <div class="completed">
+                      <i class="fa-solid fa-circle-check"></i>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="lesson">
+
+                  <div class="lesson-left">
+
+                    <i class="fa-regular fa-circle-play"></i>
+
+                    <div class="lesson-title">
+                      1.2&nbsp;&nbsp;How Does the Web Work?
+                    </div>
+
+                  </div>
+
+                  <div class="lesson-right">
+
+                    <div class="time">15:20</div>
+
+                    <div class="completed">
+                      <i class="fa-solid fa-circle-check"></i>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="lesson">
+
+                  <div class="lesson-left">
+
+                    <i class="fa-regular fa-circle-play"></i>
+
+                    <div class="lesson-title">
+                      1.3&nbsp;&nbsp;HTML Overview
+                    </div>
+
+                  </div>
+
+                  <div class="lesson-right">
+
+                    <div class="time">12:30</div>
+
+                    <div class="completed">
+                      <i class="fa-solid fa-circle-check"></i>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="lesson">
+
+                  <div class="lesson-left">
+
+                    <i class="fa-regular fa-file-lines"></i>
+
+                    <div class="lesson-title">
+                      1.4&nbsp;&nbsp;Module 1 Quiz
+                    </div>
+
+                  </div>
+
+                  <div class="lesson-right">
+
+                    <div class="time">10 Questions</div>
+
+                    <button class="quiz-btn">
+                      Start Quiz
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- COLLAPSED -->
+
+            <div class="collapsed">
+
+              <h3>Module 2: HTML Basics</h3>
+
+              <div class="collapsed-right">
+                6 Lessons
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+
+            </div>
+
+            <div class="collapsed">
+
+              <h3>Module 3: CSS Fundamentals</h3>
+
+              <div class="collapsed-right">
+                7 Lessons
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+
+            </div>
+
+            <div class="collapsed">
+
+              <h3>Module 4: JavaScript Basics</h3>
+
+              <div class="collapsed-right">
+                8 Lessons
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+
+            </div>
+
+            <div class="collapsed">
+
+              <h3>Module 5: Building a Project</h3>
+
+              <div class="collapsed-right">
+                5 Lessons
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="right-section">
+
+        <!-- ABOUT -->
+
+        <div class="card">
+
+          <h3>About This Course</h3>
+
+          <p class="about-text">
+            This course is designed for beginners who want to learn web development step by step. By the end of this course, you will be able to build beautiful and responsive websites.
+          </p>
+
+          <div class="about-list">
+
+            <div class="about-item">
+
+              <div class="about-left">
+                <i class="fa-regular fa-user"></i>
+                Instructor
+              </div>
+
+              <div class="about-right purple-text">
+                Alex Johnson
+              </div>
+
+            </div>
+
+            <div class="about-item">
+
+              <div class="about-left">
+                <i class="fa-regular fa-clock"></i>
+                Duration
+              </div>
+
+              <div class="about-right">
+                10h 30m
+              </div>
+
+            </div>
+
+            <div class="about-item">
+
+              <div class="about-left">
+                <i class="fa-regular fa-rectangle-list"></i>
+                Lessons
+              </div>
+
+              <div class="about-right">
+                30
+              </div>
+
+            </div>
+
+            <div class="about-item">
+
+              <div class="about-left">
+                <i class="fa-solid fa-globe"></i>
+                Language
+              </div>
+
+              <div class="about-right">
+                English
+              </div>
+
+            </div>
+
+            <div class="about-item">
+
+              <div class="about-left">
+                <i class="fa-regular fa-id-badge"></i>
+                Certificate
+              </div>
+
+              <div class="about-right">
+                Yes
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- RESOURCES -->
+
+        <div class="card">
+
+          <h3>Course Resources</h3>
+
+          <div class="resource-list">
+
+            <div class="resource">
+
+              <div class="resource-left">
+
+                <i class="fa-regular fa-file-pdf red"></i>
+
+                <div class="resource-info">
+                  <h4>Course Notes (PDF)</h4>
+                  <p>2.4 MB</p>
+                </div>
+
+              </div>
+
+              <div class="resource-action">
+                <i class="fa-solid fa-download"></i>
+              </div>
+
+            </div>
+
+            <div class="resource">
+
+              <div class="resource-left">
+
+                <i class="fa-regular fa-file-lines blue"></i>
+
+                <div class="resource-info">
+                  <h4>HTML Cheat Sheet</h4>
+                  <p>1.1 MB</p>
+                </div>
+
+              </div>
+
+              <div class="resource-action">
+                <i class="fa-solid fa-download"></i>
+              </div>
+
+            </div>
+
+            <div class="resource">
+
+              <div class="resource-left">
+
+                <i class="fa-regular fa-file-lines orange"></i>
+
+                <div class="resource-info">
+                  <h4>CSS Cheat Sheet</h4>
+                  <p>1.3 MB</p>
+                </div>
+
+              </div>
+
+              <div class="resource-action">
+                <i class="fa-solid fa-download"></i>
+              </div>
+
+            </div>
+
+            <div class="resource">
+
+              <div class="resource-left">
+
+                <i class="fa-solid fa-globe dark"></i>
+
+                <div class="resource-info">
+                  <h4>Useful Links</h4>
+                  <p>View</p>
+                </div>
+
+              </div>
+
+              <div class="resource-action">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- HELP -->
+
+        <div class="card help-card">
+
+          <div class="help-content">
+
+            <h3>Need Help?</h3>
+
+            <p>
+              If you have any questions, feel free to ask or contact our support team.
+            </p>
+
+            <button class="help-btn">
+
+              <i class="fa-solid fa-headset"></i>
+
+              Contact Support
+
+            </button>
+
+          </div>
+
+          <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" alt="">
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+<script src="../../assets/js/api.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/sidebar.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/layout.js"></script>
+</body>
+</html>

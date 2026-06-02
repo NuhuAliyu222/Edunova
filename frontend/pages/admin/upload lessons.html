@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Lessons - Edunova - Smart Learning</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="../../assets/css/global.css"/>
+  <link rel="stylesheet" href="../../assets/css/animation.css"/>
+  <link rel="stylesheet" href="../../assets/css/responsive.css"/>
+
+  <style>
+    *{
+      font-family: 'Inter', sans-serif;
+    }
+
+    body{
+      background:#f7f7fb;
+      overflow:hidden;
+    }
+
+    .sidebar-bg{
+      background:
+      radial-gradient(circle at top left, rgba(107,63,255,0.18), transparent 28%),
+      linear-gradient(180deg,#07032d 0%, #080a4d 100%);
+    }
+
+    .active-menu{
+      background:linear-gradient(90deg,#4c1dff 0%, #6428ff 100%);
+      box-shadow:0 10px 30px rgba(91,53,255,.35);
+    }
+
+    .glass-card{
+      background:#ffffff;
+      border:1px solid #ececf2;
+      box-shadow:0 2px 6px rgba(20,20,43,0.03);
+    }
+
+    .purple-btn{
+      background:linear-gradient(90deg,#4c1dff 0%, #6b2dff 100%);
+    }
+
+    .input{
+      border:1px solid #e6e7ef;
+      background:#fff;
+      height:48px;
+      border-radius:10px;
+      padding:0 16px;
+      font-size:14px;
+      color:#111827;
+      outline:none;
+      width:100%;
+    }
+
+    .textarea{
+      border:1px solid #e6e7ef;
+      border-radius:10px;
+      padding:14px 16px;
+      font-size:14px;
+      outline:none;
+      resize:none;
+      width:100%;
+    }
+
+    .toolbar-btn{
+      width:28px;
+      height:28px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:6px;
+      color:#52525b;
+    }
+
+    .toolbar-btn:hover{
+      background:#f2f2f7;
+    }
+
+    .status-pill{
+      padding:6px 12px;
+      border-radius:8px;
+      font-size:12px;
+      font-weight:600;
+    }
+
+    .published{
+      background:#ebfaf1;
+      color:#27ae60;
+    }
+
+    .draft{
+      background:#fff6e7;
+      color:#e0a129;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar{
+      display:none;
+    }
+
+    a.admin-nav-item{
+      text-decoration:none;
+      color:inherit;
+      display:flex;
+      align-items:center;
+    }
+  </style>
+</head>
+
+<body data-auth-guard="admin">
+
+<div class="w-screen h-screen flex">
+
+  <!-- SIDEBAR -->
+  <aside class="w-[245px] h-full sidebar-bg text-white flex flex-col">
+
+    <!-- Logo -->
+    <div class="px-7 pt-6 flex items-start gap-4">
+      <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br from-[#6d3bff] to-[#4c1dff]">
+        <i class="fa-solid fa-graduation-cap text-[22px]"></i>
+      </div>
+
+      <div>
+        <div class="text-[18px] font-[800] leading-[22px]">Edunova </div>
+        <div class="text-[18px] font-[800] leading-[22px]">- Smart Learning</div>
+      </div>
+    </div>
+
+    <!-- Menu -->
+    <div class="mt-10 px-3 flex-1 overflow-y-auto scrollbar-hide">
+
+      <nav class="space-y-2" aria-label="Admin main menu">
+
+        <a href="dashboard.html" class="admin-nav-item flex items-center gap-4 px-5 h-[48px] rounded-xl text-[15px]">
+          <i class="fa-solid fa-house text-[17px] opacity-95"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="manage students.html" class="admin-nav-item flex items-center gap-4 px-5 h-[48px] rounded-xl text-[15px]">
+          <i class="fa-solid fa-users text-[17px] opacity-95"></i>
+          <span>Users</span>
+        </a>
+
+        <a href="manage courses.html" class="admin-nav-item flex items-center gap-4 px-5 h-[48px] rounded-xl text-[15px]">
+          <i class="fa-regular fa-book-open text-[17px] opacity-95"></i>
+          <span>Courses</span>
+        </a>
+
+        <!-- LESSONS ACTIVE -->
+        <div class="rounded-2xl active-menu overflow-hidden">
+
+          <a href="upload lessons.html" class="admin-nav-item flex items-center gap-4 px-5 h-[48px] text-[15px]">
+            <i class="fa-regular fa-circle-play text-[17px]"></i>
+            <span>Lessons</span>
+          </a>
+
+          <div class="pl-14 pb-4 space-y-4 text-[14px]">
+
+            <a href="upload lessons.html" class="admin-nav-item flex items-center gap-3">
+              <div class="w-[6px] h-[6px] rounded-full bg-white"></div>
+              <span>All Lessons</span>
+            </a>
+
+            <a href="upload lessons.html#upload" class="admin-nav-item flex items-center gap-3 text-[#b9a7ff]">
+              <div class="w-[6px] h-[6px] rounded-full bg-[#7f5cff]"></div>
+              <span>Upload Lesson</span>
+            </a>
+
+          </div>
+        </div>
+
+        <a href="managa quiz.html" class="admin-nav-item flex items-center gap-4 px-5 h-[48px] rounded-xl text-[15px]">
+          <i class="fa-regular fa-circle-question text-[17px]"></i>
+          <span>Quizzes</span>
+        </a>
+
+        <a href="dashboard.html#certificates" class="admin-nav-item flex items-center gap-4 px-5 h-[48px] rounded-xl text-[15px]">
+          <i class="fa-regular fa-id-card text-[17px]"></i>
+          <span>Certificates</span>
+        </a>
+
+        <a href="dashboard.html#reports" class="admin-nav-item flex items-center gap-4 px-5 h-[48px] rounded-xl text-[15px]">
+          <i class="fa-solid fa-chart-column text-[17px]"></i>
+          <span>Reports</span>
+        </a>
+
+        <a href="dashboard.html#announcements" class="admin-nav-item flex items-center gap-4 px-5 h-[48px] rounded-xl text-[15px]">
+          <i class="fa-solid fa-bullhorn text-[17px]"></i>
+          <span>Announcements</span>
+        </a>
+
+        <a href="dashboard.html#settings" class="admin-nav-item flex items-center gap-4 px-5 h-[48px] rounded-xl text-[15px]">
+          <i class="fa-solid fa-gear text-[17px]"></i>
+          <span>Settings</span>
+        </a>
+
+        <a href="dashboard.html#system-settings" class="admin-nav-item flex items-center gap-4 px-5 h-[48px] rounded-xl text-[15px]">
+          <i class="fa-regular fa-shield text-[17px]"></i>
+          <span>System Settings</span>
+        </a>
+
+        <a href="login.html" class="admin-nav-item flex items-center gap-4 px-5 h-[48px] rounded-xl text-[15px]">
+          <i class="fa-solid fa-arrow-right-from-bracket text-[17px]"></i>
+          <span>Logout</span>
+        </a>
+
+      </nav>
+
+      <!-- Upgrade Card -->
+      <div class="mt-12 px-3 pb-6">
+        <div class="rounded-[26px] overflow-hidden bg-gradient-to-b from-[#1c1d6a] to-[#10134f] p-7">
+
+          <div class="flex justify-center">
+            <div class="w-[82px] h-[82px] rounded-full bg-gradient-to-br from-[#7f4dff] to-[#4f1fff] flex items-center justify-center shadow-2xl">
+              <i class="fa-solid fa-crown text-[30px]"></i>
+            </div>
+          </div>
+
+          <h3 class="text-center text-[16px] font-[700] mt-7">
+            Upgrade to Pro
+          </h3>
+
+          <p class="text-center text-[14px] text-[#d3d3f5] mt-3 leading-6">
+            Unlock all features and get exclusive benefits.
+          </p>
+
+          <button class="purple-btn w-full h-[50px] rounded-xl font-[600] mt-7">
+            Upgrade Now
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="flex-1 h-full flex flex-col overflow-hidden">
+
+    <!-- TOPBAR -->
+    <header class="h-[78px] bg-white border-b border-[#ececf2] px-8 flex items-center justify-between">
+
+      <div class="flex items-center gap-7">
+
+        <button class="text-[#50567a] text-[26px]">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="w-[430px] h-[44px] border border-[#e5e7ef] rounded-xl px-5 flex items-center justify-between">
+          <input
+            type="text"
+            placeholder="Search for courses, users, quizzes..."
+            class="w-full text-[14px] outline-none text-[#1f2937]"
+          />
+
+          <i class="fa-solid fa-magnifying-glass text-[#5a5f7d]"></i>
+        </div>
+
+      </div>
+
+      <div class="flex items-center gap-8">
+
+        <div class="relative">
+          <i class="fa-regular fa-bell text-[24px] text-[#2d3556]"></i>
+
+          <div class="absolute -top-2 -right-2 w-[20px] h-[20px] rounded-full bg-[#ff334d] text-white text-[11px] font-bold flex items-center justify-center">
+            5
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+
+          <img
+            src="https://i.pravatar.cc/100?img=12"
+            class="w-[44px] h-[44px] rounded-full border-[3px] border-[#4d24ff]"
+          />
+
+          <div>
+            <div class="text-[15px] font-[700] text-[#111827]">
+              Admin User
+            </div>
+
+            <div class="text-[13px] text-[#6b7280] mt-[2px]">
+              Super Admin
+            </div>
+          </div>
+
+          <i class="fa-solid fa-chevron-down text-[13px] text-[#3c4565] ml-2"></i>
+
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- CONTENT -->
+    <div class="flex-1 overflow-y-auto px-8 py-8">
+
+      <div class="grid grid-cols-[1fr_370px] gap-7">
+
+        <!-- LEFT -->
+        <div>
+
+          <!-- PAGE TITLE -->
+          <div>
+            <h1 class="text-[26px] font-[800] text-[#0f172a]">
+              Upload Lessons
+            </h1>
+
+            <div class="flex items-center gap-3 text-[14px] mt-3">
+
+              <span class="text-[#5b21ff] font-[500]">Dashboard</span>
+
+              <span class="text-[#8b90aa]">></span>
+
+              <span class="text-[#5b21ff] font-[500]">Courses</span>
+
+              <span class="text-[#8b90aa]">></span>
+
+              <span class="text-[#5b21ff] font-[500]">
+                Web Development Fundamentals
+              </span>
+
+              <span class="text-[#8b90aa]">></span>
+
+              <span class="text-[#6b7280]">Upload Lesson</span>
+
+            </div>
+          </div>
+
+          <!-- SELECT COURSE -->
+          <div class="glass-card rounded-2xl mt-6 p-5">
+
+            <div class="text-[15px] font-[700] text-[#111827]">
+              Select Course
+            </div>
+
+            <div class="mt-4 border border-[#e7e8f0] rounded-xl h-[58px] px-4 flex items-center justify-between">
+
+              <div class="flex items-center gap-4">
+
+                <img
+                  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=300&auto=format&fit=crop"
+                  class="w-[58px] h-[44px] rounded-lg object-cover"
+                />
+
+                <div class="text-[15px] font-[500] text-[#111827]">
+                  Web Development Fundamentals
+                </div>
+
+              </div>
+
+              <i class="fa-solid fa-chevron-down text-[#666d88]"></i>
+
+            </div>
+
+          </div>
+
+          <!-- LESSON INFO -->
+          <div class="glass-card rounded-2xl mt-5 p-5">
+
+            <div class="text-[22px] font-[700] text-[#5b21ff]">
+              Lesson Information
+            </div>
+
+            <div class="grid grid-cols-[1fr_220px] gap-6 mt-6">
+
+              <div>
+                <label class="text-[14px] font-[600] text-[#111827]">
+                  Lesson Title <span class="text-[#ef4444]">*</span>
+                </label>
+
+                <input
+                  class="input mt-3"
+                  placeholder="Enter lesson title"
+                />
+              </div>
+
+              <div>
+                <label class="text-[14px] font-[600] text-[#111827]">
+                  Lesson Type <span class="text-[#ef4444]">*</span>
+                </label>
+
+                <div class="relative mt-3">
+                  <select class="input appearance-none">
+                    <option>Select lesson type</option>
+                  </select>
+
+                  <i class="fa-solid fa-chevron-down absolute right-4 top-[17px] text-[12px] text-[#6b7280]"></i>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="grid grid-cols-[1fr_220px] gap-6 mt-6">
+
+              <div>
+                <label class="text-[14px] font-[600] text-[#111827]">
+                  Short Description
+                </label>
+
+                <textarea
+                  class="textarea mt-3 h-[110px]"
+                  placeholder="Enter short description about this lesson"
+                ></textarea>
+              </div>
+
+              <div class="space-y-5">
+
+                <div>
+                  <label class="text-[14px] font-[600] text-[#111827]">
+                    Duration (minutes)
+                  </label>
+
+                  <div class="relative mt-3">
+                    <input class="input pl-11" placeholder="e.g. 45"/>
+
+                    <i class="fa-regular fa-clock absolute left-4 top-[16px] text-[#707792] text-[14px]"></i>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="text-[14px] font-[600] text-[#111827]">
+                    Lesson Order
+                  </label>
+
+                  <div class="relative mt-3">
+                    <input class="input pl-11" placeholder="e.g. 1"/>
+
+                    <i class="fa-solid fa-list absolute left-4 top-[16px] text-[#707792] text-[14px]"></i>
+                  </div>
+
+                  <div class="text-[12px] text-[#777d98] mt-2">
+                    Set the order of this lesson in the course
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- EDITOR -->
+            <div class="mt-7">
+
+              <div class="text-[14px] font-[600] text-[#111827] mb-3">
+                Content (Optional)
+              </div>
+
+              <div class="border border-[#e6e7ef] rounded-xl overflow-hidden">
+
+                <!-- toolbar -->
+                <div class="h-[52px] border-b border-[#ececf2] px-4 flex items-center gap-3 bg-white">
+
+                  <select class="text-[14px] border-none outline-none bg-transparent text-[#525866]">
+                    <option>Paragraph</option>
+                  </select>
+
+                  <div class="w-px h-5 bg-[#e4e6ee]"></div>
+
+                  <button class="toolbar-btn">
+                    <i class="fa-solid fa-bold"></i>
+                  </button>
+
+                  <button class="toolbar-btn">
+                    <i class="fa-solid fa-italic"></i>
+                  </button>
+
+                  <button class="toolbar-btn">
+                    <i class="fa-solid fa-underline"></i>
+                  </button>
+
+                  <button class="toolbar-btn">
+                    <i class="fa-solid fa-list-ul"></i>
+                  </button>
+
+                  <button class="toolbar-btn">
+                    <i class="fa-solid fa-list-ol"></i>
+                  </button>
+
+                  <button class="toolbar-btn">
+                    <i class="fa-solid fa-align-left"></i>
+                  </button>
+
+                  <button class="toolbar-btn">
+                    <i class="fa-solid fa-align-center"></i>
+                  </button>
+
+                  <button class="toolbar-btn">
+                    <i class="fa-solid fa-link"></i>
+                  </button>
+
+                  <button class="toolbar-btn">
+                    <i class="fa-solid fa-expand"></i>
+                  </button>
+
+                </div>
+
+                <textarea
+                  class="w-full h-[140px] p-5 text-[14px] outline-none resize-none"
+                  placeholder="Write lesson content here..."
+                ></textarea>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- UPLOAD -->
+          <div class="glass-card rounded-2xl mt-5 overflow-hidden">
+
+            <div class="p-5">
+
+              <div class="text-[22px] font-[700] text-[#5b21ff]">
+                Upload Content
+              </div>
+
+              <div class="mt-5 border-2 border-dashed border-[#d7d8e4] rounded-2xl h-[250px] flex flex-col items-center justify-center">
+
+                <div class="w-[70px] h-[70px] rounded-full flex items-center justify-center">
+                  <i class="fa-solid fa-cloud-arrow-up text-[52px] text-[#5b21ff]"></i>
+                </div>
+
+                <div class="text-[24px] font-[700] text-[#111827] mt-4">
+                  Drag & drop your files here
+                </div>
+
+                <div class="text-[14px] text-[#6b7280] mt-3">
+                  Supports: MP4, PDF, DOC, PPT, ZIP (Max size: 500MB)
+                </div>
+
+                <button class="purple-btn h-[48px] px-8 rounded-xl text-white font-[600] mt-7 flex items-center gap-3">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  Choose Files
+                </button>
+
+              </div>
+
+            </div>
+
+            <div class="border-t border-[#ececf2] h-[78px] px-5 flex items-center justify-end gap-4 bg-white">
+
+              <button class="h-[46px] px-7 rounded-xl border border-[#e5e7ef] text-[15px] font-[500] text-[#374151]">
+                Cancel
+              </button>
+
+              <button class="purple-btn h-[46px] px-8 rounded-xl text-white text-[15px] font-[600] flex items-center gap-3">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                Upload Lesson
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="space-y-5">
+
+          <!-- LESSON TYPE -->
+          <div class="glass-card rounded-2xl p-5">
+
+            <div class="text-[22px] font-[700] text-[#111827]">
+              Lesson Type
+            </div>
+
+            <div class="space-y-6 mt-6">
+
+              <div class="flex gap-4">
+                <div class="w-[42px] h-[42px] rounded-xl bg-[#ede8ff] flex items-center justify-center text-[#5b21ff]">
+                  <i class="fa-solid fa-play"></i>
+                </div>
+
+                <div>
+                  <div class="font-[700] text-[15px]">Video Lesson</div>
+                  <div class="text-[13px] text-[#6b7280] mt-1">
+                    Upload video content for your lesson
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex gap-4">
+                <div class="w-[42px] h-[42px] rounded-xl bg-[#e9f1ff] flex items-center justify-center text-[#2563eb]">
+                  <i class="fa-solid fa-t"></i>
+                </div>
+
+                <div>
+                  <div class="font-[700] text-[15px]">Text Lesson</div>
+                  <div class="text-[13px] text-[#6b7280] mt-1">
+                    Create text-based learning content
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex gap-4">
+                <div class="w-[42px] h-[42px] rounded-xl bg-[#eafaf1] flex items-center justify-center text-[#16a34a]">
+                  <i class="fa-solid fa-file-lines"></i>
+                </div>
+
+                <div>
+                  <div class="font-[700] text-[15px]">Document</div>
+                  <div class="text-[13px] text-[#6b7280] mt-1">
+                    Upload PDF, DOC, or other documents
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex gap-4">
+                <div class="w-[42px] h-[42px] rounded-xl bg-[#fff5e8] flex items-center justify-center text-[#f59e0b]">
+                  <i class="fa-solid fa-file-powerpoint"></i>
+                </div>
+
+                <div>
+                  <div class="font-[700] text-[15px]">Presentation</div>
+                  <div class="text-[13px] text-[#6b7280] mt-1">
+                    Upload slides and presentations
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex gap-4">
+                <div class="w-[42px] h-[42px] rounded-xl bg-[#ffeef3] flex items-center justify-center text-[#f43f5e]">
+                  <i class="fa-solid fa-chalkboard"></i>
+                </div>
+
+                <div>
+                  <div class="font-[700] text-[15px]">Interactive</div>
+                  <div class="text-[13px] text-[#6b7280] mt-1">
+                    Create interactive learning content
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- TIPS -->
+          <div class="rounded-2xl border border-[#dbe5ff] bg-[#f5f8ff] p-5">
+
+            <div class="text-[20px] font-[700] text-[#5b21ff]">
+              Upload Tips
+            </div>
+
+            <div class="space-y-4 mt-6 text-[14px] text-[#4b5563]">
+
+              <div class="flex gap-3">
+                <i class="fa-regular fa-circle-check text-[#5b21ff] mt-[2px]"></i>
+                <span>Use high-quality videos for better learning experience</span>
+              </div>
+
+              <div class="flex gap-3">
+                <i class="fa-regular fa-circle-check text-[#5b21ff] mt-[2px]"></i>
+                <span>Keep lesson duration between 5-30 minutes</span>
+              </div>
+
+              <div class="flex gap-3">
+                <i class="fa-regular fa-circle-check text-[#5b21ff] mt-[2px]"></i>
+                <span>Add clear descriptions and learning objectives</span>
+              </div>
+
+              <div class="flex gap-3">
+                <i class="fa-regular fa-circle-check text-[#5b21ff] mt-[2px]"></i>
+                <span>Ensure file size is under 500MB</span>
+              </div>
+
+              <div class="flex gap-3">
+                <i class="fa-regular fa-circle-check text-[#5b21ff] mt-[2px]"></i>
+                <span>Supported formats: MP4, PDF, DOC, PPT, ZIP</span>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- RECENT LESSONS -->
+          <div class="glass-card rounded-2xl p-5">
+
+            <div class="flex items-center justify-between">
+
+              <div class="text-[22px] font-[700] text-[#111827]">
+                Recent Lessons
+              </div>
+
+              <button class="text-[#5b21ff] text-[14px] font-[600]">
+                View All
+              </button>
+
+            </div>
+
+            <div class="space-y-5 mt-6">
+
+              <!-- ITEM -->
+              <div class="flex items-start gap-4">
+
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=300&auto=format&fit=crop"
+                  class="w-[68px] h-[54px] rounded-lg object-cover"/>
+
+                <div class="flex-1">
+
+                  <div class="flex items-start justify-between">
+
+                    <div>
+                      <div class="font-[700] text-[15px]">
+                        Introduction to HTML
+                      </div>
+
+                      <div class="flex items-center gap-5 mt-2 text-[12px] text-[#6b7280]">
+                        <div class="flex items-center gap-2">
+                          <i class="fa-regular fa-circle-play"></i>
+                          Video
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                          <i class="fa-regular fa-clock"></i>
+                          25:30
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="status-pill published">
+                      Published
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <i class="fa-solid fa-ellipsis text-[#9aa0b7] mt-2"></i>
+
+              </div>
+
+              <!-- ITEM -->
+              <div class="flex items-start gap-4">
+
+                <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=300&auto=format&fit=crop"
+                  class="w-[68px] h-[54px] rounded-lg object-cover"/>
+
+                <div class="flex-1">
+
+                  <div class="flex items-start justify-between">
+
+                    <div>
+                      <div class="font-[700] text-[15px]">
+                        CSS Flexbox Guide
+                      </div>
+
+                      <div class="flex items-center gap-5 mt-2 text-[12px] text-[#6b7280]">
+                        <div class="flex items-center gap-2">
+                          <i class="fa-regular fa-file-lines"></i>
+                          Document
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                          <i class="fa-regular fa-clock"></i>
+                          18:45
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="status-pill published">
+                      Published
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <i class="fa-solid fa-ellipsis text-[#9aa0b7] mt-2"></i>
+
+              </div>
+
+              <!-- ITEM -->
+              <div class="flex items-start gap-4">
+
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png"
+                  class="w-[68px] h-[54px] rounded-lg object-cover bg-[#facc15]"/>
+
+                <div class="flex-1">
+
+                  <div class="flex items-start justify-between">
+
+                    <div>
+                      <div class="font-[700] text-[15px]">
+                        JavaScript Basics
+                      </div>
+
+                      <div class="flex items-center gap-5 mt-2 text-[12px] text-[#6b7280]">
+                        <div class="flex items-center gap-2">
+                          <i class="fa-regular fa-circle-play"></i>
+                          Video
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                          <i class="fa-regular fa-clock"></i>
+                          32:15
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="status-pill draft">
+                      Draft
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <i class="fa-solid fa-ellipsis text-[#9aa0b7] mt-2"></i>
+
+              </div>
+
+              <!-- ITEM -->
+              <div class="flex items-start gap-4">
+
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=300&auto=format&fit=crop"
+                  class="w-[68px] h-[54px] rounded-lg object-cover"/>
+
+                <div class="flex-1">
+
+                  <div class="flex items-start justify-between">
+
+                    <div>
+                      <div class="font-[700] text-[15px]">
+                        Responsive Design Principles
+                      </div>
+
+                      <div class="flex items-center gap-5 mt-2 text-[12px] text-[#6b7280]">
+                        <div class="flex items-center gap-2">
+                          <i class="fa-regular fa-file-powerpoint"></i>
+                          Presentation
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                          <i class="fa-regular fa-clock"></i>
+                          20:10
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="status-pill published">
+                      Published
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <i class="fa-solid fa-ellipsis text-[#9aa0b7] mt-2"></i>
+
+              </div>
+
+              <!-- ITEM -->
+              <div class="flex items-start gap-4">
+
+                <img src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?q=80&w=300&auto=format&fit=crop"
+                  class="w-[68px] h-[54px] rounded-lg object-cover"/>
+
+                <div class="flex-1">
+
+                  <div class="flex items-start justify-between">
+
+                    <div>
+                      <div class="font-[700] text-[15px]">
+                        Web Development Roadmap
+                      </div>
+
+                      <div class="flex items-center gap-5 mt-2 text-[12px] text-[#6b7280]">
+                        <div class="flex items-center gap-2">
+                          <i class="fa-regular fa-file-lines"></i>
+                          Document
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                          <i class="fa-regular fa-clock"></i>
+                          15:20
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="status-pill draft">
+                      Draft
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <i class="fa-solid fa-ellipsis text-[#9aa0b7] mt-2"></i>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+<script src="../../assets/js/api.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/sidebar.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/layout.js"></script>
+</body>
+</html>

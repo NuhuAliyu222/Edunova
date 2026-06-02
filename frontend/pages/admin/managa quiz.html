@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Quizzes - Edunova - Smart Learning</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="../../assets/css/global.css"/>
+  <link rel="stylesheet" href="../../assets/css/animation.css"/>
+  <link rel="stylesheet" href="../../assets/css/responsive.css"/>
+
+  <style>
+    *{
+      font-family:'Inter',sans-serif;
+    }
+
+    body{
+      background:#f5f6fb;
+      overflow:hidden;
+    }
+
+    .sidebar{
+      background:
+        radial-gradient(circle at top left, rgba(116,89,255,0.08), transparent 24%),
+        linear-gradient(180deg,#04084f 0%,#070e57 100%);
+    }
+
+    .menu-item{
+      height:54px;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      padding:0 20px;
+      border-radius:14px;
+      color:#fff;
+      font-size:16px;
+      font-weight:500;
+    }
+
+    .menu-item.active{
+      background:linear-gradient(90deg,#5c36ff 0%,#4b2af2 100%);
+      box-shadow:0 12px 28px rgba(92,54,255,0.35);
+    }
+
+    .submenu{
+      background:rgba(16,20,78,0.9);
+      border-radius:0 0 14px 14px;
+      margin-top:-8px;
+      padding:12px 0 14px 0;
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid #ececf4;
+      border-radius:18px;
+    }
+
+    .shadow-purple{
+      box-shadow:0 10px 28px rgba(91,53,255,0.28);
+    }
+
+    .table-row{
+      height:84px;
+      border-bottom:1px solid #eff0f6;
+    }
+
+    .action-btn{
+      width:34px;
+      height:34px;
+      border-radius:8px;
+      border:1px solid #dddff0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#5a35ff;
+      background:#fff;
+    }
+
+    .action-btn.red{
+      border-color:#ffd3d3;
+      color:#ff5b5b;
+    }
+
+    .scroll-hidden::-webkit-scrollbar{
+      display:none;
+    }
+
+    .chart-grid{
+      stroke:#ececf6;
+      stroke-width:1;
+    }
+
+    .chart-line{
+      fill:none;
+      stroke:#5a35ff;
+      stroke-width:3;
+    }
+
+    .chart-dot{
+      fill:#5a35ff;
+    }
+  </style>
+</head>
+
+<body class="w-screen h-screen" data-auth-guard="admin">
+
+<div class="flex w-full h-full">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar w-[242px] h-full text-white relative">
+
+    <!-- Logo -->
+    <div class="px-5 pt-5 flex items-start gap-4">
+
+      <div class="w-[46px] h-[46px] rounded-xl bg-[#5a35ff] flex items-center justify-center">
+        <i class="fa-solid fa-layer-group text-white text-[19px]"></i>
+      </div>
+
+      <div class="leading-tight pt-[2px]">
+        <div class="text-[17px] font-[700]">Edunova </div>
+        <div class="text-[17px] font-[700]">- Smart Learning</div>
+      </div>
+
+    </div>
+
+    <!-- Menu -->
+    <nav class="mt-12 px-3 flex flex-col gap-[10px]" aria-label="Admin main menu">
+
+      <a href="dashboard.html" class="menu-item">
+        <i class="fa-solid fa-house text-[17px] w-[18px]"></i>
+        Dashboard
+      </a>
+
+      <a href="manage students.html" class="menu-item">
+        <i class="fa-solid fa-users text-[17px] w-[18px]"></i>
+        Users
+      </a>
+
+      <a href="manage courses.html" class="menu-item">
+        <i class="fa-solid fa-book-open text-[17px] w-[18px]"></i>
+        Courses
+      </a>
+
+      <a href="upload lessons.html" class="menu-item">
+        <i class="fa-regular fa-circle-play text-[17px] w-[18px]"></i>
+        Lessons
+      </a>
+
+      <!-- Active -->
+      <div>
+
+        <a href="managa quiz.html" class="menu-item active">
+          <i class="fa-regular fa-circle-question text-[17px] w-[18px]"></i>
+          Quizzes
+        </a>
+
+        <div class="submenu px-8">
+
+          <a href="managa quiz.html" class="flex items-center gap-4 h-[34px] text-[15px] text-white no-underline">
+            <div class="w-[7px] h-[7px] rounded-full bg-white"></div>
+            All Quizzes
+          </a>
+
+          <a href="managa quiz.html#categories" class="flex items-center gap-4 h-[34px] text-[15px] text-[#8c7dff] no-underline">
+            <div class="w-[7px] h-[7px] rounded-full bg-[#8c7dff]"></div>
+            Quiz Categories
+          </a>
+
+        </div>
+
+      </div>
+
+      <a href="dashboard.html#certificates" class="menu-item">
+        <i class="fa-regular fa-id-badge text-[17px] w-[18px]"></i>
+        Certificates
+      </a>
+
+      <a href="dashboard.html#reports" class="menu-item">
+        <i class="fa-solid fa-chart-simple text-[17px] w-[18px]"></i>
+        Reports
+      </a>
+
+      <a href="dashboard.html#announcements" class="menu-item">
+        <i class="fa-solid fa-bullhorn text-[17px] w-[18px]"></i>
+        Announcements
+      </a>
+
+      <a href="dashboard.html#settings" class="menu-item">
+        <i class="fa-solid fa-gear text-[17px] w-[18px]"></i>
+        Settings
+      </a>
+
+      <a href="dashboard.html#system-settings" class="menu-item">
+        <i class="fa-solid fa-shield-halved text-[17px] w-[18px]"></i>
+        System Settings
+      </a>
+
+      <a href="login.html" class="menu-item">
+        <i class="fa-solid fa-arrow-right-from-bracket text-[17px] w-[18px]"></i>
+        Logout
+      </a>
+
+    </nav>
+
+    <!-- Upgrade -->
+    <div class="absolute left-4 right-4 bottom-5 rounded-[22px] bg-[#141c6d] border border-[#1f2879] px-5 py-6">
+
+      <div class="flex justify-center">
+        <div class="w-[84px] h-[84px] rounded-full bg-[#2b2a88] flex items-center justify-center">
+
+          <div class="w-[56px] h-[56px] rounded-full bg-[#5a35ff] flex items-center justify-center shadow-purple">
+            <i class="fa-solid fa-crown text-white text-[24px]"></i>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="mt-6 text-center text-[18px] font-[700]">
+        Upgrade to Pro
+      </div>
+
+      <div class="mt-3 text-center text-[15px] leading-[1.6] text-[#d5d8ff]">
+        Unlock all features and get
+        exclusive benefits.
+      </div>
+
+      <button class="mt-6 w-full h-[46px] rounded-[12px] bg-[#5a35ff] text-white text-[16px] font-[600] shadow-purple">
+        Upgrade Now
+      </button>
+
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="flex-1 h-full overflow-hidden">
+
+    <!-- TOPBAR -->
+    <div class="h-[76px] bg-white border-b border-[#ececf4] flex items-center justify-between px-8">
+
+      <div class="flex items-center gap-8">
+
+        <button class="text-[#44527b] text-[26px]">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="relative">
+
+          <input
+            type="text"
+            placeholder="Search for courses, users, quizzes..."
+            class="w-[430px] h-[44px] rounded-[12px] border border-[#dde1ef] pl-6 pr-14 text-[15px] outline-none text-[#111827]"
+          />
+
+          <i class="fa-solid fa-magnifying-glass absolute right-5 top-1/2 -translate-y-1/2 text-[#5f6984]"></i>
+
+        </div>
+
+      </div>
+
+      <div class="flex items-center gap-8">
+
+        <div class="relative">
+
+          <i class="fa-regular fa-bell text-[24px] text-[#3d4969]"></i>
+
+          <div class="absolute -top-2 -right-2 w-[19px] h-[19px] rounded-full bg-[#ff3d57] border-2 border-white text-white text-[10px] font-[700] flex items-center justify-center">
+            6
+          </div>
+
+        </div>
+
+        <div class="flex items-center gap-4">
+
+          <div class="w-[44px] h-[44px] rounded-full bg-gradient-to-br from-[#ffcfa3] to-[#875639] border-[3px] border-[#5a35ff]"></div>
+
+          <div>
+            <div class="text-[17px] font-[700] text-[#111827]">
+              Admin User
+            </div>
+
+            <div class="text-[13px] text-[#6e7690] mt-[2px]">
+              Super Admin
+            </div>
+          </div>
+
+          <i class="fa-solid fa-angle-down text-[#5f6984] text-[13px] ml-1"></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CONTENT -->
+    <div class="h-[calc(100%-76px)] overflow-y-auto scroll-hidden px-7 py-6">
+
+      <!-- Header -->
+      <div class="flex items-start justify-between">
+
+        <div>
+
+          <h1 class="text-[52px] leading-none tracking-[-1px] font-[800] text-[#0f172f]">
+            Manage Quizzes
+          </h1>
+
+          <p class="mt-4 text-[21px] text-[#68728d]">
+            Create, manage and organize quizzes for your courses.
+          </p>
+
+        </div>
+
+        <button class="w-[186px] h-[54px] rounded-[14px] bg-[#5a35ff] text-white text-[18px] font-[600] flex items-center justify-center gap-4 shadow-purple">
+          <i class="fa-solid fa-plus"></i>
+          Add New Quiz
+        </button>
+
+      </div>
+
+      <!-- Main Grid -->
+      <div class="grid grid-cols-[1fr_320px] gap-5 mt-8">
+
+        <!-- LEFT -->
+        <div>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-4 gap-5">
+
+            <!-- Card -->
+            <div class="card h-[128px] px-5 flex items-center gap-5">
+
+              <div class="w-[54px] h-[54px] rounded-[16px] bg-[#f1ecff] flex items-center justify-center">
+                <i class="fa-solid fa-list text-[#5a35ff] text-[25px]"></i>
+              </div>
+
+              <div>
+                <div class="text-[14px] font-[600] text-[#5f6884]">
+                  Total Quizzes
+                </div>
+
+                <div class="mt-2 text-[28px] font-[800] text-[#111827]">
+                  156
+                </div>
+
+                <div class="mt-2 text-[#22b067] text-[13px]">
+                  ↑ 12.4% from last month
+                </div>
+              </div>
+
+            </div>
+
+            <div class="card h-[128px] px-5 flex items-center gap-5">
+
+              <div class="w-[54px] h-[54px] rounded-[16px] bg-[#e7f7ee] flex items-center justify-center">
+                <i class="fa-regular fa-circle-check text-[#20af65] text-[25px]"></i>
+              </div>
+
+              <div>
+                <div class="text-[14px] font-[600] text-[#5f6884]">
+                  Published Quizzes
+                </div>
+
+                <div class="mt-2 text-[28px] font-[800] text-[#111827]">
+                  118
+                </div>
+
+                <div class="mt-2 text-[#22b067] text-[13px]">
+                  ↑ 15.8% from last month
+                </div>
+              </div>
+
+            </div>
+
+            <div class="card h-[128px] px-5 flex items-center gap-5">
+
+              <div class="w-[54px] h-[54px] rounded-[16px] bg-[#fff4e7] flex items-center justify-center">
+                <i class="fa-regular fa-file-lines text-[#f6a323] text-[25px]"></i>
+              </div>
+
+              <div>
+                <div class="text-[14px] font-[600] text-[#5f6884]">
+                  Draft Quizzes
+                </div>
+
+                <div class="mt-2 text-[28px] font-[800] text-[#111827]">
+                  38
+                </div>
+
+                <div class="mt-2 text-[#ff5b5b] text-[13px]">
+                  ↓ 8.7% from last month
+                </div>
+              </div>
+
+            </div>
+
+            <div class="card h-[128px] px-5 flex items-center gap-5">
+
+              <div class="w-[54px] h-[54px] rounded-[16px] bg-[#edf4ff] flex items-center justify-center">
+                <i class="fa-solid fa-users text-[#3b82f6] text-[25px]"></i>
+              </div>
+
+              <div>
+                <div class="text-[14px] font-[600] text-[#5f6884]">
+                  Total Attempts
+                </div>
+
+                <div class="mt-2 text-[28px] font-[800] text-[#111827]">
+                  8,542
+                </div>
+
+                <div class="mt-2 text-[#22b067] text-[13px]">
+                  ↑ 18.3% from last month
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Table -->
+          <div class="card mt-5 overflow-hidden">
+
+            <!-- Filters -->
+            <div class="p-4 border-b border-[#eff0f6] flex items-center gap-4">
+
+              <div class="relative flex-1">
+
+                <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-[#6b748f] text-[14px]"></i>
+
+                <input
+                  type="text"
+                  placeholder="Search quizzes..."
+                  class="w-full h-[42px] rounded-[10px] border border-[#e2e5f0] pl-12 pr-4 text-[14px] outline-none"
+                />
+
+              </div>
+
+              <button class="w-[166px] h-[42px] rounded-[10px] border border-[#e2e5f0] flex items-center justify-between px-4 text-[14px] text-[#4f5975]">
+                All Courses
+                <i class="fa-solid fa-angle-down text-[12px]"></i>
+              </button>
+
+              <button class="w-[150px] h-[42px] rounded-[10px] border border-[#e2e5f0] flex items-center justify-between px-4 text-[14px] text-[#4f5975]">
+                All Categories
+                <i class="fa-solid fa-angle-down text-[12px]"></i>
+              </button>
+
+              <button class="w-[150px] h-[42px] rounded-[10px] border border-[#e2e5f0] flex items-center justify-between px-4 text-[14px] text-[#4f5975]">
+                All Status
+                <i class="fa-solid fa-angle-down text-[12px]"></i>
+              </button>
+
+              <button class="w-[98px] h-[42px] rounded-[10px] border border-[#e2e5f0] flex items-center justify-center gap-3 text-[14px] text-[#4f5975]">
+                <i class="fa-solid fa-filter"></i>
+                Filters
+              </button>
+
+            </div>
+
+            <!-- Table Head -->
+            <div class="h-[46px] bg-[#fafbfe] border-b border-[#eff0f6] grid grid-cols-[2fr_1.6fr_0.7fr_0.8fr_0.8fr_0.8fr_1fr] items-center px-4 text-[13px] font-[600] text-[#5c6783]">
+
+              <div>Quiz</div>
+              <div>Course</div>
+              <div>Questions</div>
+              <div>Time Limit</div>
+              <div>Attempts</div>
+              <div>Status</div>
+              <div>Actions</div>
+
+            </div>
+
+            <!-- Rows -->
+
+            <!-- Row -->
+            <div class="table-row grid grid-cols-[2fr_1.6fr_0.7fr_0.8fr_0.8fr_0.8fr_1fr] items-center px-4">
+
+              <div class="flex items-center gap-4">
+
+                <div class="w-[56px] h-[56px] rounded-[10px] bg-gradient-to-br from-[#09091b] to-[#5a35ff] flex items-center justify-center text-white text-[28px]">
+                  <i class="fa-solid fa-code"></i>
+                </div>
+
+                <div>
+                  <div class="text-[15px] font-[700] text-[#111827]">
+                    JavaScript Basics Quiz
+                  </div>
+
+                  <div class="mt-2 text-[13px] text-[#5a35ff] font-[500]">
+                    Programming
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="text-[15px] text-[#4e5875]">
+                JavaScript Fundamentals
+              </div>
+
+              <div class="text-[15px] text-[#2b3551]">20</div>
+
+              <div class="text-[15px] text-[#2b3551]">30 min</div>
+
+              <div class="text-[15px] text-[#2b3551]">1,245</div>
+
+              <div>
+                <div class="w-[70px] h-[30px] rounded-[8px] bg-[#e7f7ee] text-[#1fa764] text-[13px] font-[600] flex items-center justify-center">
+                  Published
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+
+                <button class="action-btn">
+                  <i class="fa-regular fa-eye text-[12px]"></i>
+                </button>
+
+                <button class="action-btn">
+                  <i class="fa-solid fa-pen text-[12px]"></i>
+                </button>
+
+                <button class="action-btn red">
+                  <i class="fa-regular fa-trash-can text-[12px]"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+            <!-- Row -->
+            <div class="table-row grid grid-cols-[2fr_1.6fr_0.7fr_0.8fr_0.8fr_0.8fr_1fr] items-center px-4">
+
+              <div class="flex items-center gap-4">
+
+                <div class="w-[56px] h-[56px] rounded-[10px] bg-gradient-to-br from-[#0b1d55] to-[#0f6dff] flex items-center justify-center text-[#ffd447] text-[34px]">
+                  <i class="fa-brands fa-python"></i>
+                </div>
+
+                <div>
+                  <div class="text-[15px] font-[700] text-[#111827]">
+                    Python Functions Quiz
+                  </div>
+
+                  <div class="mt-2 text-[13px] text-[#5a35ff] font-[500]">
+                    Programming
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="text-[15px] text-[#4e5875]">
+                Python Programming
+              </div>
+
+              <div class="text-[15px] text-[#2b3551]">25</div>
+
+              <div class="text-[15px] text-[#2b3551]">40 min</div>
+
+              <div class="text-[15px] text-[#2b3551]">982</div>
+
+              <div>
+                <div class="w-[70px] h-[30px] rounded-[8px] bg-[#e7f7ee] text-[#1fa764] text-[13px] font-[600] flex items-center justify-center">
+                  Published
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+
+                <button class="action-btn">
+                  <i class="fa-regular fa-eye text-[12px]"></i>
+                </button>
+
+                <button class="action-btn">
+                  <i class="fa-solid fa-pen text-[12px]"></i>
+                </button>
+
+                <button class="action-btn red">
+                  <i class="fa-regular fa-trash-can text-[12px]"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+            <!-- Row -->
+            <div class="table-row grid grid-cols-[2fr_1.6fr_0.7fr_0.8fr_0.8fr_0.8fr_1fr] items-center px-4">
+
+              <div class="flex items-center gap-4">
+
+                <div class="w-[56px] h-[56px] rounded-[10px] bg-gradient-to-br from-[#07071f] to-[#23238d] flex items-center justify-center text-white text-[22px] font-[700]">
+                  UI/UX
+                </div>
+
+                <div>
+                  <div class="text-[15px] font-[700] text-[#111827]">
+                    UI/UX Principles Quiz
+                  </div>
+
+                  <div class="mt-2 text-[13px] text-[#5a35ff] font-[500]">
+                    Design
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="text-[15px] text-[#4e5875]">
+                UI/UX Design Fundamentals
+              </div>
+
+              <div class="text-[15px] text-[#2b3551]">15</div>
+
+              <div class="text-[15px] text-[#2b3551]">20 min</div>
+
+              <div class="text-[15px] text-[#2b3551]">756</div>
+
+              <div>
+                <div class="w-[58px] h-[30px] rounded-[8px] bg-[#fff5e8] text-[#f4a227] text-[13px] font-[600] flex items-center justify-center">
+                  Draft
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+
+                <button class="action-btn">
+                  <i class="fa-regular fa-eye text-[12px]"></i>
+                </button>
+
+                <button class="action-btn">
+                  <i class="fa-solid fa-pen text-[12px]"></i>
+                </button>
+
+                <button class="action-btn red">
+                  <i class="fa-regular fa-trash-can text-[12px]"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+            <!-- Row -->
+            <div class="table-row grid grid-cols-[2fr_1.6fr_0.7fr_0.8fr_0.8fr_0.8fr_1fr] items-center px-4">
+
+              <div class="flex items-center gap-4">
+
+                <div class="w-[56px] h-[56px] rounded-[10px] bg-gradient-to-br from-[#05071f] to-[#0f6dff] flex items-center justify-center text-white text-[24px]">
+                  <i class="fa-solid fa-chart-line"></i>
+                </div>
+
+                <div>
+                  <div class="text-[15px] font-[700] text-[#111827]">
+                    Data Structures Quiz
+                  </div>
+
+                  <div class="mt-2 text-[13px] text-[#5a35ff] font-[500]">
+                    Computer Science
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="text-[15px] text-[#4e5875]">
+                Data Structures & Algorithms
+              </div>
+
+              <div class="text-[15px] text-[#2b3551]">30</div>
+
+              <div class="text-[15px] text-[#2b3551]">45 min</div>
+
+              <div class="text-[15px] text-[#2b3551]">1,102</div>
+
+              <div>
+                <div class="w-[70px] h-[30px] rounded-[8px] bg-[#e7f7ee] text-[#1fa764] text-[13px] font-[600] flex items-center justify-center">
+                  Published
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+
+                <button class="action-btn">
+                  <i class="fa-regular fa-eye text-[12px]"></i>
+                </button>
+
+                <button class="action-btn">
+                  <i class="fa-solid fa-pen text-[12px]"></i>
+                </button>
+
+                <button class="action-btn red">
+                  <i class="fa-regular fa-trash-can text-[12px]"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+            <!-- Row -->
+            <div class="table-row grid grid-cols-[2fr_1.6fr_0.7fr_0.8fr_0.8fr_0.8fr_1fr] items-center px-4">
+
+              <div class="flex items-center gap-4">
+
+                <div class="w-[56px] h-[56px] rounded-[10px] bg-gradient-to-br from-[#131a61] to-[#1f2f9b] flex items-center justify-center text-white text-[27px]">
+                  <i class="fa-solid fa-database"></i>
+                </div>
+
+                <div>
+                  <div class="text-[15px] font-[700] text-[#111827]">
+                    SQL Basics Quiz
+                  </div>
+
+                  <div class="mt-2 text-[13px] text-[#5a35ff] font-[500]">
+                    Database
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="text-[15px] text-[#4e5875]">
+                SQL for Beginners
+              </div>
+
+              <div class="text-[15px] text-[#2b3551]">20</div>
+
+              <div class="text-[15px] text-[#2b3551]">30 min</div>
+
+              <div class="text-[15px] text-[#2b3551]">843</div>
+
+              <div>
+                <div class="w-[70px] h-[30px] rounded-[8px] bg-[#e7f7ee] text-[#1fa764] text-[13px] font-[600] flex items-center justify-center">
+                  Published
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+
+                <button class="action-btn">
+                  <i class="fa-regular fa-eye text-[12px]"></i>
+                </button>
+
+                <button class="action-btn">
+                  <i class="fa-solid fa-pen text-[12px]"></i>
+                </button>
+
+                <button class="action-btn red">
+                  <i class="fa-regular fa-trash-can text-[12px]"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+            <!-- Row -->
+            <div class="table-row grid grid-cols-[2fr_1.6fr_0.7fr_0.8fr_0.8fr_0.8fr_1fr] items-center px-4 border-b-0">
+
+              <div class="flex items-center gap-4">
+
+                <div class="w-[56px] h-[56px] rounded-[10px] bg-gradient-to-br from-[#7b3aed] to-[#5a35ff] flex items-center justify-center text-white text-[26px]">
+                  <i class="fa-solid fa-bullhorn"></i>
+                </div>
+
+                <div>
+                  <div class="text-[15px] font-[700] text-[#111827]">
+                    Digital Marketing Quiz
+                  </div>
+
+                  <div class="mt-2 text-[13px] text-[#5a35ff] font-[500]">
+                    Marketing
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="text-[15px] text-[#4e5875]">
+                Digital Marketing Basics
+              </div>
+
+              <div class="text-[15px] text-[#2b3551]">18</div>
+
+              <div class="text-[15px] text-[#2b3551]">25 min</div>
+
+              <div class="text-[15px] text-[#2b3551]">614</div>
+
+              <div>
+                <div class="w-[58px] h-[30px] rounded-[8px] bg-[#fff5e8] text-[#f4a227] text-[13px] font-[600] flex items-center justify-center">
+                  Draft
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+
+                <button class="action-btn">
+                  <i class="fa-regular fa-eye text-[12px]"></i>
+                </button>
+
+                <button class="action-btn">
+                  <i class="fa-solid fa-pen text-[12px]"></i>
+                </button>
+
+                <button class="action-btn red">
+                  <i class="fa-regular fa-trash-can text-[12px]"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+            <!-- Pagination -->
+            <div class="h-[60px] border-t border-[#eff0f6] px-4 flex items-center justify-between">
+
+              <div class="text-[15px] text-[#616b86]">
+                Showing 1 to 6 of 156 quizzes
+              </div>
+
+              <div class="flex items-center gap-3">
+
+                <button class="w-[34px] h-[34px] rounded-[10px] border border-[#e2e5f0] text-[#4f5975]">
+                  <i class="fa-solid fa-angle-left text-[12px]"></i>
+                </button>
+
+                <button class="w-[34px] h-[34px] rounded-[10px] bg-[#5a35ff] text-white text-[14px] font-[600] shadow-purple">
+                  1
+                </button>
+
+                <button class="w-[34px] h-[34px] rounded-[10px] border border-[#e2e5f0] text-[#4f5975] text-[14px]">
+                  2
+                </button>
+
+                <button class="w-[34px] h-[34px] rounded-[10px] border border-[#e2e5f0] text-[#4f5975] text-[14px]">
+                  3
+                </button>
+
+                <button class="w-[34px] h-[34px] rounded-[10px] border border-[#e2e5f0] text-[#4f5975] text-[14px]">
+                  ...
+                </button>
+
+                <button class="w-[34px] h-[34px] rounded-[10px] border border-[#e2e5f0] text-[#4f5975] text-[14px]">
+                  26
+                </button>
+
+                <button class="w-[34px] h-[34px] rounded-[10px] border border-[#e2e5f0] text-[#4f5975]">
+                  <i class="fa-solid fa-angle-right text-[12px]"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="flex flex-col gap-5">
+
+          <!-- Analytics -->
+          <div class="card p-5">
+
+            <div class="flex items-center justify-between">
+
+              <div class="text-[18px] font-[700] text-[#111827]">
+                Quiz Analytics
+              </div>
+
+              <button class="w-[118px] h-[38px] rounded-[10px] border border-[#e2e5f0] flex items-center justify-center gap-3 text-[13px] text-[#4f5975]">
+                This Month
+                <i class="fa-solid fa-angle-down text-[11px]"></i>
+              </button>
+
+            </div>
+
+            <div class="mt-5">
+
+              <svg width="100%" height="220" viewBox="0 0 300 220">
+
+                <line class="chart-grid" x1="20" y1="20" x2="290" y2="20"/>
+                <line class="chart-grid" x1="20" y1="70" x2="290" y2="70"/>
+                <line class="chart-grid" x1="20" y1="120" x2="290" y2="120"/>
+                <line class="chart-grid" x1="20" y1="170" x2="290" y2="170"/>
+
+                <path
+                  d="M20 165 L45 105 L70 88 L95 60 L120 66 L145 35 L170 78 L195 92 L220 100 L245 88 L270 72 L290 88 L290 200 L20 200 Z"
+                  fill="rgba(91,53,255,0.08)"
+                />
+
+                <polyline
+                  class="chart-line"
+                  points="20,165 45,105 70,88 95,60 120,66 145,35 170,78 195,92 220,100 245,88 270,72 290,88"
+                />
+
+                <g class="chart-dot">
+                  <circle cx="20" cy="165" r="4"/>
+                  <circle cx="45" cy="105" r="4"/>
+                  <circle cx="70" cy="88" r="4"/>
+                  <circle cx="95" cy="60" r="4"/>
+                  <circle cx="120" cy="66" r="4"/>
+                  <circle cx="145" cy="35" r="4"/>
+                  <circle cx="170" cy="78" r="4"/>
+                  <circle cx="195" cy="92" r="4"/>
+                  <circle cx="220" cy="100" r="4"/>
+                  <circle cx="245" cy="88" r="4"/>
+                  <circle cx="270" cy="72" r="4"/>
+                  <circle cx="290" cy="88" r="4"/>
+                </g>
+
+                <!-- Tooltip -->
+                <g>
+                  <rect x="118" y="82" width="92" height="46" rx="8" fill="#111827"/>
+                  <text x="130" y="99" fill="#ffffff" font-size="11">May 14, 2024</text>
+                  <text x="130" y="116" fill="#ffffff" font-size="13" font-weight="700">Attempts: 1,620</text>
+                </g>
+
+                <!-- Labels -->
+                <g fill="#707892" font-size="11">
+                  <text x="0" y="170">0</text>
+                  <text x="0" y="122">500</text>
+                  <text x="0" y="74">1K</text>
+                  <text x="0" y="24">2K</text>
+
+                  <text x="15" y="205">May 1</text>
+                  <text x="65" y="205">May 7</text>
+                  <text x="115" y="205">May 14</text>
+                  <text x="185" y="205">May 21</text>
+                  <text x="250" y="205">May 28</text>
+                </g>
+
+              </svg>
+
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-3 mt-2">
+
+              <div class="h-[72px] rounded-[12px] bg-[#fafbfe] border border-[#ececf4] px-4 flex flex-col justify-center">
+                <div class="text-[17px] font-[800] text-[#5a35ff]">
+                  8,542
+                </div>
+
+                <div class="mt-1 text-[13px] text-[#66708b]">
+                  Total Attempts
+                </div>
+              </div>
+
+              <div class="h-[72px] rounded-[12px] bg-[#fafbfe] border border-[#ececf4] px-4 flex flex-col justify-center">
+                <div class="text-[17px] font-[800] text-[#21b165]">
+                  4,820
+                </div>
+
+                <div class="mt-1 text-[13px] text-[#66708b]">
+                  Unique Users
+                </div>
+              </div>
+
+              <div class="h-[72px] rounded-[12px] bg-[#fafbfe] border border-[#ececf4] px-4 flex flex-col justify-center">
+                <div class="text-[17px] font-[800] text-[#f6a323]">
+                  78.5%
+                </div>
+
+                <div class="mt-1 text-[13px] text-[#66708b]">
+                  Avg. Score
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Activity -->
+          <div class="card p-5 flex-1">
+
+            <div class="flex items-center justify-between">
+
+              <div class="text-[18px] font-[700] text-[#111827]">
+                Recent Quiz Activity
+              </div>
+
+              <button class="text-[#5a35ff] text-[14px] font-[700]">
+                View All
+              </button>
+
+            </div>
+
+            <div class="mt-8 flex flex-col gap-8">
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#1fa764] flex items-center justify-center text-white">
+                    <i class="fa-solid fa-plus"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      New quiz created
+                    </div>
+
+                    <div class="text-[14px] text-[#69738d] mt-2">
+                      “React Components Quiz” created
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[12px] text-[#8b93ad]">
+                  10 min ago
+                </div>
+
+              </div>
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#5a35ff] flex items-center justify-center text-white">
+                    <i class="fa-solid fa-pen"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      Quiz updated
+                    </div>
+
+                    <div class="text-[14px] text-[#69738d] mt-2">
+                      “Python Functions Quiz” updated
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[12px] text-[#8b93ad]">
+                  25 min ago
+                </div>
+
+              </div>
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#f6a323] flex items-center justify-center text-white">
+                    <i class="fa-regular fa-eye"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      Quiz published
+                    </div>
+
+                    <div class="text-[14px] text-[#69738d] mt-2">
+                      “Data Structures Quiz” published
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[12px] text-[#8b93ad]">
+                  1 hour ago
+                </div>
+
+              </div>
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#ff5b5b] flex items-center justify-center text-white">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      Quiz deleted
+                    </div>
+
+                    <div class="text-[14px] text-[#69738d] mt-2">
+                      “Old jQuery Quiz” deleted
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[12px] text-[#8b93ad]">
+                  3 hours ago
+                </div>
+
+              </div>
+
+              <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                  <div class="w-[40px] h-[40px] rounded-full bg-[#3b82f6] flex items-center justify-center text-white">
+                    <i class="fa-regular fa-file-lines"></i>
+                  </div>
+
+                  <div>
+                    <div class="text-[15px] font-[700] text-[#111827]">
+                      New questions added
+                    </div>
+
+                    <div class="text-[14px] text-[#69738d] mt-2">
+                      15 questions added to “UI/UX Quiz”
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-[12px] text-[#8b93ad]">
+                  5 hours ago
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+<script src="../../assets/js/api.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/sidebar.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/layout.js"></script>
+</body>
+</html>

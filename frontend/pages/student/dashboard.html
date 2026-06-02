@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard - Edunova Smart Learning</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+  <link rel="stylesheet" href="../../assets/css/global.css"/>
+  <link rel="stylesheet" href="../../assets/css/animation.css"/>
+  <link rel="stylesheet" href="../../assets/css/responsive.css"/>
+
+  <style>
+    /* Keep all existing styles from your dashboard.html */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Outfit', sans-serif; background: #f5f5fb; overflow: hidden; color: #111827; }
+    a { text-decoration: none; color: inherit; }
+    .dashboard { width: 100%; height: 100vh; display: flex; }
+    .sidebar { width: 280px; background: linear-gradient(180deg, #2e1ea0 0%, #24188b 100%); color: #fff; padding: 26px 22px; display: flex; flex-direction: column; justify-content: space-between; overflow-y: auto; }
+    .logo { display: flex; align-items: center; gap: 14px; margin-bottom: 42px; padding-left: 4px; }
+    .logo i { font-size: 34px; }
+    .logo h2 { font-size: 22px; line-height: 1.2; font-weight: 700; }
+    .menu { display: flex; flex-direction: column; gap: 8px; }
+    .menu-item { height: 48px; border-radius: 12px; display: flex; align-items: center; gap: 14px; padding: 0 18px; color: #e0e0ff; font-size: 15px; font-weight: 500; transition: 0.2s; cursor: pointer; }
+    .menu-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .menu-item.active { background: #ffffff; color: #5b34ea; }
+    .menu-item i { width: 24px; font-size: 20px; }
+    .unread-badge { background: #ff4d5a; color: white; border-radius: 20px; padding: 2px 8px; font-size: 11px; margin-left: auto; }
+    .promo { background: linear-gradient(135deg, #ffffff 0%, #f8f6ff 100%); border-radius: 20px; padding: 22px 18px 0; color: #111827; overflow: hidden; margin-top: 20px; }
+    .promo h3 { font-size: 20px; font-weight: 800; line-height: 1.3; margin-bottom: 12px; background: linear-gradient(135deg, #5b34ea 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .promo p { font-size: 14px; line-height: 1.5; color: #6b7280; margin-bottom: 20px; }
+    .promo button { width: 100%; height: 40px; border: none; border-radius: 10px; background: #5b34ea; color: #fff; font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 18px; }
+    .promo img { width: 100%; margin-top: 6px; border-radius: 10px; }
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .header { height: 80px; background: #fff; border-bottom: 1px solid #ececf4; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; }
+    .header-left { display: flex; align-items: center; gap: 26px; }
+    .menu-toggle { font-size: 24px; color: #475569; cursor: pointer; display: none; }
+    .search { width: 380px; height: 44px; border: 1px solid #e5e7eb; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: #fafbfc; }
+    .search input { border: none; outline: none; width: 100%; font-family: 'Outfit', sans-serif; font-size: 14px; background: transparent; color: #111827; }
+    .header-right { display: flex; align-items: center; gap: 28px; }
+    .notification { position: relative; font-size: 22px; color: #0f172a; cursor: pointer; }
+    .notification span { position: absolute; top: -8px; right: -10px; width: 18px; height: 18px; border-radius: 50%; background: #ef4444; color: #fff; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+    .profile { display: flex; align-items: center; gap: 14px; cursor: pointer; }
+    .profile img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid #5b34ea; }
+    .profile-info h4 { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 2px; }
+    .profile-info p { font-size: 13px; color: #6b7280; }
+    .content { flex: 1; display: flex; gap: 24px; padding: 24px 28px; overflow-y: auto; }
+    .left-content { flex: 1; overflow-y: auto; }
+    .right-content { width: 360px; display: flex; flex-direction: column; gap: 20px; }
+    .welcome { margin-bottom: 20px; }
+    .welcome h1 { font-size: 32px; font-weight: 800; margin-bottom: 6px; background: linear-gradient(135deg, #5b34ea 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 28px; }
+    .stat-card { background: #fff; border: 1px solid #f0f0f5; border-radius: 20px; padding: 20px; transition: 0.3s; }
+    .stat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+    .stat-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+    .stat-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+    .purple-bg { background: #f0e6ff; color: #5b34ea; }
+    .green-bg { background: #e3f9ee; color: #10b981; }
+    .blue-bg { background: #e6f0ff; color: #3b82f6; }
+    .orange-bg { background: #fff0e6; color: #f59e0b; }
+    .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .section-head h2 { font-size: 20px; font-weight: 700; color: #111827; }
+    .section-head a { color: #5b34ea; font-size: 14px; font-weight: 500; }
+    .courses { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 24px; }
+    .course-card { background: #fff; border: 1px solid #f0f0f5; border-radius: 20px; overflow: hidden; transition: 0.3s; cursor: pointer; }
+    .course-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+    .course-image { position: relative; height: 130px; overflow: hidden; }
+    .course-image img { width: 100%; height: 100%; object-fit: cover; }
+    .progress-badge { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; box-shadow: 0 4px 12px rgba(0,0,0,0.1); color: #5b34ea; }
+    .course-body { padding: 16px; }
+    .course-body h3 { font-size: 16px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; color: #111827; }
+    .progress-bar { width: 100%; height: 4px; background: #f0f0f5; border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
+    .progress-fill { height: 100%; border-radius: 10px; }
+    .btn-purple { background: #5b34ea; color: white; border: none; }
+    .continue-btn { width: 100%; height: 38px; border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+    .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .panel { background: #fff; border: 1px solid #f0f0f5; border-radius: 20px; overflow: hidden; }
+    .panel-header { padding: 18px 20px 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f5f5fa; }
+    .panel-header h3 { font-size: 17px; font-weight: 700; color: #111827; }
+    .activity-list { padding: 0 20px 12px; }
+    .activity-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid #f5f5fa; }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .activity-content { flex: 1; }
+    .activity-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .activity-content p { font-size: 12px; color: #6b7280; }
+    .activity-time { font-size: 11px; color: #8b93ad; }
+    .continue-item { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid #f5f5fa; }
+    .continue-item:last-child { border-bottom: none; }
+    .continue-item img { width: 60px; height: 45px; border-radius: 10px; object-fit: cover; }
+    .continue-info { flex: 1; }
+    .continue-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .continue-info p { font-size: 12px; color: #8b93ad; }
+    .small-progress { width: 100%; height: 3px; background: #f0f0f5; border-radius: 10px; overflow: hidden; margin-top: 6px; }
+    .small-progress-fill { height: 100%; background: #5b34ea; border-radius: 10px; }
+    .small-btn { padding: 6px 16px; background: #5b34ea; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer; }
+    .side-card { background: #fff; border: 1px solid #f0f0f5; border-radius: 20px; padding: 20px; }
+    .side-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .side-header h3 { font-size: 17px; font-weight: 700; color: #111827; }
+    .announcement-item { padding: 12px 0; border-bottom: 1px solid #f5f5fa; cursor: pointer; }
+    .announcement-item:last-child { border-bottom: none; }
+    .announcement-title { font-weight: 600; font-size: 14px; margin-bottom: 5px; }
+    .announcement-date { font-size: 11px; color: #8b93ad; }
+    .announcement-excerpt { font-size: 13px; color: #6b7280; margin-top: 5px; }
+    .bookmark-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f5f5fa; cursor: pointer; }
+    .bookmark-item:last-child { border-bottom: none; }
+    .bookmark-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+    .bookmark-info p { font-size: 12px; color: #8b93ad; }
+    .error-message { background: #fee2e2; color: #dc2626; padding: 12px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
+    @media(max-width:1400px) { .courses { grid-template-columns: repeat(2, 1fr); } }
+    @media(max-width:1200px) { .stats { grid-template-columns: repeat(2, 1fr); } .right-content { width: 320px; } }
+    @media(max-width:992px) { .sidebar { position: fixed; left: -280px; transition: 0.3s; z-index: 1000; height: 100%; } .sidebar.open { left: 0; } .menu-toggle { display: block; } .right-content { display: none; } .main { width: 100%; } .courses { grid-template-columns: 1fr; } .bottom-grid { grid-template-columns: 1fr; } }
+    @media(max-width:768px) { .stats { grid-template-columns: 1fr; } .search { display: none; } .profile-info { display: none; } .content { padding: 16px; } }
+  </style>
+</head>
+
+<body data-auth-guard="student">
+
+<div class="dashboard">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="logo">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <h2>Edunova<br>Smart Learning</h2>
+      </div>
+      <nav class="menu" aria-label="Student main menu">
+        <a class="menu-item active" href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+        <a class="menu-item" href="courses.html"><i class="fa-solid fa-book-open"></i> My Courses</a>
+        <a class="menu-item" href="quiz.html"><i class="fa-solid fa-question-circle"></i> Quizzes</a>
+        <a class="menu-item" href="messages.html"><i class="fa-regular fa-envelope"></i> Messages<span class="unread-badge" id="unreadBadge">0</span></a>
+        <a class="menu-item" href="profile.html"><i class="fa-solid fa-chart-line"></i> My Progress</a>
+        <a class="menu-item" href="profile.html#certificates"><i class="fa-solid fa-certificate"></i> Certificates</a>
+        <a class="menu-item" href="profile.html"><i class="fa-regular fa-user"></i> Profile</a>
+        <a class="menu-item" href="login.html" data-logout><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+      </nav>
+    </div>
+    <div class="promo">
+      <h3>Keep learning,<br>keep growing! 🚀</h3>
+      <p>Explore new free courses and upgrade your skills today.</p>
+      <button onclick="window.location.href='courses.html'">Explore Free Courses</button>
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="Learning">
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="header">
+      <div class="header-left">
+        <div class="menu-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></div>
+        <div class="search"><input type="text" placeholder="Search for courses..." id="searchInput"><i class="fa-solid fa-magnifying-glass"></i></div>
+      </div>
+      <div class="header-right">
+        <div class="notification" onclick="window.location.href='messages.html'"><i class="fa-regular fa-bell"></i><span id="notificationBadge">0</span></div>
+        <div class="profile" onclick="window.location.href='profile.html'">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile">
+          <div class="profile-info"><h4 id="studentName">Student</h4><p>Student</p></div>
+          <i class="fa-solid fa-chevron-down" style="font-size:12px;color:#475569;"></i>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="left-content">
+        <div class="welcome"><h1 id="welcomeMessage">Hello, Student! 👋</h1><p>Welcome back! Continue your free learning journey and achieve your goals.</p></div>
+        <div id="errorMessage" class="error-message" style="display:none;"></div>
+
+        <div class="stats">
+          <div class="stat-card"><div class="stat-top"><div class="stat-icon purple-bg"><i class="fa-solid fa-book-open"></i></div><div><h2 id="enrolledCount">0</h2><p>Enrolled Courses</p></div></div></div>
+          <div class="stat-card"><div class="stat-top"><div class="stat-icon green-bg"><i class="fa-regular fa-circle-check"></i></div><div><h2 id="completedLessons">0</h2><p>Lessons Completed</p></div></div></div>
+          <div class="stat-card"><div class="stat-top"><div class="stat-icon blue-bg"><i class="fa-regular fa-clipboard"></i></div><div><h2 id="quizzesTaken">0</h2><p>Quizzes Taken</p></div></div></div>
+          <div class="stat-card"><div class="stat-top"><div class="stat-icon orange-bg"><i class="fa-solid fa-trophy"></i></div><div><h2 id="avgScore">0%</h2><p>Average Score</p></div></div></div>
+        </div>
+
+        <div class="section-head"><h2>My Courses</h2><a href="courses.html">View All Courses →</a></div>
+        <div class="courses" id="coursesContainer"><div style="text-align:center;padding:40px;">Loading courses...</div></div>
+
+        <div class="bottom-grid">
+          <div class="panel"><div class="panel-header"><h3>Recent Activity</h3><a href="courses.html">View All</a></div><div id="activityList" class="activity-list"><div style="text-align:center;padding:20px;color:#8b93ad;">No recent activity</div></div></div>
+          <div class="panel"><div class="panel-header"><h3>Continue Learning</h3><a href="courses.html">View All</a></div><div id="continueList" style="padding: 0 20px 16px;"><div style="text-align:center;padding:20px;color:#8b93ad;">No courses in progress</div></div></div>
+        </div>
+      </div>
+
+      <div class="right-content">
+        <div class="side-card"><div class="side-header"><h3>📢 Announcements</h3><a href="courses.html">View All</a></div><div id="announcementsList"><div style="text-align:center;padding:20px;color:#8b93ad;">No announcements yet</div></div></div>
+        <div class="side-card"><div class="side-header"><h3>🔖 Bookmarked Courses</h3><a href="courses.html">View All</a></div><div id="bookmarksList"><div style="text-align:center;padding:20px;color:#8b93ad;">No bookmarks yet</div></div></div>
+        <div class="side-card"><div class="side-header"><h3>📊 Quick Stats</h3></div><div id="quickStats"><div style="text-align:center"><div style="font-size:36px;font-weight:800;color:#5b34ea">0%</div><div style="font-size:13px;color:#6b7280">Overall Progress</div></div></div></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="../../assets/js/api.js"></script>
+<script src="../../assets/js/auth.js"></script>
+
+<script>
+  function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+  function viewCourse(courseId) { window.location.href = 'courses.html?id=' + courseId; }
+
+  async function loadDashboardData() {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const result = await EdunovaAPI.getStudentDashboard();
+      if (result) {
+        document.getElementById('enrolledCount').innerText = result.enrolledCourses || 0;
+        document.getElementById('completedLessons').innerText = result.completedLessons || 0;
+        document.getElementById('quizzesTaken').innerText = result.quizzesTaken || 0;
+        document.getElementById('avgScore').innerText = result.avgScore || '0%';
+      }
+    } catch (error) { console.error('Error loading stats:', error.message); }
+  }
+
+  async function loadEnrolledCourses() {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const progress = await EdunovaAPI.getMyProgress();
+      const container = document.getElementById('coursesContainer');
+      
+      if (progress && progress.length > 0) {
+        container.innerHTML = progress.map((course, i) => `
+          <div class="course-card" onclick="viewCourse(${course.course_id})">
+            <div class="course-image"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400" alt="Course"><div class="progress-badge">${course.completionPercentage}%</div></div>
+            <div class="course-body"><h3>Course ${course.course_id}</h3><p>Progress: ${course.completedLessons}/${course.totalLessons} lessons</p>
+            <div class="progress-bar"><div class="progress-fill" style="width:${course.completionPercentage}%;background:#5b34ea"></div></div>
+            <button class="continue-btn btn-purple" onclick="event.stopPropagation();viewCourse(${course.course_id})">▶ Continue Learning</button></div>
+          </div>
+        `).join('');
+      } else {
+        // Show available courses to enroll
+        await loadAvailableCourses();
+      }
+    } catch (error) {
+      console.error('Error loading enrolled courses:', error);
+      await loadAvailableCourses();
+    }
+  }
+
+  async function loadAvailableCourses() {
+    try {
+      const courses = await EdunovaAPI.getCourses();
+      const container = document.getElementById('coursesContainer');
+      
+      if (courses && courses.length > 0) {
+        container.innerHTML = courses.map((course) => `
+          <div class="course-card" onclick="enrollInCourse(${course.id})">
+            <div class="course-image"><img src="${course.thumbnail || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400'}" alt="${course.title}"><div class="progress-badge">NEW</div></div>
+            <div class="course-body"><h3>${escapeHtml(course.title)}</h3><p>${course.description ? escapeHtml(course.description.substring(0, 60)) : 'Start learning today for free!'}</p>
+            <button class="continue-btn btn-purple" onclick="event.stopPropagation();enrollInCourse(${course.id})">📚 Enroll Now</button></div>
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = '<div class="course-card" style="grid-column:1/-1;padding:40px;text-align:center"><p>No courses available. Please check back later.</p></div>';
+      }
+    } catch (error) {
+      console.error('Error loading available courses:', error);
+      document.getElementById('coursesContainer').innerHTML = '<div class="course-card" style="grid-column:1/-1;padding:40px;text-align:center"><p>Unable to load courses. Please check your connection.</p></div>';
+    }
+  }
+
+  async function enrollInCourse(courseId) {
+    try {
+      const result = await EdunovaAPI.enrollCourse(courseId);
+      alert('Successfully enrolled! Start learning now.');
+      loadEnrolledCourses();
+      loadDashboardData();
+    } catch (error) {
+      alert(error.message || 'Enrollment failed');
+    }
+  }
+
+  async function loadBookmarks() {
+    try {
+      const bookmarks = await EdunovaAPI.getUserBookmarks();
+      const container = document.getElementById('bookmarksList');
+      if (bookmarks && bookmarks.length > 0) {
+        container.innerHTML = bookmarks.slice(0, 3).map(bookmark => `
+          <div class="bookmark-item" onclick="viewCourse(${bookmark.course_id})">
+            <div class="bookmark-info"><h4>${escapeHtml(bookmark.title || 'Course ' + bookmark.course_id)}</h4><p>${escapeHtml(bookmark.category || 'Course')}</p></div>
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = '<div style="text-align:center;padding:20px;color:#8b93ad;">No bookmarks yet</div>';
+      }
+    } catch (error) { console.error('Error loading bookmarks:', error); }
+  }
+
+  async function loadUnreadCount() {
+    try {
+      const count = await EdunovaAPI.getUnreadCount();
+      document.getElementById('unreadBadge').innerText = count || 0;
+      document.getElementById('notificationBadge').innerText = count || 0;
+    } catch (error) { console.error('Error loading unread count:', error); }
+  }
+
+  async function loadQuickStats() {
+    try {
+      const progress = await EdunovaAPI.getMyProgress();
+      if (progress && progress.length > 0) {
+        const totalProgress = progress.reduce((sum, c) => sum + (c.completionPercentage || 0), 0) / progress.length;
+        document.getElementById('quickStats').innerHTML = `
+          <div style="text-align:center">
+            <div style="font-size:36px;font-weight:800;color:#5b34ea">${Math.round(totalProgress)}%</div>
+            <div style="font-size:13px;color:#6b7280">Overall Progress</div>
+            <div style="margin-top:15px;padding-top:15px;border-top:1px solid #f0f0f5">
+              <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+                <span>📚 ${progress.length} Courses</span><span>⭐ ${Math.round(totalProgress)}% Avg</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    } catch (error) { console.error('Error loading quick stats:', error); }
+  }
+
+  function escapeHtml(str) { return String(str || '').replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+
+  function initSearch() {
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        document.querySelectorAll('.course-card').forEach(card => {
+          const title = card.querySelector('h3')?.innerText.toLowerCase() || '';
+          card.style.display = title.includes(term) ? 'block' : 'none';
+        });
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    EdunovaAuth.applyUserToPage();
+    loadDashboardData();
+    loadEnrolledCourses();
+    loadBookmarks();
+    loadUnreadCount();
+    loadQuickStats();
+    initSearch();
+  });
+
+  window.toggleSidebar = toggleSidebar;
+  window.viewCourse = viewCourse;
+  window.enrollInCourse = enrollInCourse;
+</script>
+</body>
+</html>

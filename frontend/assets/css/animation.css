@@ -1,0 +1,30 @@
+/* Shared animation utility classes */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes softPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.anim-fade-in-up {
+  animation: fadeInUp 0.35s ease;
+}
+
+.anim-soft-pulse {
+  animation: softPulse 1.8s ease-in-out infinite;
+}
