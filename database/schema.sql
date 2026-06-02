@@ -1,210 +1,179 @@
-CREATE DATABASE IF NOT EXISTS edunova CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE edunova;
+-- =====================================================================
+-- Edunova Smart Learning Database Schema
+-- RDBMS: MySQL 5.7+ / 8.0+
+-- Description: Highly optimized SQL schema supporting real-time progress,
+--              secure credential storage, certificates, quiz tracking,
+--              and admin support tickets.
+-- =====================================================================
 
--- Users table (updated with more fields)
-CREATE TABLE IF NOT EXISTS users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role ENUM('student', 'instructor', 'admin') DEFAULT 'student',
-    profile_image VARCHAR(255),
-    bio TEXT,
-    last_login TIMESTAMP NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_users_email (email),
-    INDEX idx_users_role (role)
-);
+CREATE DATABASE IF NOT EXISTS `edunova_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `edunova_db`;
 
--- Courses table (removed price)
-CREATE TABLE IF NOT EXISTS courses (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(200) NOT NULL,
-    description TEXT,
-    thumbnail VARCHAR(255),
-    category VARCHAR(100),
-    instructor_id INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (instructor_id) REFERENCES users(id) ON DELETE SET NULL,
-    INDEX idx_courses_category (category),
-    INDEX idx_courses_instructor (instructor_id)
-);
+-- 1. USERS TABLE
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(100) NOT NULL,
+  `username` VARCHAR(50) NOT NULL UNIQUE,
+  `email` VARCHAR(100) NOT NULL UNIQUE,
+  `password_hash` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(20) DEFAULT NULL,
+  `gender` VARCHAR(20) DEFAULT NULL,
+  `dob` DATE DEFAULT NULL,
+  `bio` TEXT DEFAULT NULL,
+  `role` ENUM('student', 'admin') NOT NULL DEFAULT 'student',
+  `registered_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_email (`email`),
+  INDEX idx_username (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Course enrollments (new table)
-CREATE TABLE IF NOT EXISTS enrollments (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    course_id INT NOT NULL,
-    enrolled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status ENUM('active', 'completed', 'dropped') DEFAULT 'active',
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_enrollment (user_id, course_id),
-    INDEX idx_enrollments_user (user_id),
-    INDEX idx_enrollments_course (course_id)
-);
+-- 2. COURSES TABLE
+CREATE TABLE IF NOT EXISTS `courses` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(150) NOT NULL,
+  `description` TEXT NOT NULL,
+  `category` VARCHAR(50) NOT NULL,
+  `instructor` VARCHAR(100) NOT NULL,
+  `price` DECIMAL(10, 2) NOT NULL DEFAULT '0.00',
+  `thumbnail` VARCHAR(255) NOT NULL,
+  `rating` DECIMAL(3, 2) DEFAULT '0.00',
+  `reviews_count` INT DEFAULT 0,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Lessons table
-CREATE TABLE IF NOT EXISTS lessons (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    course_id INT NOT NULL,
-    title VARCHAR(200) NOT NULL,
-    content TEXT,
-    video_url VARCHAR(500),
-    pdf_url VARCHAR(500),
-    file_path VARCHAR(500),
-    duration VARCHAR(50),
-    order_index INT DEFAULT 0,
-    is_free BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
-    INDEX idx_lessons_course (course_id),
-    INDEX idx_lessons_order (order_index)
-);
+-- 3. LESSONS TABLE
+CREATE TABLE IF NOT EXISTS `lessons` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `course_id` INT NOT NULL,
+  `title` VARCHAR(150) NOT NULL,
+  `duration` VARCHAR(20) NOT NULL DEFAULT '5 mins',
+  `video_url` VARCHAR(255) DEFAULT NULL,
+  `lesson_order` INT NOT NULL DEFAULT 1,
+  FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE,
+  INDEX idx_course_lessons (`course_id`, `lesson_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Quizzes table
-CREATE TABLE IF NOT EXISTS quizzes (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    course_id INT NOT NULL,
-    lesson_id INT NULL,
-    title VARCHAR(200),
-    question TEXT NOT NULL,
-    options JSON,
-    correct_answer VARCHAR(10),
-    points INT DEFAULT 1,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
-    FOREIGN KEY (lesson_id) REFERENCES lessons(id) ON DELETE CASCADE,
-    INDEX idx_quizzes_course (course_id)
-);
+-- 4. ENROLLMENTS TABLE (Unique pair prevents duplicate enrollments)
+CREATE TABLE IF NOT EXISTS `enrollments` (
+  `user_id` INT NOT NULL,
+  `course_id` INT NOT NULL,
+  `enrolled_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`, `course_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Progress table (updated)
-CREATE TABLE IF NOT EXISTS progress (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    course_id INT NOT NULL,
-    lesson_id INT NULL,
-    completed BOOLEAN DEFAULT FALSE,
-    completed_at TIMESTAMP NULL,
-    quiz_score INT DEFAULT 0,
-    quiz_attempts INT DEFAULT 0,
-    completion_percentage INT DEFAULT 0,
-    last_activity TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
-    INDEX idx_progress_user (user_id),
-    INDEX idx_progress_course (course_id),
-    INDEX idx_progress_user_course (user_id, course_id)
-);
+-- 5. LESSON PROGRESS TABLE (Track complete stamps dynamically)
+CREATE TABLE IF NOT EXISTS `lesson_progress` (
+  `user_id` INT NOT NULL,
+  `course_id` INT NOT NULL,
+  `lesson_id` INT NOT NULL,
+  `completed_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`, `course_id`, `lesson_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`lesson_id`) REFERENCES `lessons` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Certificates table (new)
-CREATE TABLE IF NOT EXISTS certificates (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    course_id INT NOT NULL,
-    certificate_code VARCHAR(100) UNIQUE NOT NULL,
-    issued_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    pdf_path VARCHAR(500),
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
-    INDEX idx_certificates_user (user_id),
-    INDEX idx_certificates_code (certificate_code)
-);
+-- 6. QUIZ QUESTIONS TABLE
+CREATE TABLE IF NOT EXISTS `quiz_questions` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `course_id` INT NOT NULL,
+  `question` TEXT NOT NULL,
+  `options` JSON NOT NULL, -- Stored as a serialized JSON array of options
+  `correct_index` INT NOT NULL, -- 0-based index
+  FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Course reviews table (new)
-CREATE TABLE IF NOT EXISTS reviews (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    course_id INT NOT NULL,
-    rating INT CHECK (rating >= 1 AND rating <= 5),
-    comment TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_review (user_id, course_id),
-    INDEX idx_reviews_course (course_id),
-    INDEX idx_reviews_rating (rating)
-);
+-- 7. QUIZ ATTEMPTS TABLE (Track scores, correct counts and progress)
+CREATE TABLE IF NOT EXISTS `quiz_attempts` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `user_id` INT NOT NULL,
+  `course_id` INT NOT NULL,
+  `score` DECIMAL(5, 2) NOT NULL, -- percentage score
+  `correct_count` INT NOT NULL,
+  `total_count` INT NOT NULL,
+  `attempted_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE,
+  INDEX idx_attempts_leaderboard (`course_id`, `score` DESC)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Bookmarks/wishlist table (new)
-CREATE TABLE IF NOT EXISTS bookmarks (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    course_id INT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_bookmark (user_id, course_id),
-    INDEX idx_bookmarks_user (user_id)
-);
+-- 8. CERTIFICATES TABLE (verifiable progress certs)
+CREATE TABLE IF NOT EXISTS `certificates` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `user_id` INT NOT NULL,
+  `course_id` INT NOT NULL,
+  `certificate_code` VARCHAR(50) NOT NULL UNIQUE,
+  `issued_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE,
+  INDEX idx_certificate_code (`certificate_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Announcements table (new)
-CREATE TABLE IF NOT EXISTS announcements (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    course_id INT NOT NULL,
-    author_id INT NOT NULL,
-    title VARCHAR(200) NOT NULL,
-    content TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NULL,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
-    FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE,
-    INDEX idx_announcements_course (course_id),
-    INDEX idx_announcements_created (created_at)
-);
+-- 9. BOOKMARKS TABLE
+CREATE TABLE IF NOT EXISTS `bookmarks` (
+  `user_id` INT NOT NULL,
+  `course_id` INT NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`, `course_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Messages table (new)
-CREATE TABLE IF NOT EXISTS messages (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    sender_id INT NOT NULL,
-    receiver_id INT NOT NULL,
-    course_id INT NULL,
-    subject VARCHAR(200),
-    message TEXT NOT NULL,
-    is_read BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE SET NULL,
-    INDEX idx_messages_sender (sender_id),
-    INDEX idx_messages_receiver (receiver_id),
-    INDEX idx_messages_read (is_read)
-);
+-- 10. MESSAGES TABLE (Helpdesk, announcements and support logs)
+CREATE TABLE IF NOT EXISTS `messages` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `user_id` INT NOT NULL, -- context channel (usually student id, 0 or system matches public logs)
+  `text` TEXT NOT NULL,
+  `sender` ENUM('system', 'admin', 'student') NOT NULL DEFAULT 'student',
+  `is_read` TINYINT(1) DEFAULT 0,
+  `sent_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_user_messages (`user_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Email queue table (new for notifications)
-CREATE TABLE IF NOT EXISTS email_queue (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    to_email VARCHAR(100) NOT NULL,
-    to_name VARCHAR(100),
-    subject VARCHAR(255) NOT NULL,
-    body TEXT NOT NULL,
-    status ENUM('pending', 'sent', 'failed') DEFAULT 'pending',
-    attempts INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    sent_at TIMESTAMP NULL,
-    INDEX idx_email_queue_status (status)
-);
+-- 11. ANNOUNCEMENTS TABLE (General broadcasts)
+CREATE TABLE IF NOT EXISTS `announcements` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(150) NOT NULL,
+  `excerpt` TEXT NOT NULL,
+  `published_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Default users (password: admin123 for admin, instructor123 for instructor)
-INSERT INTO users (name, email, password, role) VALUES
-('Admin User', 'admin@edunova.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),
-('John Instructor', 'instructor@edunova.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'instructor')
-ON DUPLICATE KEY UPDATE email = email;
 
--- Sample courses (no price)
-INSERT INTO courses (title, description, thumbnail, category, instructor_id) VALUES
-('Web Development Bootcamp', 'Complete web development course with HTML, CSS, JavaScript, and PHP', 'https://images.unsplash.com/photo-1498050108023-c5249f4df085', 'Development', 2),
-('Data Science Fundamentals', 'Learn data analysis, visualization, and machine learning basics', 'https://images.unsplash.com/photo-1551288049-bebda4e38f71', 'Data Science', 2),
-('UI/UX Design Mastery', 'Master user interface and user experience design principles', 'https://images.unsplash.com/photo-1561070791-2526d30994b5', 'Design', 2);
+-- =====================================================================
+-- SEED INITIAL DATA FOR THE ENTIRE ECOSYSTEM
+-- =====================================================================
 
--- Sample lessons
-INSERT INTO lessons (course_id, title, content, video_url, duration, order_index) VALUES
-(1, 'Introduction to HTML', 'Learn the basics of HTML markup language', 'https://www.youtube.com/embed/qz0aGYrrlhU', '12:30', 1),
-(1, 'CSS Fundamentals', 'Master CSS styling and layouts', 'https://www.youtube.com/embed/1PnVor36_40', '18:45', 2),
-(2, 'Python Basics', 'Introduction to Python programming', 'https://www.youtube.com/embed/_uQrJ0TkZlc', '15:20', 1),
-(3, 'Design Principles', 'Learn core UI/UX design principles', 'https://www.youtube.com/embed/y882XR8lhlY', '20:10', 1);
+-- Passwords match: 'student123' and 'admin123'
+INSERT INTO `users` (`id`, `name`, `username`, `email`, `password_hash`, `phone`, `gender`, `dob`, `role`) VALUES
+(1, 'Dean Henderson', 'dean_admin', 'dean@edunova.org', '$2y$10$R9n5r6FidR.i9g7EByC7tO0l/pSgUqK.O3p8h99/T0D1s9gBvSvyK', '+1 (555) 721-0000', 'Male', '1985-05-12', 'admin'),
+(2, 'Sarah Jenkins', 'sarah_j', 'sarah@student.com', '$2y$10$wT0H779B3m5aJ5U/K/gXye7Z.1BvK7p8vJ6T0D9C1s8gBvSvyK9L.', '+1 (555) 124-7890', 'Female', '2005-09-18', 'student');
 
--- Sample quizzes
-INSERT INTO quizzes (course_id, question, options, correct_answer, points) VALUES
-(1, 'What does HTML stand for?', '["Hyper Text Markup Language", "High Tech Modern Language", "Home Tool Markup Language"]', '0', 1),
-(1, 'Which tag is used for the largest heading?', '["<h6>", "<h1>", "<head>"]', '1', 1),
-(2, 'Which library is commonly used for data analysis in Python?', '["NumPy", "Pandas", "React"]', '1', 1);
+-- INITIAL COURSES
+INSERT INTO `courses` (`id`, `title`, `description`, `category`, `instructor`, `price`, `thumbnail`, `rating`, `reviews_count`) VALUES
+(1, 'Introduction to Computer Architectures', 'Delve cleanly into standard computer science von Neumann pipelines, instruction sets, CPU structures, cycles, caching systems, and hardware layouts.', 'Computer Science', 'Dr. Aris Thorne', 49.99, 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=600', 4.90, 114),
+(2, 'Reactive Web Framework Architectures', 'Master client-side application modeling, progressive rendering, VDOM mechanics, event dispatchers, and state synchronization loops.', 'Web Development', 'Instructor Sarah Jenkins', 0.00, 'https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&q=80&w=600', 4.85, 252),
+(3, 'Modern Cloud Native Databases', 'Learn the mechanics of cloud databases including replication consistency models, high availability clusters, global partition indices, and ACID optimization.', 'Database Systems', 'Dean Henderson', 79.00, 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&q=80&w=600', 4.95, 87);
+
+-- INITIAL LESSONS
+INSERT INTO `lessons` (`id`, `course_id`, `title`, `duration`, `video_url`, `lesson_order`) VALUES
+(1, 1, 'Welcome to the Microarchitecture Frontier', '12 mins', 'https://www.w3schools.com/html/mov_bbb.mp4', 1),
+(2, 1, 'The CPU Pipeline & RISC-V Assembler Basics', '15 mins', 'https://www.w3schools.com/html/mov_bbb.mp4', 2),
+(3, 1, 'Exploring Cache Hierarchies (L1, L2, L3)', '18 mins', 'https://www.w3schools.com/html/mov_bbb.mp4', 3),
+(4, 2, 'Decoupled Client-Side UI Lifecycles', '10 mins', 'https://www.w3schools.com/html/mov_bbb.mp4', 1),
+(5, 2, 'Unidirectional Data-Flow Optimization Rules', '14 mins', 'https://www.w3schools.com/html/mov_bbb.mp4', 2),
+(6, 3, 'Spanner Engine & Global Multi-Region Replication', '25 mins', 'https://www.w3schools.com/html/mov_bbb.mp4', 1);
+
+-- INITIAL QUIZ QUESTIONS
+INSERT INTO `quiz_questions` (`id`, `course_id`, `question`, `options`, `correct_index`) VALUES
+(1, 1, 'Which component handles arithmetic registers and instruction hazard detection inside standard pipelines?', '["Arithmetic Logic Unit (ALU)", "Memory Cache Controller", "Instruction Pipeline Decoder / Hazard Unit", "Floating Point Register Map"]', 2),
+(2, 1, 'What is the primary benefit of speculative instruction execution inside modern branch predictors?', '["Reduces pipeline instruction bubbles during branches", "Bypasses primary hardware memory leaks perfectly", "Decreases total energy consumption indices inside registers", "Simplifies the underlying silicon wiring bus layout"]', 0),
+(3, 1, 'Which cache mapping design is subject to conflict misses because multiple memory lines overlap on identical index banks?', '["Fully Associative Cache Map", "Direct-Mapped Cache Design", "2-Way Set-Associative Layout", "Multi-Threaded Hardware Registers"]', 1),
+(4, 2, 'What was the foundational problem progressive Virtual DOM algorithms set out to scale and solve?', '["Providing asynchronous memory serialization dynamically", "Minimizing expensive re-paints triggered by deep DOM updates", "Simplifying legacy cascading style sheets variables", "Bypassing server security handshakes entirely"]', 1),
+(5, 3, 'How does the Google Spanner database achieve consistent consensus locks globally without introducing sync bottlenecks?', '["By utilizing physical GPS atomic clocks (TrueTime API)", "Using arbitrary timestamp hashing algorithms on replicas", "Forcing serial single-node queues across channels", "By trusting local system timestamps only"]', 0);
+
+-- INITIAL BROADCASTS
+INSERT INTO `announcements` (`id`, `title`, `excerpt`, `published_at`) VALUES
+(1, '🚀 Free Certificates Campaign Active', 'Earn free verifiable course certificates automatically once you finish all lessons in any course.', '2026-05-18 10:00:00'),
+(2, '🔧 Scheduled Server Maintenance', 'Edunova smart database engines will undergo standard optimization this Saturday morning.', '2026-05-17 08:30:00');
