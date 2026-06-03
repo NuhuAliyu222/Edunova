@@ -3,7 +3,13 @@
   var BTN_CLASSES = ["btn-purple", "btn-green", "btn-blue", "btn-orange"];
 
   function pathEndsWith(suffix) {
-    return window.location.pathname.replace(/\\/g, "/").endsWith(suffix);
+    var path = window.location.pathname;
+    try {
+      path = decodeURIComponent(path);
+    } catch (e) {
+      /* keep raw path if it is not valid percent-encoding */
+    }
+    return path.replace(/\\/g, "/").endsWith(suffix);
   }
 
   function byText(selector, text) {
