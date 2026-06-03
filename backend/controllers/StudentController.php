@@ -134,13 +134,13 @@ class StudentController
         }
         
         // Check if already enrolled
-        $stmt = $this->progressModel->getCourseProgressSummary($userId, $courseId, 0);
-        if ($stmt['completedLessons'] > 0 || $stmt['quizScore'] !== null) {
+        if ($this->courseModel->isEnrolled($userId, $courseId)) {
             return Response::error('Already enrolled in this course', 400);
         }
         
-        // Create initial progress record
-        $ok = $this->progressModel->saveQuizScore($userId, $courseId, 0);
+        // Record enrollment and create an initial progress record
+        $ok = $this->courseModel->enrollStudent($userId, $courseId)
+            && $this->progressModel->saveQuizScore($userId, $courseId, 0);
         
         if (!$ok) {
             return Response::error('Could not enroll in course', 500);

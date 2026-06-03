@@ -59,10 +59,9 @@ class Progress
         $quizStmt->execute([':user_id' => $userId, ':course_id' => $courseId]);
         $quizRow = $quizStmt->fetch();
         
-        // Auto-mark course as completed at 100%
-        if ($percent >= 100) {
-            $this->markCourseCompleted($userId, $courseId);
-        }
+        // Persist the computed completion percentage so dashboards and
+        // certificate eligibility stay in sync.
+        $this->updateCompletionPercentage($userId, $courseId, $percent);
 
         return [
             'courseId' => $courseId,
@@ -76,10 +75,18 @@ class Progress
         ];
     }
 
-    public function markCourseCompleted(int $userId, int $courseId): bool
+    public function updateCompletionPercentage(int $userId, int $courseId, int $percent): bool
     {
-        // This method is optional - you can implement if you have an enrollments table
-        return true;
+        $stmt = $this->conn->prepare("
+            UPDATE {$this->table}
+            SET completion_percentage = :percent
+            WHERE user_id = :user_id AND course_id = :course_id
+        ");
+        return $stmt->execute([
+            ':percent' => $percent,
+            ':user_id' => $userId,
+            ':course_id' => $courseId,
+        ]);
     }
 
     public function getMyCoursesProgress(int $userId): array
@@ -92,7 +99,7 @@ class Progress
             FROM {$this->table}
             WHERE user_id = :uid
             GROUP BY course_id
-            ORDER BY last_activity DESC
+            ORDER BY MAX(last_activity) DESC
         ");
         $stmt->execute([':uid' => $userId]);
         $rows = $stmt->fetchAll();
@@ -161,7 +168,7 @@ class Progress
     public function saveQuizScore(int $userId, int $courseId, int $score): bool
     {
         $check = $this->conn->prepare("
-            SELECT id, quiz_attempts FROM {$this->table}
+            SELECT id, quiz_score, quiz_attempts FROM {$this->table}
             WHERE user_id = :user_id AND course_id = :course_id AND lesson_id IS NULL
             LIMIT 1
         ");

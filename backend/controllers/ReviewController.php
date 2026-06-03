@@ -65,7 +65,7 @@ class ReviewController
         
         // Admins can delete any review
         if ($role === 'admin') {
-            $deleted = $this->reviewModel->delete($id, 0);
+            $deleted = $this->reviewModel->delete($id, null);
         } else {
             $deleted = $this->reviewModel->delete($id, $userId);
         }
