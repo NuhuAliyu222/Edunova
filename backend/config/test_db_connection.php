@@ -50,7 +50,7 @@ if ($conn) {
         echo "<div class='info'>👥 Total users: " . $userCount . "</div>";
     }
 } else {
-    echo "<div class='error'>❌ " . $result['message'] . "</div>";
+    echo "<div class='error'>❌ Database connection failed. Check your configuration.</div>";
     echo "<div class='info'>";
     echo "<strong>Troubleshooting steps:</strong><br>";
     echo "1. Make sure MySQL is running in XAMPP Control Panel<br>";
