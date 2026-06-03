@@ -70,12 +70,18 @@ class Review
         return $stmt->fetch() ?: null;
     }
 
-    public function delete(int $id, int $userId): bool
+    public function delete(int $id, ?int $userId = null): bool
     {
-        $stmt = $this->conn->prepare("
-            DELETE FROM {$this->table}
-            WHERE id = :id AND user_id = :user_id
-        ");
-        return $stmt->execute([':id' => $id, ':user_id' => $userId]);
+        if ($userId === null) {
+            $stmt = $this->conn->prepare("DELETE FROM {$this->table} WHERE id = :id");
+            $stmt->execute([':id' => $id]);
+        } else {
+            $stmt = $this->conn->prepare("
+                DELETE FROM {$this->table}
+                WHERE id = :id AND user_id = :user_id
+            ");
+            $stmt->execute([':id' => $id, ':user_id' => $userId]);
+        }
+        return $stmt->rowCount() > 0;
     }
 }

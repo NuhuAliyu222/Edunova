@@ -65,15 +65,17 @@ class Course
 
     public function create(array $data): ?int
     {
-        $query = "INSERT INTO {$this->table} (title, description, thumbnail, category, instructor_id)
-                  VALUES (:title, :description, :thumbnail, :category, :instructor_id)";
+        $query = "INSERT INTO {$this->table} (title, description, thumbnail, category, instructor, instructor_id, price)
+                  VALUES (:title, :description, :thumbnail, :category, :instructor, :instructor_id, :price)";
         $stmt = $this->conn->prepare($query);
         $stmt->execute([
             ':title' => $data['title'],
             ':description' => $data['description'] ?? '',
             ':thumbnail' => $data['thumbnail'] ?? '',
             ':category' => $data['category'] ?? '',
+            ':instructor' => $data['instructor'] ?? '',
             ':instructor_id' => $data['instructor_id'] ?? null,
+            ':price' => $data['price'] ?? 0,
         ]);
         return (int) $this->conn->lastInsertId();
     }
@@ -85,7 +87,9 @@ class Course
                   description = :description,
                   thumbnail = :thumbnail, 
                   category = :category,
-                  instructor_id = :instructor_id
+                  instructor = :instructor,
+                  instructor_id = :instructor_id,
+                  price = :price
                   WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         return $stmt->execute([
@@ -94,7 +98,9 @@ class Course
             ':description' => $data['description'] ?? '',
             ':thumbnail' => $data['thumbnail'] ?? '',
             ':category' => $data['category'] ?? '',
+            ':instructor' => $data['instructor'] ?? '',
             ':instructor_id' => $data['instructor_id'] ?? null,
+            ':price' => $data['price'] ?? 0,
         ]);
     }
 

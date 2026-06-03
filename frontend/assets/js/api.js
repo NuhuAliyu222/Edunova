@@ -16,12 +16,8 @@
       if (pathname.includes('/edunova/')) {
         return '/edunova/backend/routes/api.php';
       }
-      // If files are directly in htdocs
-      if (pathname.startsWith('/backend/')) {
-        return '/backend/routes/api.php';
-      }
-      // Default guess
-      return '/Edunova-Smart-Learning/backend/routes/api.php';
+      // Default: served from project root (e.g. `php -S localhost:8080 router.php`)
+      return '/backend/routes/api.php';
     }
     
     // Production
@@ -140,6 +136,24 @@
     },
     getCourse: function (id) {
       return request('GET', 'getCourse', { params: { id: id } });
+    },
+    createCourse: function (course) {
+      return request('POST', 'createCourse', { body: course });
+    },
+    updateCourse: function (id, course) {
+      return request('PUT', 'updateCourse', { body: course, params: { id: id } });
+    },
+    createLesson: function (lesson) {
+      return request('POST', 'createLesson', { body: lesson });
+    },
+    createQuiz: function (quiz) {
+      return request('POST', 'createQuiz', { body: quiz });
+    },
+    getStudents: function () {
+      return request('GET', 'getStudents');
+    },
+    getAdminStats: function () {
+      return request('GET', 'adminStats');
     },
     enrollCourse: function (courseId) {
       return request('POST', 'enrollCourse', { body: { course_id: courseId } });

@@ -18,22 +18,19 @@ echo "<!DOCTYPE html>
 ";
 
 // Include database class
-require_once __DIR__ . '/backend/config/database.php';
+require_once __DIR__ . '/database.php';
 
 // Test connection
 $database = new Database();
-$result = $database->testConnection();
+$conn = $database->getConnection();
 
-if ($result['success']) {
-    echo "<div class='success'>✅ " . $result['message'] . "</div>";
+if ($conn) {
+    echo "<div class='success'>✅ Database connection successful</div>";
     echo "<div class='info'>";
-    echo "<strong>Server Info:</strong> " . ($result['details']['server_info'] ?? 'Unknown') . "<br>";
-    echo "<strong>Database:</strong> " . ($result['details']['database'] ?? 'Unknown') . "<br>";
+    echo "<strong>Server Info:</strong> " . htmlspecialchars($conn->getAttribute(PDO::ATTR_SERVER_VERSION)) . "<br>";
     echo "</div>";
-    
-    // Try to get actual connection and query
-    $conn = $database->getConnection();
-    if ($conn) {
+
+    {
         // Check if database exists
         $stmt = $conn->query("SELECT DATABASE()");
         $currentDb = $stmt->fetchColumn();
